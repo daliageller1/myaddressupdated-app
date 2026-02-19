@@ -92,7 +92,26 @@ export default function Dashboard() {
       <ul>
         {move.checklist.map((item: any) => (
           <li key={item.id}>
-            [{item.category}] {item.label}
+            <label>
+              <input
+                type="checkbox"
+                checked={item.completed}
+                onChange={async (e) => {
+                  const checked = e.target.checked;
+
+                  await fetch(`/api/checklist/${item.id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ completed: checked }),
+                  });
+
+                  item.completed = checked;
+                  setMove({ ...move });
+                }}
+              />
+              {" "}
+              [{item.category}] {item.label}
+            </label>
           </li>
         ))}
       </ul>
