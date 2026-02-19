@@ -22,10 +22,11 @@ export async function GET(req: Request) {
     const move = await prisma.move.findFirst({
       where: { userId: decoded.userId },
       include: {
-        checklist: true,
+        checklist: {
           orderBy: {
             createdAt: "asc",
           },
+        },
       },
     });
 
