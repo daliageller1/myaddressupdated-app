@@ -105,8 +105,14 @@ export default function Dashboard() {
                     body: JSON.stringify({ completed: checked }),
                   });
 
-                  item.completed = checked;
-                  setMove({ ...move });
+                  setMove({
+                    ...move,
+                    checklist: move.checklist.map((i: any) =>
+                      i.id === item.id
+                        ? { ...i, completed: checked }
+                        : i
+                    ),
+                  });
                 }}
               />
               {" "}

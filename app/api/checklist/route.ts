@@ -23,6 +23,9 @@ export async function GET(req: Request) {
       where: { userId: decoded.userId },
       include: {
         checklist: true,
+          orderBy: {
+            createdAt: "asc",
+          },
       },
     });
 
