@@ -78,6 +78,10 @@ export default function Dashboard() {
     );
   }
 
+  const total = move.checklist.length;
+  const completed = move.checklist.filter((i: any) => i.completed).length;
+  const percent = Math.round((completed / total) * 100);
+
   // 🚀 Move exists → show checklist
   return (
     <div style={{ padding: "40px" }}>
@@ -89,6 +93,29 @@ export default function Dashboard() {
       <p><strong>To:</strong> {move.newAddress}</p>
 
       <h2>Checklist</h2>
+      <div style={{ marginBottom: "20px" }}>
+        <strong>Progress: {completed} of {total} completed ({percent}%)</strong>
+
+        <div
+          style={{
+            height: "10px",
+            backgroundColor: "#e5e5e5",
+            borderRadius: "6px",
+            marginTop: "8px",
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${percent}%`,
+              backgroundColor: "#2563eb",
+              borderRadius: "6px",
+              transition: "width 0.3s ease",
+            }}
+          />
+        </div>
+      </div>
+
       <ul>
         {move.checklist.map((item: any) => (
           <li key={item.id}>
