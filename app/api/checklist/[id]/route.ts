@@ -1,19 +1,22 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function PATCH(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { completed } = await req.json();
+  const { id } = await context.params;
 
-  const item = await prisma.checklistItem.update({
-    where: { id: params.id },
+  const body = await request.json();
+  const { completed } = body;
+
+  const updatedItem = await prisma.checklistItem.update({
+    where: { id },
     data: {
       completed,
       completedAt: completed ? new Date() : null,
     },
   });
 
-  return NextResponse.json(item);
+  return NextResponse.json(updatedItem);
 }
