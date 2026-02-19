@@ -24,7 +24,7 @@ export async function GET(req: Request) {
       include: {
         checklist: {
           orderBy: {
-            createdAt: "asc",
+            id: "asc",
           },
         },
       },
