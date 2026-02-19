@@ -37,6 +37,9 @@ export default function LoginPage() {
         <br /><br />
         <button type="submit">Login</button>
       </form>
+      <p style={{ marginTop: "20px" }}>
+        Don’t have an account? <a href="/signup">Sign up</a>
+      </p>
     </div>
   );
 }

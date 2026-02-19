@@ -10,6 +10,11 @@ export default function Dashboard() {
   const [newAddress, setNewAddress] = useState("");
   const [moveDate, setMoveDate] = useState("");
 
+  function logout() {
+    document.cookie = "token=; Max-Age=0; path=/";
+    window.location.href = "/login";
+  }
+
   async function createMove(e: React.FormEvent) {
     e.preventDefault();
 
@@ -77,6 +82,8 @@ export default function Dashboard() {
   return (
     <div style={{ padding: "40px" }}>
       <h1>Your Move Checklist</h1>
+
+      <button onClick={logout}>Logout</button>
 
       <p><strong>From:</strong> {move.oldAddress}</p>
       <p><strong>To:</strong> {move.newAddress}</p>

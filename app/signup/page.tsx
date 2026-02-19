@@ -48,6 +48,9 @@ export default function Signup() {
 
         <button type="submit">Create Account</button>
       </form>
+      <p style={{ marginTop: "20px" }}>
+        Already have an account? <a href="/login">Login</a>
+      </p>
     </div>
   );
 }
