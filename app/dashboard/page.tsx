@@ -102,7 +102,17 @@ export default function Dashboard() {
       }}
     >
 
-      <h1 style={{ marginBottom: "10px" }}>Your Move Checklist</h1>
+      <h1 style={{ marginBottom: "8px" }}>Your Move Checklist</h1>
+
+      <p
+        style={{
+          color: "#6b7280",
+          marginBottom: "20px",
+          fontSize: "15px",
+        }}
+      >
+        Moving is stressful. Let’s make this part easy.
+      </p>
 
       <button
         onClick={logout}
@@ -139,7 +149,7 @@ export default function Dashboard() {
             style={{
               height: "100%",
               width: `${percent}%`,
-              backgroundColor: "#2563eb",
+              backgroundColor: "#3b82f6",
               borderRadius: "6px",
               transition: "width 0.3s ease",
             }}
@@ -153,9 +163,10 @@ export default function Dashboard() {
           style={{
             marginBottom: "20px",
             padding: "15px",
-            border: "1px solid #f0f0f0",
+            border: "1px solid #f3f4f6",
             borderRadius: "8px",
-            background: "#fafafa",
+            background: "#ffffff",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
           }}
         >
           <h3
@@ -202,7 +213,7 @@ export default function Dashboard() {
                   <span
                     style={{
                       textDecoration: item.completed ? "line-through" : "none",
-                      color: item.completed ? "#888" : "#000",
+                      color: item.completed ? "#16a34a" : "#111",
                     }}
                   >
                     {item.label}
