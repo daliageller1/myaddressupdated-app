@@ -82,9 +82,25 @@ export default function Dashboard() {
   const completed = move.checklist.filter((i: any) => i.completed).length;
   const percent = Math.round((completed / total) * 100);
 
+  const grouped = move.checklist.reduce((acc: any, item: any) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item);
+    return acc;
+  }, {});
+
   // 🚀 Move exists → show checklist
   return (
-    <div style={{ padding: "40px" }}>
+    <div
+      style={{
+        maxWidth: "700px",
+        margin: "40px auto",
+        padding: "30px",
+        border: "1px solid #e5e5e5",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
       <h1>Your Move Checklist</h1>
 
       <button onClick={logout}>Logout</button>
@@ -116,38 +132,63 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <ul>
-        {move.checklist.map((item: any) => (
-          <li key={item.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={item.completed}
-                onChange={async (e) => {
-                  const checked = e.target.checked;
+      {Object.entries(grouped).map(([category, items]: any) => (
+        <div key={category} style={{ marginBottom: "20px" }}>
+          <h3
+            style={{
+              marginBottom: "10px",
+              marginTop: "20px",
+              fontSize: "16px",
+              textTransform: "uppercase",
+              letterSpacing: "1px",
+              color: "#555",
+            }}
+          >
+            {category}
+          </h3>
 
-                  await fetch(`/api/checklist/${item.id}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ completed: checked }),
-                  });
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            {items.map((item: any) => (
+              <li key={item.id} style={{ padding: "6px 0" }}>
+                <label>
+                  <input
+                    style={{ marginRight: "8px" }}
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={async (e) => {
+                      const checked = e.target.checked;
 
-                  setMove({
-                    ...move,
-                    checklist: move.checklist.map((i: any) =>
-                      i.id === item.id
-                        ? { ...i, completed: checked }
-                        : i
-                    ),
-                  });
-                }}
-              />
-              {" "}
-              [{item.category}] {item.label}
-            </label>
-          </li>
-        ))}
-      </ul>
+                      await fetch(`/api/checklist/${item.id}`, {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ completed: checked }),
+                      });
+
+                      setMove({
+                        ...move,
+                        checklist: move.checklist.map((i: any) =>
+                          i.id === item.id
+                            ? { ...i, completed: checked }
+                            : i
+                        ),
+                      });
+                    }}
+                  />
+                  {" "}
+                  <span
+                    style={{
+                      textDecoration: item.completed ? "line-through" : "none",
+                      color: item.completed ? "#888" : "#000",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
