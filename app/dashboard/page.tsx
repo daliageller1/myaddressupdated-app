@@ -101,14 +101,29 @@ export default function Dashboard() {
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
     >
-      <h1>Your Move Checklist</h1>
 
-      <button onClick={logout}>Logout</button>
+      <h1 style={{ marginBottom: "10px" }}>Your Move Checklist</h1>
+
+      <button
+        onClick={logout}
+        style={{
+          padding: "6px 14px",
+          borderRadius: "6px",
+          border: "1px solid #ddd",
+          background: "#fafafa",
+          cursor: "pointer",
+          marginBottom: "20px",
+        }}
+      >
+        Logout
+      </button>
 
       <p><strong>From:</strong> {move.oldAddress}</p>
       <p><strong>To:</strong> {move.newAddress}</p>
 
-      <h2>Checklist</h2>
+      <h2 style={{ marginTop: "30px", marginBottom: "10px" }}>
+        Checklist
+      </h2>
       <div style={{ marginBottom: "20px" }}>
         <strong>Progress: {completed} of {total} completed ({percent}%)</strong>
 
@@ -133,7 +148,16 @@ export default function Dashboard() {
       </div>
 
       {Object.entries(grouped).map(([category, items]: any) => (
-        <div key={category} style={{ marginBottom: "20px" }}>
+        <div
+          key={category}
+          style={{
+            marginBottom: "20px",
+            padding: "15px",
+            border: "1px solid #f0f0f0",
+            borderRadius: "8px",
+            background: "#fafafa",
+          }}
+        >
           <h3
             style={{
               marginBottom: "10px",
