@@ -47,33 +47,94 @@ export default function Dashboard() {
   // 🚨 No move yet → show form
   if (!move) {
     return (
-      <div style={{ padding: "40px" }}>
-        <h1>Create Your Move</h1>
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f9fafb",
+          fontFamily: "system-ui, -apple-system, sans-serif",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            backgroundColor: "white",
+            padding: "40px",
+            borderRadius: "14px",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h1 style={{ marginBottom: "10px" }}>Create Your Move</h1>
+          <p style={{ marginBottom: "25px", color: "#666" }}>
+            Enter your moving details to generate your checklist.
+          </p>
 
-        <form onSubmit={createMove}>
-          <input
-            placeholder="Old Address"
-            value={oldAddress}
-            onChange={(e) => setOldAddress(e.target.value)}
-          />
-          <br /><br />
+          <form onSubmit={createMove}>
+            <input
+              placeholder="Old Address"
+              value={oldAddress}
+              onChange={(e) => setOldAddress(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: "12px",
+                marginBottom: "16px",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                fontSize: "14px",
+              }}
+            />
 
-          <input
-            placeholder="New Address"
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
-          />
-          <br /><br />
+            <input
+              placeholder="New Address"
+              value={newAddress}
+              onChange={(e) => setNewAddress(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: "12px",
+                marginBottom: "16px",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                fontSize: "14px",
+              }}
+            />
 
-          <input
-            type="date"
-            value={moveDate}
-            onChange={(e) => setMoveDate(e.target.value)}
-          />
-          <br /><br />
+            <input
+              type="date"
+              value={moveDate}
+              onChange={(e) => setMoveDate(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: "12px",
+                marginBottom: "20px",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                fontSize: "14px",
+              }}
+            />
 
-          <button type="submit">Create Move</button>
-        </form>
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                padding: "12px",
+                borderRadius: "8px",
+                border: "none",
+                backgroundColor: "#2563eb",
+                color: "white",
+                fontWeight: "600",
+                cursor: "pointer",
+              }}
+            >
+              Generate Checklist
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
@@ -92,13 +153,20 @@ export default function Dashboard() {
   return (
     <div
       style={{
-        maxWidth: "700px",
-        margin: "40px auto",
-        padding: "30px",
-        border: "1px solid #e5e5e5",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+        minHeight: "100vh",
+        backgroundColor: "#f9fafb",
+        padding: "40px 20px",
         fontFamily: "system-ui, -apple-system, sans-serif",
+     }}
+  >
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        backgroundColor: "white",
+        padding: "40px",
+        borderRadius: "14px",
+        boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
       }}
     >
 
