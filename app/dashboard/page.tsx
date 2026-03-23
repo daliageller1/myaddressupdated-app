@@ -163,6 +163,12 @@ export default function Dashboard() {
     grouped["Miscellaneous"] = [];
   }
 
+  Object.keys(categoryConfig).forEach((category) => {
+    if (!grouped[category]) {
+      grouped[category] = [];
+    }
+  });
+
   // 🚀 Move exists → show checklist
   return (
     <div
