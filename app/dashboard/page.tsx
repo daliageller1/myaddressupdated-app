@@ -266,41 +266,71 @@ export default function Dashboard() {
 
           <ul style={{ listStyle: "none", padding: 0 }}>
             {items.map((item: any) => (
-              <li key={item.id} style={{ padding: "6px 0" }}>
-                <label>
-                  <input
-                    style={{ marginRight: "8px" }}
-                    type="checkbox"
-                    checked={item.completed}
-                    onChange={async (e) => {
-                      const checked = e.target.checked;
+              <li
+                key={item.id}
+                style={{
+                  padding: "6px 0",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <label>
+                    <input
+                      style={{ marginRight: "8px" }}
+                      type="checkbox"
+                      checked={item.completed}
+                      onChange={async (e) => {
+                        const checked = e.target.checked;
 
-                      await fetch(`/api/checklist/${item.id}`, {
-                        method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ completed: checked }),
-                      });
+                        await fetch(`/api/checklist/${item.id}`, {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ completed: checked }),
+                        });
 
-                      setMove({
-                        ...move,
-                        checklist: move.checklist.map((i: any) =>
-                          i.id === item.id
-                            ? { ...i, completed: checked }
-                            : i
-                        ),
-                      });
-                    }}
-                  />
-                  {" "}
-                  <span
-                    style={{
-                      textDecoration: item.completed ? "line-through" : "none",
-                      color: item.completed ? "#16a34a" : "#111",
-                    }}
-                  >
-                    {item.label}
-                  </span>
-                </label>
+                        setMove((prev: any) => ({
+                          ...prev,
+                          checklist: prev.checklist.map((i: any) =>
+                            i.id === item.id ? { ...i, completed: checked } : i
+                          ),
+                        }));
+                      }}
+                    />
+                    <span
+                      style={{
+                        textDecoration: item.completed ? "line-through" : "none",
+                        color: item.completed ? "#16a34a" : "#111",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </label>
+                </div>
+                <button
+                  onClick={async () => {
+                    await fetch("/api/checklist/delete", {
+                      method: "DELETE",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ id: item.id }),
+                    });
+
+                    setMove((prev: any) => ({
+                      ...prev,
+                      checklist: prev.checklist.filter((i: any) => i.id !== item.id),
+                    }));
+                  }}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    color: "#dc2626",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                  }}
+                >
+                  ✕
+                </button>
               </li>
             ))}
           </ul>
