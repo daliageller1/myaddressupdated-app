@@ -318,7 +318,8 @@ export default function Dashboard() {
                 padding: "10px",
                 borderRadius: "6px",
                 border: "1px solid #ddd",
-                flex: "0 1 60%",
+                flex: 1,
+                maxWidth: "400px",
               }}
             />
 
