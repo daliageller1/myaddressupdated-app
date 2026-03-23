@@ -9,6 +9,7 @@ export default function Dashboard() {
   const [oldAddress, setOldAddress] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const [moveDate, setMoveDate] = useState("");
+  const [newItems, setNewItems] = useState<Record<string, string>>({});
 
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
@@ -290,6 +291,66 @@ export default function Dashboard() {
               </li>
             ))}
           </ul>
+          <div style={{ marginTop: "10px" }}>
+            <input
+              placeholder="Add item (e.g. Chase Bank)"
+              value={newItems[category] || ""}
+              onChange={(e) =>
+                setNewItems({
+                  ...newItems,
+                  [category]: e.target.value,
+                })
+              }
+              style={{
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #ddd",
+                marginRight: "8px",
+              }}
+            />
+
+            <button
+              onClick={async () => {
+                const value = newItems[category];
+                if (!value?.trim()) return;
+
+                const res = await fetch("/api/checklist/create", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    moveId: move.id,
+                    category,
+                    label: value,
+                  }),
+                });
+
+                const created = await res.json();
+                console.log("NEW ITEM:", created);
+
+                setMove((prev: any) => ({
+                  ...prev,
+                  checklist: [...prev.checklist, created],
+                }));
+
+                setNewItems({
+                  ...newItems,
+                  [category]: "",
+                });
+              }}
+              style={{
+                padding: "8px 12px",
+                borderRadius: "6px",
+                background: "#2563eb",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Add
+            </button>
+          </div>
         </div>
       ))}
     </div>
