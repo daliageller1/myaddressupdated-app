@@ -322,6 +322,7 @@ export default function Dashboard() {
                   </label>
                 </div>
                 <button
+                  title="Delete this item (cannot be undone)"
                   onClick={async () => {
                     await fetch("/api/checklist/delete", {
                       method: "DELETE",
