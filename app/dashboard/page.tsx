@@ -334,14 +334,21 @@ export default function Dashboard() {
                       checklist: prev.checklist.filter((i: any) => i.id !== item.id),
                     }));
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
                   style={{
-                    background: "transparent",
+                    background: "#fee2e2",
                     border: "none",
                     color: "#dc2626",
                     cursor: "pointer",
-                    fontSize: "20px",
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "50%",
+                    fontSize: "16px",
                     fontWeight: "700",
-                    lineHeight: "1",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   ✕
