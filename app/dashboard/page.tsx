@@ -250,7 +250,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      orderedCategories.map((category) => {
+      {orderedCategories.map((category) => {
         const items = grouped[category] || [];
 
         return (
@@ -409,7 +409,7 @@ export default function Dashboard() {
           </div>
         </div>
       );
-      )}
+      })}
     </div>
   </div>
   );
