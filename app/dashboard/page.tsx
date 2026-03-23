@@ -339,7 +339,9 @@ export default function Dashboard() {
                     border: "none",
                     color: "#dc2626",
                     cursor: "pointer",
-                    fontSize: "16px",
+                    fontSize: "20px",
+                    fontWeight: "700",
+                    lineHeight: "1",
                   }}
                 >
                   ✕
