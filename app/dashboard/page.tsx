@@ -11,6 +11,15 @@ export default function Dashboard() {
   const [moveDate, setMoveDate] = useState("");
   const [newItems, setNewItems] = useState<Record<string, string>>({});
 
+  const categoryConfig: Record<string, { label: string; example: string }> = {
+    Financial: { label: "bank or account", example: "Chase" },
+    Utilities: { label: "utility", example: "PG&E" },
+    Insurance: { label: "insurance", example: "State Farm" },
+    Subscriptions: { label: "subscription", example: "Netflix" },
+    Government: { label: "agency", example: "DMV" },
+    Miscellaneous: { label: "item", example: "Gym membership" },
+  };
+
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
     window.location.href = "/login";
@@ -149,6 +158,10 @@ export default function Dashboard() {
     acc[item.category].push(item);
     return acc;
   }, {});
+
+  if (!grouped["Miscellaneous"]) {
+    grouped["Miscellaneous"] = [];
+  }
 
   // 🚀 Move exists → show checklist
   return (
@@ -293,7 +306,7 @@ export default function Dashboard() {
           </ul>
           <div style={{ marginTop: "10px" }}>
             <input
-              placeholder="Add item (e.g. Chase Bank)"
+              placeholder={`Add ${categoryConfig[category]?.label || "item"} (e.g. ${categoryConfig[category]?.example || "something"})`}
               value={newItems[category] || ""}
               onChange={(e) =>
                 setNewItems({
