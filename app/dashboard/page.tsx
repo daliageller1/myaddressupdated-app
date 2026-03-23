@@ -315,10 +315,11 @@ export default function Dashboard() {
                 })
               }
               style={{
-                padding: "8px",
+                padding: "10px",
                 borderRadius: "6px",
                 border: "1px solid #ddd",
                 marginRight: "8px",
+                width: "70%",
               }}
             />
 
