@@ -304,7 +304,7 @@ export default function Dashboard() {
               </li>
             ))}
           </ul>
-          <div style={{ marginTop: "10px" }}>
+          <div style={{ marginTop: "10px", display: "flex", gap: "12px", alignItems: "center" }}>
             <input
               placeholder={`Add ${categoryConfig[category]?.label || "item"} (e.g. ${categoryConfig[category]?.example || "something"})`}
               value={newItems[category] || ""}
@@ -319,7 +319,7 @@ export default function Dashboard() {
                 borderRadius: "6px",
                 border: "1px solid #ddd",
                 flex: 1,
-                maxWidth: "400px",
+                maxWidth: "500px",
               }}
             />
 
