@@ -20,6 +20,15 @@ export default function Dashboard() {
     Miscellaneous: { label: "item", example: "Gym membership" },
   };
 
+  const orderedCategories = [
+    "Financial",
+    "Utilities",
+    "Insurance",
+    "Subscriptions",
+    "Government",
+    "Miscellaneous",
+  ];
+
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
     window.location.href = "/login";
@@ -159,10 +168,6 @@ export default function Dashboard() {
     return acc;
   }, {});
 
-  if (!grouped["Miscellaneous"]) {
-    grouped["Miscellaneous"] = [];
-  }
-
   Object.keys(categoryConfig).forEach((category) => {
     if (!grouped[category]) {
       grouped[category] = [];
@@ -245,8 +250,11 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {Object.entries(grouped).map(([category, items]: any) => (
-        <div
+      orderedCategories.map((category) => {
+        const items = grouped[category] || [];
+
+        return (
+          <div
           key={category}
           style={{
             marginBottom: "20px",
@@ -269,7 +277,6 @@ export default function Dashboard() {
           >
             {category}
           </h3>
-
           <ul style={{ listStyle: "none", padding: 0 }}>
             {items.map((item: any) => (
               <li
@@ -401,7 +408,8 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-      ))}
+      );
+      )}
     </div>
   </div>
   );
