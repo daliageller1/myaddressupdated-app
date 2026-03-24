@@ -61,7 +61,7 @@ export default function Dashboard() {
         if (data.move) {
           setMoveDate(data.move.moveDate || "");
         } else {
-          setMoveData(""); // reset when no move
+          setMoveDate(""); // reset when no move
         }
         setLoading(false);
       });
