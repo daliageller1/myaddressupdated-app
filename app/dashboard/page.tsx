@@ -209,52 +209,48 @@ export default function Dashboard() {
         Moving is stressful. Let’s make this part easy.
       </p>
 
-      <button
-        onClick={logout}
-        style={{
-          padding: "6px 14px",
-          borderRadius: "6px",
-          border: "1px solid #ddd",
-          background: "#fafafa",
-          cursor: "pointer",
-          marginBottom: "20px",
-        }}
-      >
-        Logout
-      </button>
-
-      <button
-        title="Start over (this will delete your move and cannot be undone)"
-        onClick={async () => {
-          const confirmed = confirm(
-            "Start over? This will delete your move and checklist."
-          );
-          if (!confirmed) return;
-
-          await fetch("/api/move/delete", {
-            method: "DELETE",
-          });
-
-          window.location.reload();
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
-        style={{
-          background: "#fee2e2",
-          border: "1px solid #dc2626",
-          color: "#dc2626",
-          cursor: "pointer",
-          padding: "6px 14px",
-          borderRadius: "999px", // 👈 pill shape
-          fontWeight: "600",
-        }}
-      >
-        Start Over
-      </button>
-
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <button onClick={logout}>Logout</button>
-        <button>Start Over</button>
+        <button
+          onClick={logout}
+          style={{
+            padding: "6px 14px",
+            borderRadius: "6px",
+            border: "1px solid #ddd",
+            background: "#fafafa",
+            cursor: "pointer",
+          }}
+        >
+          Logout
+        </button>
+
+        <button
+          title="Start over (this will delete your move and cannot be undone)"
+          onClick={async () => {
+            const confirmed = confirm(
+              "Start over? This will delete your move and checklist."
+            );
+            if (!confirmed) return;
+
+            await fetch("/api/move/delete", {
+              method: "DELETE",
+            });
+
+            window.location.reload();
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
+          style={{
+            background: "#fee2e2",
+            border: "1px solid #dc2626",
+            color: "#dc2626",
+            cursor: "pointer",
+            padding: "6px 14px",
+            borderRadius: "999px",
+            fontWeight: "600",
+          }}
+        >
+          Start Over
+        </button>
       </div>
 
       <p><strong>From:</strong> {move.oldAddress}</p>
