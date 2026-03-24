@@ -60,6 +60,8 @@ export default function Dashboard() {
         setMove(data.move);
         if (data.move) {
           setMoveDate(data.move.moveDate || "");
+        } else {
+          setMoveData(""); // reset when no move
         }
         setLoading(false);
       });
@@ -179,8 +181,6 @@ export default function Dashboard() {
   });
 
 function handleStartOver() {
-  console.log("CLICKED START OVER");
-
   const confirmed = confirm(
     "Start over? This will delete your move and checklist."
   );
@@ -191,15 +191,9 @@ function handleStartOver() {
     credentials: "include",
   })
     .then(async (res) => {
-      console.log("DELETE STATUS:", res.status);
-
-      const text = await res.text();   // 👈 safer than json()
-      console.log("DELETE RAW RESPONSE:", text);
-
+      const text = await res.text();
       try {
         const data = JSON.parse(text);
-        console.log("DELETE JSON:", data);
-
         if (data.success) {
           window.location.reload();
         } else {
@@ -264,7 +258,7 @@ function handleStartOver() {
 <button
   type="button"
   title="Start over (this will delete your move and cannot be undone)"
-  onClick={() => handleStartOver()}   // 👈 FIX HERE
+  onClick={() => handleStartOver()}
   onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
   onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
   style={{
@@ -451,11 +445,11 @@ function handleStartOver() {
                     border: "none",
                     color: "#dc2626",
                     cursor: "pointer",
-                    width: "25px",
-                    height: "25px",
+                    width: "23px",
+                    height: "23px",
                     borderRadius: "50%",
-                    fontSize: "15px",
-                    fontWeight: "700",
+                    fontSize: "14px",
+                    fontWeight: "600",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -502,8 +496,6 @@ function handleStartOver() {
                 });
 
                 const created = await res.json();
-                console.log("NEW ITEM:", created);
-
                 setMove((prev: any) => ({
                   ...prev,
                   checklist: [...prev.checklist, created],
