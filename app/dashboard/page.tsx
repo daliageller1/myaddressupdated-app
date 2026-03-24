@@ -256,7 +256,7 @@ export default function Dashboard() {
         ) : (
           <p>
             <strong>Move Date:</strong>{" "}
-            {move.moveDate ? new Data(move.moveDate).toLocalDateString() : "Not set"}
+            {move.moveDate ? new Date(move.moveDate).toLocaleDateString() : "Not set"}
             <button
               onClick={() => setEditingDate(true)}
               style={{
