@@ -224,8 +224,10 @@ export default function Dashboard() {
         </button>
 
         <button
+          type="button"
           title="Start over (this will delete your move and cannot be undone)"
           onClick={async () => {
+            console.log("CLICKED START OVER");
             const confirmed = confirm(
               "Start over? This will delete your move and checklist."
             );
