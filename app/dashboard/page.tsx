@@ -223,6 +223,32 @@ export default function Dashboard() {
         Logout
       </button>
 
+      <button
+        onClick={async () => {
+          const confirmed = confirm("Start over? This will delete your move and checklist.");
+
+          if (!confirmed) return;
+
+          await fetch("/api/move/delete", {
+            method: "DELETE",
+          });
+
+          window.location.reload();
+        }}
+        style={{
+          padding: "6px 14px",
+          borderRadius: "6px",
+          border: "1px solid #dc2626",
+          background: "#fee2e2",
+          color: "#dc2626",
+          cursor: "pointer",
+          marginBottom: "20px",
+          marginLeft: "10px",
+        }}
+      >
+        Start Over
+      </button>
+
       <p><strong>From:</strong> {move.oldAddress}</p>
       <p><strong>To:</strong> {move.newAddress}</p>
 
