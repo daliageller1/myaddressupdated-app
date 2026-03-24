@@ -58,7 +58,9 @@ export default function Dashboard() {
       .then((res) => res.json())
       .then((data) => {
         setMove(data.move);
-        setMoveDate(data.move.moveDate || "");
+        if (data.move) {
+          setMoveDate(data.move.moveDate || "");
+        }
         setLoading(false);
       });
   }, []);
@@ -188,17 +190,23 @@ function handleStartOver() {
     method: "DELETE",
     credentials: "include",
   })
-    .then((res) => {
+    .then(async (res) => {
       console.log("DELETE STATUS:", res.status);
-      return res.json();
-    })
-    .then((data) => {
-      console.log("DELETE RESPONSE:", data);
 
-      if (data.success) {
-        window.location.reload();
-      } else {
-        alert("Delete failed");
+      const text = await res.text();   // 👈 safer than json()
+      console.log("DELETE RAW RESPONSE:", text);
+
+      try {
+        const data = JSON.parse(text);
+        console.log("DELETE JSON:", data);
+
+        if (data.success) {
+          window.location.reload();
+        } else {
+          alert("Delete failed");
+        }
+      } catch {
+        console.error("Not JSON response");
       }
     })
     .catch((err) => {
