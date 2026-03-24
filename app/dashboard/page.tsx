@@ -239,26 +239,18 @@ export default function Dashboard() {
           Logout
         </button>
 
-        <button
-          type="button"
-          title="Start over (this will delete your move and cannot be undone)"
-          onClick={handleStartOver}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
-          style={{
-            position: "relative",
-            zIndex: 10,
-            background: "#fee2e2",
-            border: "1px solid #dc2626",
-            color: "#dc2626",
-            cursor: "pointer",
-            padding: "6px 14px",
-            borderRadius: "999px",
-            fontWeight: "600",
-          }}
-        >
-          Start Over
-        </button>
+<div
+  onClick={() => console.log("CLICK REACHED HERE")}
+  style={{
+    background: "red",
+    color: "white",
+    padding: "20px",
+    cursor: "pointer",
+  }}
+>
+  TEST CLICK AREA
+</div>
+
       </div>
 
       <p><strong>From:</strong> {move.oldAddress}</p>
