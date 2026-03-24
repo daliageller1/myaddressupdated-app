@@ -235,6 +235,7 @@ export default function Dashboard() {
 
             await fetch("/api/move/delete", {
               method: "DELETE",
+              credentials: "include",
             });
 
             window.location.reload();
@@ -242,6 +243,8 @@ export default function Dashboard() {
           onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
           style={{
+            position: "relative",
+            zIndex: 10,
             background: "#fee2e2",
             border: "1px solid #dc2626",
             color: "#dc2626",
