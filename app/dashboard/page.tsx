@@ -176,7 +176,7 @@ export default function Dashboard() {
     }
   });
 
-  async function handleStartOver() {
+  function handleStartOver() {
     console.log("CLICKED START OVER");
 
     const confirmed = confirm(
@@ -184,12 +184,12 @@ export default function Dashboard() {
     );
     if (!confirmed) return;
 
-    await fetch("/api/move/delete", {
+    fetch("/api/move/delete", {
       method: "DELETE",
       credentials: "include",
+    }).then(() => {
+      window.location.reload();
     });
-
-    window.location.reload();
   }
 
   // 🚀 Move exists → show checklist
@@ -239,7 +239,7 @@ export default function Dashboard() {
           Logout
         </button>
 
-        <button onClick={() => console.log("BUTTON WORKS")}>
+        <button onClick={handleStartOver}>
           Start Over
         </button>
 
