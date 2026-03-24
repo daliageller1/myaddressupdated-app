@@ -56,6 +56,7 @@ export async function POST(req: Request) {
       { category: "Utilities", label: "Update electricity and gas" },
       { category: "Insurance", label: "Notify auto insurance" },
       { category: "Subscriptions", label: "Update subscriptions" },
+      { category: "Miscellaneous", label: "Add any other updates" },
     ];
 
     await prisma.checklistItem.createMany({
@@ -70,6 +71,48 @@ export async function POST(req: Request) {
       message: "Move created",
       moveId: move.id,
     });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const token = req.headers
+      .get("cookie")
+      ?.split("; ")
+      .find((c) => c.startsWith("token="))
+      ?.split("=")[1];
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    ) as { userId: string };
+
+    const { moveDate } = await req.json();
+
+    const move = await prisma.move.findFirst({
+      where: { userId: decoded.userId },
+    });
+
+    if (!move) {
+      return NextResponse.json({ error: "Move not found" }, { status: 404 });
+    }
+
+    await prisma.move.update({
+      where: { id: move.id },
+      data: { moveDate: new Date(moveDate) },
+    });
+
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
