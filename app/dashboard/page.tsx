@@ -239,17 +239,9 @@ export default function Dashboard() {
           Logout
         </button>
 
-<div
-  onClick={() => console.log("CLICK REACHED HERE")}
-  style={{
-    background: "red",
-    color: "white",
-    padding: "20px",
-    cursor: "pointer",
-  }}
->
-  TEST CLICK AREA
-</div>
+        <button onClick={() => console.log("BUTTON WORKS")}>
+          Start Over
+        </button>
 
       </div>
 
