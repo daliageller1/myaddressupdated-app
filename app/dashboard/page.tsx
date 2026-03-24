@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [newAddress, setNewAddress] = useState("");
   const [moveDate, setMoveDate] = useState("");
   const [newItems, setNewItems] = useState<Record<string, string>>({});
+  const [editingDate, setEditingDate] = useState(false);
 
   const categoryConfig: Record<string, { label: string; example: string }> = {
     Financial: { label: "bank or account", example: "Chase" },
@@ -57,6 +58,7 @@ export default function Dashboard() {
       .then((res) => res.json())
       .then((data) => {
         setMove(data.move);
+        setMoveDate(data.move.moveDate || "");
         setLoading(false);
       });
   }, []);
@@ -223,6 +225,54 @@ export default function Dashboard() {
 
       <p><strong>From:</strong> {move.oldAddress}</p>
       <p><strong>To:</strong> {move.newAddress}</p>
+
+      <div style={{ marginTop: "10px" }}>
+        {editingDate ? (
+          <input
+            type="date"
+            value={moveDate}
+            onChange={(e) => setMoveDate(e.target.value)}
+            onBlur={async () => {
+              await fetch("/api/move", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ moveDate }),
+              });
+
+              setMove((prev: any) => ({
+                ...prev,
+                moveDate,
+              }));
+
+              setEditingDate(false);
+            }}
+            style={{
+              padding: "6px",
+              borderRadius: "6px",
+              border: "1px solid #ddd",
+            }}
+            autoFocus
+          />
+        ) : (
+          <p>
+            <strong>Move Date:</strong>{" "}
+            {move.moveDate ? new Data(move.moveDate).toLocalDateString() : "Not set"}
+            <button
+              onClick={() => setEditingDate(true)}
+              style={{
+                marginLeft: "8px",
+                fontSize: "12px",
+                cursor: "pointer",
+                border: "none",
+                background: "transparent",
+                color: "#2563eb",
+              }}
+            >
+              Edit
+            </button>
+          </p>
+        )}
+      </div>
 
       <h2 style={{ marginTop: "30px", marginBottom: "10px" }}>
         Checklist
