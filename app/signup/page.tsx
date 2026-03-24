@@ -46,7 +46,7 @@ export default function Signup() {
         }}
       >
         <h1 style={{ marginBottom: "8px" }}>Create your account</h1>
-        <p style={{ marginBottom: "24px", color: "#666" }}>
+        <p style={{ marginBottom: "24px", color: "#555" }}>
           Start organizing your move in minutes.
         </p>
 
@@ -100,9 +100,9 @@ export default function Signup() {
           </button>
         </form>
 
-        <p style={{ marginTop: "20px", fontSize: "14px", color: "#666" }}>
+        <p style={{ marginTop: "20px", fontSize: "14px", color: "#555" }}>
           Already have an account?{" "}
-          <a href="/login" style={{ color: "#2563eb" }}>
+          <a href="/login" style={{ color: "#1f55cc" }}>
             Login
           </a>
         </p>
