@@ -176,6 +176,22 @@ export default function Dashboard() {
     }
   });
 
+  async function handleStartOver() {
+    console.log("CLICKED START OVER");
+
+    const confirmed = confirm(
+      "Start over? This will delete your move and checklist."
+    );
+    if (!confirmed) return;
+
+    await fetch("/api/move/delete", {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    window.location.reload();
+  }
+
   // 🚀 Move exists → show checklist
   return (
     <div
@@ -226,20 +242,7 @@ export default function Dashboard() {
         <button
           type="button"
           title="Start over (this will delete your move and cannot be undone)"
-          onClick={async () => {
-            console.log("CLICKED START OVER");
-            const confirmed = confirm(
-              "Start over? This will delete your move and checklist."
-            );
-            if (!confirmed) return;
-
-            await fetch("/api/move/delete", {
-              method: "DELETE",
-              credentials: "include",
-            });
-
-            window.location.reload();
-          }}
+          onClick={handleStartOver}
           onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
           style={{
