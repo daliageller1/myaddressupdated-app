@@ -176,21 +176,35 @@ export default function Dashboard() {
     }
   });
 
-  function handleStartOver() {
-    console.log("CLICKED START OVER");
+function handleStartOver() {
+  console.log("CLICKED START OVER");
 
-    const confirmed = confirm(
-      "Start over? This will delete your move and checklist."
-    );
-    if (!confirmed) return;
+  const confirmed = confirm(
+    "Start over? This will delete your move and checklist."
+  );
+  if (!confirmed) return;
 
-    fetch("/api/move/delete", {
-      method: "DELETE",
-      credentials: "include",
-    }).then(() => {
-      window.location.reload();
+  fetch("/api/move/delete", {
+    method: "DELETE",
+    credentials: "include",
+  })
+    .then((res) => {
+      console.log("DELETE STATUS:", res.status);
+      return res.json();
+    })
+    .then((data) => {
+      console.log("DELETE RESPONSE:", data);
+
+      if (data.success) {
+        window.location.reload();
+      } else {
+        alert("Delete failed");
+      }
+    })
+    .catch((err) => {
+      console.error("DELETE ERROR:", err);
     });
-  }
+}
 
   // 🚀 Move exists → show checklist
   return (
