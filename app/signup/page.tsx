@@ -18,9 +18,10 @@ export default function Signup() {
     });
 
     if (res.ok) {
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
     } else {
-      alert("Signup failed");
+      const text = await res.text();
+      alert(text);
     }
   }
 
