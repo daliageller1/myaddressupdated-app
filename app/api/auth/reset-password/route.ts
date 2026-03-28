@@ -5,12 +5,16 @@ import bcrypt from "bcryptjs";
 export async function POST(req: Request) {
   const { token, password } = await req.json();
 
+  if (!password || password.trim().length < 6) {
+    return NextResponse.json(
+      { error: "Password must be at least 6 characters" },
+      { status: 400 }
+    );
+  }
+
   const user = await prisma.user.findFirst({
     where: {
       resetToken: token,
-      resetTokenExp: {
-        gte: new Date(),
-      },
     },
   });
 
