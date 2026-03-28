@@ -18,9 +18,10 @@ export default function Login() {
     });
 
     if (res.ok) {
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
     } else {
-      alert("Invalid email or password");
+      const text = await res.text();
+      alert(text);
     }
   }
 
