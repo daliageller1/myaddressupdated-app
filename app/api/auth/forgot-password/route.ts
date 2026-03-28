@@ -21,7 +21,10 @@ export async function POST(req: Request) {
     },
   });
 
-  const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || "https://app.myaddressupdated.com";
+
+  const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
   console.log("RESET LINK:", resetLink); // for now
 
