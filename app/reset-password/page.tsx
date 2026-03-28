@@ -45,20 +45,15 @@ function ResetPasswordInner() {
             body: JSON.stringify({ token, password }),
           });
 
+          const data = await res.json();
+          console.log("RESET RESPONSE:", data);
+
           if (res.ok) {
             alert("Password reset successful!");
             window.location.href = "/login";
           } else {
-            alert("Invalid or expired link");
+            alert(data.error || "Something went wrong");
           }
-        }}
-        style={{
-          padding: "10px 20px",
-          background: "#2563eb",
-          color: "white",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
         }}
       >
         Reset Password
