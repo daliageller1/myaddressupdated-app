@@ -32,6 +32,11 @@ function ResetPasswordInner() {
 
       <button
         onClick={async () => {
+          if (!password || password.length < 6) {
+            alert("Password must be at least 6 characters");
+            return;
+          }
+
           const res = await fetch("/api/auth/reset-password", {
             method: "POST",
             headers: {
