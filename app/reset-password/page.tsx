@@ -1,9 +1,9 @@
 "use client";
 
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
-export default function ResetPassword() {
+function ResetPasswordInner() {
   const params = useSearchParams();
   const token = params.get("token");
 
@@ -59,5 +59,13 @@ export default function ResetPassword() {
         Reset Password
       </button>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <ResetPasswordInner />
+    </Suspense>
   );
 }
