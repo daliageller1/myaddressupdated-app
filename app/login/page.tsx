@@ -10,24 +10,35 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleLogin(e: React.FormEvent) {
-    onClick={async () => {
-      setError("");
+async function handleLogin(e: React.FormEvent) {
+  e.preventDefault();
 
-      if (!email || !password) {
-        setError("Email and password are required");
-      return;
-    }
+  setError("");
 
-    setLoading(true);
+  if (!email || !password) {
+    setError("Email and password are required");
+    return;
+  }
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-       },
-        body: JSON.stringify({ email, password }),
-    });
+  setLoading(true);
+
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await res.json();
+
+  setLoading(false);
+
+  if (res.ok) {
+    router.push("/dashboard"); // or wherever you go after login
+  } else {
+    setError(data.error || "Invalid credentials");
+  }
 
   return (
     <div
@@ -56,6 +67,11 @@ export default function Login() {
         </p>
 
         <form onSubmit={handleLogin}>
+          {error && (
+            <p style={{ color: "red", marginBottom: "12px" }}>
+              {error}
+            </p>
+          )}
           <input
             type="email"
             placeholder="Email"
@@ -114,6 +130,7 @@ export default function Login() {
 
           <button
             type="submit"
+            disabled={loading}
             style={{
               width: "100%",
               padding: "12px",
@@ -125,7 +142,7 @@ export default function Login() {
               cursor: "pointer",
             }}
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
