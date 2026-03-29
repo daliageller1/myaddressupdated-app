@@ -10,34 +10,35 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-async function handleLogin(e: React.FormEvent) {
-  e.preventDefault();
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
 
-  setError("");
+    setError("");
 
-  if (!email || !password) {
-    setError("Email and password are required");
-    return;
-  }
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
 
-  setLoading(true);
+    setLoading(true);
 
-  const res = await fetch("/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  setLoading(false);
+    setLoading(false);
 
-  if (res.ok) {
-    router.push("/dashboard"); // or wherever you go after login
-  } else {
-    setError(data.error || "Invalid credentials");
+    if (res.ok) {
+      router.push("/dashboard"); // or wherever you go after login
+    } else {
+      setError(data.error || "Invalid credentials");
+    }
   }
 
   return (
