@@ -84,6 +84,12 @@ export default function Login() {
             }}
           />
 
+          <p style={{ marginTop: "10px", fontSize: "14px" }}>
+            <a href="/forgot-password" style={{ color: "#2563eb" }}>
+              Forgot password?
+            </a>
+          </p>
+
           <button
             type="submit"
             style={{

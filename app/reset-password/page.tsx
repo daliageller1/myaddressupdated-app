@@ -46,7 +46,6 @@ function ResetPasswordInner() {
           });
 
           const data = await res.json();
-          console.log("RESET RESPONSE:", data);
 
           if (res.ok) {
             alert("Password reset successful!");
@@ -55,6 +54,18 @@ function ResetPasswordInner() {
             alert(data.error || "Something went wrong");
           }
         }}
+        style={{
+          width: "100%",
+          padding: "12px",
+          borderRadius: "8px",
+          border: "none",
+          backgroundColor: "#2563eb",
+          color: "white",
+          fontWeight: "600",
+          cursor: "pointer",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#1d4ed8")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "#2563eb")}
       >
         Reset Password
       </button>

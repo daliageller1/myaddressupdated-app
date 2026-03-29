@@ -54,15 +54,11 @@ export default function ForgotPasswordPage() {
               return;
             }
 
-            setLoading(true);
-
             await fetch("/api/auth/forgot-password", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email }),
             });
-
-            setLoading(false);
 
             alert("If your email exists, a reset link was sent.");
           }}
@@ -76,8 +72,10 @@ export default function ForgotPasswordPage() {
             fontWeight: "600",
             cursor: "pointer",
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#1d4ed8")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#2563eb")}
         >
-          {loading ? "Sending..." : "Send Reset Link"}
+          Send Reset Link
         </button>
 
         <p style={{ marginTop: "20px", fontSize: "14px" }}>
