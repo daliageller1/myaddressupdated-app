@@ -55,13 +55,14 @@ function ResetPasswordInner() {
           }
         }}
         style={{
-          width: "100%",
+          width: "auto",
+          minWidth: "180px",
           padding: "12px",
           borderRadius: "8px",
-          border: "none",
           backgroundColor: "#2563eb",
           color: "white",
           fontWeight: "600",
+          border: "none",
           cursor: "pointer",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#1d4ed8")}

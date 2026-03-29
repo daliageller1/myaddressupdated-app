@@ -12,9 +12,15 @@ export async function POST(req: Request) {
     );
   }
 
+  const now = new Date();
+
   const user = await prisma.user.findFirst({
     where: {
-      resetToken: token,
+      resetToken: token?.trim(),
+      resetTokenExp: {
+        not: null,
+        gte: now,
+      },
     },
   });
 
