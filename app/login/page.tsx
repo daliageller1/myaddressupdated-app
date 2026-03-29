@@ -84,11 +84,29 @@ export default function Login() {
             }}
           />
 
-          <p style={{ marginTop: "10px", fontSize: "14px" }}>
-            <a href="/forgot-password" style={{ color: "#2563eb" }}>
-              Forgot password?
+          <div style={{ marginTop: "12px", textAlign: "center" }}>
+            <a
+              href="/forgot-password"
+              style={{
+                display: "inline-block",
+                padding: "8px 12px",
+                borderRadius: "6px",
+                backgroundColor: "#eef2ff",
+                color: "#2563eb",
+                fontWeight: "500",
+                textDecoration: "none",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#e0e7ff")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "#eef2ff")
+              }
+            >
+              Forgot your password?
             </a>
-          </p>
+          </div>
 
           <button
             type="submit"
