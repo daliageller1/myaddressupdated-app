@@ -7,23 +7,27 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleLogin(e: React.FormEvent) {
-    e.preventDefault();
+    onClick={async () => {
+      setError("");
+
+      if (!email || !password) {
+        setError("Email and password are required");
+      return;
+    }
+
+    setLoading(true);
 
     const res = await fetch("/api/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+       },
+        body: JSON.stringify({ email, password }),
     });
-
-    if (res.ok) {
-      window.location.href = "/dashboard";
-    } else {
-      const text = await res.text();
-      alert(text);
-    }
-  }
 
   return (
     <div
