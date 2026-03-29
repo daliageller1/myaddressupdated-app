@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "admin@myaddressupdated.com",
     to: email,
     subject: "Reset your password",
     html: `
