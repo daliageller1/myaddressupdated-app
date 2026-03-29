@@ -1,6 +1,9 @@
+import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { email } = await req.json();
@@ -26,6 +29,15 @@ export async function POST(req: Request) {
 
   const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Reset your password",
+    html: `
+      <p>Click below to reset your password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+    `,
+   });
   console.log("RESET LINK:", resetLink); // for now
 
   return NextResponse.json({ success: true });
