@@ -6,7 +6,6 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   return (
     <div
