@@ -5,6 +5,8 @@ import { useState } from "react";
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <div
@@ -33,6 +35,21 @@ export default function ForgotPasswordPage() {
           Enter your email and we’ll send you a reset link.
         </p>
 
+        {message && (
+          <p
+            style={{
+              background: "#ecfdf5",
+              color: "#065f46",
+              padding: "10px",
+              borderRadius: "6px",
+              marginBottom: "12px",
+              fontSize: "14px",
+            }}
+          >
+            {message}
+          </p>
+        )}
+
         <input
           type="email"
           placeholder="Email"
@@ -49,10 +66,14 @@ export default function ForgotPasswordPage() {
 
         <button
           onClick={async () => {
+            setMessage("");
+
             if (!email) {
-              alert("Please enter your email");
+              setMessage("Please enter your email");
               return;
             }
+
+            setLoading(true);
 
             await fetch("/api/auth/forgot-password", {
               method: "POST",
@@ -60,7 +81,9 @@ export default function ForgotPasswordPage() {
               body: JSON.stringify({ email }),
             });
 
-            alert("If your email exists, a reset link was sent.");
+            setLoading(false);
+
+            setMessage("If your email exists, a reset link was sent.");
           }}
           style={{
             width: "100%",
