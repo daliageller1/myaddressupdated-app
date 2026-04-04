@@ -4,6 +4,7 @@ import { sendReminderEmail } from "@/lib/sendReminderEmail";
 import DashboardClient from "./DashboardClient";
 
 export default async function Dashboard() {
+
   const move = await prisma.move.findFirst({
     include: {
       user: true,
@@ -15,6 +16,11 @@ export default async function Dashboard() {
     : null;
 
   const today = new Date().toDateString();
+
+console.log("MOVE:", move);
+console.log("REMINDER:", reminder);
+console.log("EMAIL:", move?.user?.email);
+console.log("LAST SENT:", move?.lastReminderSent);
 
   if (
     reminder &&
