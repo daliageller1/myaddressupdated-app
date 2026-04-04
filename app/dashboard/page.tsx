@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import { prisma } from "@/lib/prisma";
 import { getReminder } from "@/lib/reminders";
@@ -6,7 +7,7 @@ import { sendReminderEmail } from "@/lib/sendReminderEmail";
 import DashboardClient from "./DashboardClient";
 
 export default async function Dashboard() {
-console.log("##### one");
+  console.log("🔥 DASHBOARD SERVER RUNNING");
 
   const move = await prisma.move.findFirst({
     include: {
