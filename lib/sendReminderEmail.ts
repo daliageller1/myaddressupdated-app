@@ -3,6 +3,9 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendReminderEmail(email: string, reminder: any) {
+  console.log("📨 EMAIL FUNCTION CALLED");
+  console.log("TO:", email);
+  console.log("REMINDER:", reminder);
   await resend.emails.send({
     from: "admin@myaddressupdated.com",
     to: email,

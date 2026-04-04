@@ -31,7 +31,8 @@ console.log("LAST SENT:", move?.lastReminderSent);
     move?.user?.email &&
     move.lastReminderSent?.toDateString() !== today
   ) {
-    await sendReminderEmail(move.user.email, reminder);
+    const result = await sendReminderEmail(move.user.email, reminder);
+    console.log("📬 EMAIL RESULT:", result);
 
     await prisma.move.update({
       where: { id: move.id },
