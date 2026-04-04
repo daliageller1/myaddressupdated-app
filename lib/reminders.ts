@@ -5,6 +5,8 @@ export function getReminder(moveDate: Date) {
     (moveDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  // 🚨 ALWAYS return something (this is the key fix)
+
   if (daysLeft <= 0) {
     return {
       title: "Your move is today!",
@@ -16,13 +18,24 @@ export function getReminder(moveDate: Date) {
     };
   }
 
+  if (daysLeft <= 3) {
+    return {
+      title: `Final prep — ${daysLeft} days left`,
+      daysLeft,
+      suggestions: [
+        "Pack essentials bag",
+        "Confirm moving time",
+      ],
+    };
+  }
+
   if (daysLeft <= 7) {
     return {
       title: `Confirm movers — ${daysLeft} days left`,
       daysLeft,
       suggestions: [
         "Call moving company",
-        "Confirm time",
+        "Prepare payment",
       ],
     };
   }
@@ -50,5 +63,13 @@ export function getReminder(moveDate: Date) {
     };
   }
 
-  return null;
+  // ✅ NEW: handle far future
+  return {
+    title: `Your move is in ${daysLeft} days`,
+    daysLeft,
+    suggestions: [
+      "Start planning your move",
+      "Research moving companies",
+    ],
+  };
 }
