@@ -317,6 +317,10 @@ function handleStartOver() {
                 } else {
                   alert("Failed to update move date");
                 }
+
+                await fetch("/api/send-reminder", {
+                  method: "POST",
+                });
               }}
               style={{
                 padding: "8px 14px",
