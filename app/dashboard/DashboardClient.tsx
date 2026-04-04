@@ -1,5 +1,6 @@
 "use client";
 
+import { getReminder } from "@/lib/reminders";
 import { useEffect, useState } from "react";
 
 export default function DashboardClient() {
@@ -173,6 +174,9 @@ export default function DashboardClient() {
   const total = move.checklist.length;
   const completed = move.checklist.filter((i: any) => i.completed).length;
   const percent = Math.round((completed / total) * 100);
+  const reminder = move?.moveDate
+    ? getReminder(new Date(move.moveDate))
+    : null;
 
   const grouped = move.checklist.reduce((acc: any, item: any) => {
     if (!acc[item.category]) acc[item.category] = [];
@@ -236,6 +240,35 @@ function handleStartOver() {
     >
 
       <h1 style={{ marginBottom: "8px" }}>Your Move Checklist</h1>
+
+      {reminder && (
+        <div
+          style={{
+            background:
+              reminder.daysLeft <= 3
+                ? "#fee2e2"   // red
+                : reminder.daysLeft <= 7
+                ? "#fef3c7"   // yellow
+                : "#eef2ff",  // blue
+            border: "1px solid #c7d2fe",
+            padding: "16px",
+            borderRadius: "10px",
+            marginBottom: "20px",
+          }}
+        >
+          <div style={{ fontWeight: "600", marginBottom: "6px" }}>
+            🔔 {reminder.title}
+          </div>
+
+          <ul style={{ margin: 0, paddingLeft: "18px" }}>
+            {reminder.suggestions.map((s: string, i: number) => (
+              <li key={i} style={{ marginBottom: "4px" }}>
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <p
         style={{
