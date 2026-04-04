@@ -30,6 +30,7 @@ model Move {
   oldAddress String
   newAddress String
   moveDate   DateTime
+  lastReminderSent DateTime?
   paid       Boolean  @default(false)
   createdAt  DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
