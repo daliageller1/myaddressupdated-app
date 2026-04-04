@@ -21,10 +21,10 @@ export default async function Dashboard() {
 
   const today = new Date().toDateString();
 
-console.log("MOVE:", move);
-console.log("REMINDER:", reminder);
-console.log("EMAIL:", move?.user?.email);
-console.log("LAST SENT:", move?.lastReminderSent);
+console.error("page MOVE:", move);
+console.error("page REMINDER:", reminder);
+console.error("page EMAIL:", move?.user?.email);
+console.error("page LAST SENT:", move?.lastReminderSent);
 
   if (
     reminder &&
