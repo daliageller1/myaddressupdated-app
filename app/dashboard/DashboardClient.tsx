@@ -66,6 +66,11 @@ export default function DashboardClient() {
         }
         setLoading(false);
       });
+
+    fetch("/api/send-reminder", {
+      method: "POST",
+    });
+
   }, []);
 
   if (loading) return <p>Loading...</p>;
