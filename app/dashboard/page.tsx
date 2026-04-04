@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { sendReminderEmail } from "@/lib/sendReminderEmail";
 
-export default function Dashboard() {
+export default async function Dashboard() {
   const [move, setMove] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
