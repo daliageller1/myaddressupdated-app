@@ -39,7 +39,7 @@ export async function POST() {
     move.user?.email &&
     daysLeft !== null &&
     milestones.includes(daysLeft) &&
-    move.lastReminderSent?.toDateString() === today
+    (move.lastReminderSent?.toDateString() === today || move.lastReminderSent?.toDateString === undefined)
   ) {
     console.log("📧 Sending milestone email:", daysLeft);
 
