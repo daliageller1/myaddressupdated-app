@@ -20,11 +20,23 @@ export async function POST() {
 
   const today = new Date().toDateString();
 
+  const daysLeft = move.moveDate
+    ? Math.ceil(
+      (new Date(move.moveDate).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24)
+      )
+    : null;
+
+  const milestones = [30, 14, 7, 3, 1, 0];
+
   if (
     reminder &&
+    move.user?.email &&
+    daysLeft !== null &&
+    milestones.includes(daysLeft) &&
     move.lastReminderSent?.toDateString() !== today
   ) {
-    console.log("📧 Sending email to:", move.user.email);
+    console.log("📧 Sending milestone email:", daysLeft);
 
     await sendReminderEmail(move.user.email, reminder);
 
