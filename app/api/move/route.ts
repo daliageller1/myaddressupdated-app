@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         userId: decoded.userId,
         oldAddress,
         newAddress,
-        moveDate: new Date(moveDate),
+        moveDate: new Date(moveDate + "T12:00:00"),
         lastReminderSent: null,
       },
     });
@@ -110,7 +110,10 @@ export async function PATCH(req: Request) {
 
     await prisma.move.update({
       where: { id: move.id },
-      data: { moveDate: new Date(moveDate) },
+      data: {
+         moveDate: new Date(moveDate + "T12:00:00"),
+         lastReminderSent: null,
+      },
     });
 
     return NextResponse.json({ success: true });
