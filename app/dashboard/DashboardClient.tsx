@@ -351,7 +351,9 @@ function handleStartOver() {
           <p>
             <strong>Move Date:</strong>{" "}
             {move.moveDate
-              ? new Date(move.moveDate).toLocaleDateString()
+              ? new Date(move.moveDate).toLocaleDateString("en-US", {
+                  timeZone: "UTC",
+                })
               : "Not set"}
 
             <button
