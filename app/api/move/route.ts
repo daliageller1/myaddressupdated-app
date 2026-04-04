@@ -46,6 +46,7 @@ export async function POST(req: Request) {
         oldAddress,
         newAddress,
         moveDate: new Date(moveDate),
+        lastReminderSent: null,
       },
     });
 

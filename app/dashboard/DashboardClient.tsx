@@ -287,44 +287,83 @@ function handleStartOver() {
 
       <div style={{ marginTop: "10px" }}>
         {editingDate ? (
-          <input
-            type="date"
-            value={moveDate}
-            onChange={(e) => setMoveDate(e.target.value)}
-            onBlur={async () => {
-              await fetch("/api/move", {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ moveDate }),
-              });
+          <div style={{ marginTop: "10px", display: "flex", gap: "10px", alignItems: "center" }}>
+    
+            <input
+              type="date"
+              value={moveDate}
+              onChange={(e) => setMoveDate(e.target.value)}
+              style={{
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #ddd",
+              }}
+            />
 
-              setMove((prev: any) => ({
-                ...prev,
-                moveDate,
-              }));
+            <button
+              onClick={async () => {
+                const res = await fetch("/api/move", {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ moveDate }),
+                });
 
-              setEditingDate(false);
-            }}
-            style={{
-              padding: "6px",
-              borderRadius: "6px",
-              border: "1px solid #ddd",
-            }}
-            autoFocus
-          />
+                if (res.ok) {
+                  setMove((prev: any) => ({
+                    ...prev,
+                    moveDate,
+                  }));
+                  setEditingDate(false);
+                } else {
+                  alert("Failed to update move date");
+                }
+              }}
+              style={{
+                padding: "8px 14px",
+                borderRadius: "6px",
+                backgroundColor: "#16a34a",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Save
+            </button>
+
+            <button
+              onClick={() => {
+                setMoveDate(move.moveDate || "");
+                setEditingDate(false);
+              }}
+              style={{
+                padding: "8px 14px",
+                borderRadius: "6px",
+                backgroundColor: "#ddd",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Cancel
+            </button>
+
+          </div>
         ) : (
           <p>
             <strong>Move Date:</strong>{" "}
-            {move.moveDate ? new Date(move.moveDate).toLocaleDateString() : "Not set"}
+            {move.moveDate
+              ? new Date(move.moveDate).toLocaleDateString()
+              : "Not set"}
+
             <button
               onClick={() => setEditingDate(true)}
               style={{
-                marginLeft: "8px",
-                fontSize: "12px",
-                cursor: "pointer",
+                marginLeft: "10px",
+                padding: "8px 14px",
+                borderRadius: "8px",
+                backgroundColor: "#2563eb",
+                color: "white",
                 border: "none",
-                background: "transparent",
-                color: "#2563eb",
+                cursor: "pointer",
               }}
             >
               Edit
