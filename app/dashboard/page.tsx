@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { sendReminderEmail } from "@/lib/sendReminderEmail";
 
 export default function Dashboard() {
   const [move, setMove] = useState<any>(null);
@@ -29,6 +30,31 @@ export default function Dashboard() {
     "Government",
     "Miscellaneous",
   ];
+
+  const move = await prisma.move.findFirst({
+    include: {
+      user: true,
+    },
+  });
+
+  const reminder = move?.moveDate
+    ? getReminder(move.moveDate)
+    : null;
+
+  const today = new Date().toDateString();
+
+  if (
+    reminder &&
+    move?.user?.email &&
+    move.lastReminderSent?.toDateString() !== today
+  ) {
+    await sendReminderEmail(move.user.email, reminder);
+
+    await prisma.move.update({
+      where: { id: move.id },
+      data: { lastReminderSent: new Date() },
+    });
+  }
 
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
