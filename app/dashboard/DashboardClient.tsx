@@ -23,6 +23,15 @@ export default function DashboardClient() {
     Miscellaneous: { label: "item", example: "Gym membership" },
   };
 
+  const suggestionConfig: Record<string, string[]> = {
+    Financial: ["Bank", "Credit Cards", "PayPal"],
+    Utilities: ["Electricity", "Internet", "Water", "Gas"],
+    Insurance: ["Health Insurance", "Car Insurance", "Home Insurance"],
+    Subscriptions: ["Netflix", "Amazon", "Spotify"],
+    Government: ["USPS", "DMV", "IRS"],
+    Miscellaneous: ["Gym", "Doctor", "School"],
+  };
+
   const orderedCategories = [
     "Financial",
     "Utilities",
@@ -294,24 +303,24 @@ function handleStartOver() {
           Logout
         </button>
 
-<button
-  type="button"
-  title="Start over (this will delete your move and cannot be undone)"
-  onClick={() => handleStartOver()}
-  onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
-  onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
-  style={{
-    background: "#fee2e2",
-    border: "1px solid #dc2626",
-    color: "#dc2626",
-    cursor: "pointer",
-    padding: "6px 14px",
-    borderRadius: "999px",
-    fontWeight: "600",
-  }}
->
-  Start Over
-</button>
+        <button
+          type="button"
+          title="Start over (this will delete your move and cannot be undone)"
+          onClick={() => handleStartOver()}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
+            style={{
+              background: "#fee2e2",
+              border: "1px solid #dc2626",
+              color: "#dc2626",
+              cursor: "pointer",
+              padding: "6px 14px",
+              borderRadius: "999px",
+              fontWeight: "600",
+            }}
+          >
+            Start Over
+          </button>
 
       </div>
 
@@ -601,6 +610,57 @@ function handleStartOver() {
             >
               Add
             </button>
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+              💡 Suggestions:
+            </div>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              {(suggestionConfig[category] || [])
+                .filter(
+                  (s) =>
+                    !move.checklist.some(
+                      (item: any) =>
+                        item.category === category && item.label === s
+                    )
+                )
+                .map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    onClick={async () => {
+                      const res = await fetch("/api/checklist/create", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          moveId: move.id,
+                          category,
+                          label: suggestion,
+                        }),
+                      });
+
+                      const created = await res.json();
+
+                      setMove((prev: any) => ({
+                        ...prev,
+                        checklist: [...prev.checklist, created],
+                      }));
+                    }}
+                    style={{
+                      padding: "6px 10px",
+                      borderRadius: "999px",
+                      border: "1px solid #ddd",
+                      background: "#f9fafb",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                    }}
+                  >
+                    + {suggestion}
+                  </button>
+                ))}
+              </div>
           </div>
         </div>
       );
