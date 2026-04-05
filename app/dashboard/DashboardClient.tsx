@@ -627,9 +627,8 @@ function handleStartOver() {
             <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
               💡 Suggestions:
             </div>
-
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {((suggestionConfig[category] || [])
+              {(suggestionConfig[category] || [])
                 .filter(
                   (s) =>
                     !move.checklist.some(
@@ -678,7 +677,7 @@ function handleStartOver() {
                       {suggestion}
                     </button>
                   );
-                })
+                })}
               </div>
             </div>
           </div>
