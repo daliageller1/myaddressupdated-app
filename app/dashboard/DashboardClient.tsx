@@ -681,7 +681,6 @@ function handleStartOver() {
               </div>
             </div>
           </div>
-        </div>
       );
       })}
     </div>
