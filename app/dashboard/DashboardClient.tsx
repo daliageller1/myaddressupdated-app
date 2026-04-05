@@ -188,6 +188,7 @@ export default function DashboardClient() {
     : null;
 
   const reminderCategoryMap: Record<string, string[]> = {
+    "Your move is in": ["Miscellaneous"],
     "Notify utilities": ["Utilities"],
     "Start packing": ["Miscellaneous"],
     "Confirm movers": ["Miscellaneous"],
