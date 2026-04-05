@@ -196,8 +196,21 @@ export default function DashboardClient() {
     ? getReminder(new Date(move.moveDate))
     : null;
 
-  const isPlanningPhase = reminder?.title.includes("Your move is in");
-  const isPackingPhase = reminder?.title.includes("packing");
+  const daysLeft = reminder?.daysLeft ?? 999;
+
+  const phase =
+    daysLeft > 60
+      ? "planning"
+      : daysLeft > 30
+      ? "preparation"
+      : daysLeft > 7
+      ? "packing"
+      : "final";
+
+  const isPlanningPhase = phase === "planning";
+  const isPackingPhase = phase === "packing";
+  // const isPlanningPhase = reminder?.title.includes("Your move is in");
+  // const isPackingPhase = reminder?.title.includes("packing");
 
   const reminderCategoryMap: Record<string, string[]> = {
     "Your move is in": ["Miscellaneous"],
