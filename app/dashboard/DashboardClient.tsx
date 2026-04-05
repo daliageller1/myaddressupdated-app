@@ -308,7 +308,10 @@ function handleStartOver() {
         style={{
           marginBottom: "25px",
           padding: "16px",
-          border: "1px solid #e5e7eb",
+          border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
+          boxShadow: isPlanningPhase
+            ? "0 0 0 2px rgba(99,102,241,0.15)"
+            : "none",
           borderRadius: "10px",
           background:
             isPackingPhase
