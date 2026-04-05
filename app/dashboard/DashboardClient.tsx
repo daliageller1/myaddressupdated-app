@@ -637,41 +637,48 @@ function handleStartOver() {
                         item.category === category && item.label === s
                     )
                 )
-                .map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    onClick={async () => {
-                      const res = await fetch("/api/checklist/create", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          moveId: move.id,
-                          category,
-                          label: suggestion,
-                        }),
-                      });
+                .map((suggestion) => {
+                  const isHighlighted = activeCategories.includes(category);
 
-                      const created = await res.json();
+                  return (
+                    <button
+                      key={suggestion}
+                      onClick={async () => {
+                        const res = await fetch("/api/checklist/create", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            moveId: move.id,
+                            category,
+                            label: suggestion,
+                          }),
+                        });
 
-                      setMove((prev: any) => ({
-                        ...prev,
-                        checklist: [...prev.checklist, created],
-                      }));
-                    }}
-                    style={{
-                      padding: "6px 10px",
-                      borderRadius: "999px",
-                      border: "1px solid #ddd",
-                      background: "#f9fafb",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                    }}
-                  >
-                    + {suggestion}
-                  </button>
-                ))}
+                        const created = await res.json();
+
+                        setMove((prev: any) => ({
+                          ...prev,
+                          checklist: [...prev.checklist, created],
+                        }));
+                      }}
+                      style={{
+                        padding: "6px 10px",
+                        borderRadius: "999px",
+                        border: isHighlighted ? "1px solid #2563eb" : "1px solid #ddd",
+                        background: isHighlighted ? "#eef2ff" : "#f9fafb",
+                        color: isHighlighted ? "#1d4ed8" : "#111",
+                        cursor: "pointer",
+                        fontSize: "12px",
+                        fontWeight: isHighlighted ? "600" : "400",
+                      }}
+                    >
+                      {isHighlighted ? "🔥 " : "+ "}
+                      {suggestion}
+                    </button>
+                  );
+                })
               </div>
           </div>
         </div>
