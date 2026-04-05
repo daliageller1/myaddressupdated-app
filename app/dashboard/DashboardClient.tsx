@@ -41,6 +41,15 @@ export default function DashboardClient() {
     "Miscellaneous",
   ];
 
+  const linkButton = {
+    padding: "6px 12px",
+    borderRadius: "999px",
+    border: "1px solid #ddd",
+    background: "white",
+    cursor: "pointer",
+    fontSize: "12px",
+  };
+
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
     window.location.href = "/login";
@@ -291,6 +300,62 @@ function handleStartOver() {
           </ul>
         </div>
       )}
+
+      <div
+        style={{
+          marginBottom: "25px",
+          padding: "16px",
+          border: "1px solid #e5e7eb",
+          borderRadius: "10px",
+          background: "#fafafa",
+        }}
+      >
+        <div style={{ fontWeight: "600", marginBottom: "10px" }}>
+          🚚 Movers & Supplies
+        </div>
+
+        {/* Movers */}
+        <div style={{ marginBottom: "12px" }}>
+          <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+            Movers
+          </div>
+
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <a href="https://www.uhaul.com" target="_blank">
+              <button style={linkButton}>U-Haul</button>
+            </a>
+
+            <a href="https://www.pods.com" target="_blank">
+              <button style={linkButton}>PODS</button>
+            </a>
+
+            <a href="https://twomenandatruck.com" target="_blank">
+              <button style={linkButton}>Two Men and a Truck</button>
+            </a>
+          </div>
+        </div>
+
+        {/* Supplies */}
+        <div>
+          <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+            Packing Supplies
+          </div>
+
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <a href="https://www.amazon.com/s?k=moving+boxes" target="_blank">
+              <button style={linkButton}>Boxes</button>
+            </a>
+
+            <a href="https://www.homedepot.com/b/Storage-Organization-Moving-Supplies/N-5yc1vZchnc" target="_blank">
+              <button style={linkButton}>Home Depot Kits</button>
+            </a>
+
+            <a href="https://www.uhaul.com/MovingSupplies/" target="_blank">
+              <button style={linkButton}>U-Haul Supplies</button>
+            </a>
+          </div>
+        </div>
+      </div>
 
       <p
         style={{
