@@ -196,6 +196,9 @@ export default function DashboardClient() {
     ? getReminder(new Date(move.moveDate))
     : null;
 
+  const isPlanningPhase = reminder?.title.includes("Your move is in");
+  const isPackingPhase = reminder?.title.includes("packing");
+
   const reminderCategoryMap: Record<string, string[]> = {
     "Your move is in": ["Miscellaneous"],
     "Notify utilities": ["Utilities"],
@@ -307,54 +310,104 @@ function handleStartOver() {
           padding: "16px",
           border: "1px solid #e5e7eb",
           borderRadius: "10px",
-          background: "#fafafa",
+          background:
+            isPackingPhase
+              ? "#fef3c7"   // yellow (packing)
+              : isPlanningPhase
+              ? "#eef2ff"   // blue (planning)
+              : "#fafafa",
         }}
       >
         <div style={{ fontWeight: "600", marginBottom: "10px" }}>
           🚚 Movers & Supplies
         </div>
+        {isPackingPhase ? (
+          <>
+            {/* Supplies */}
+            <div>
+              <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+                Packing Supplies
+              </div>
 
-        {/* Movers */}
-        <div style={{ marginBottom: "12px" }}>
-          <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
-            Movers
-          </div>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <a href="https://www.amazon.com/s?k=moving+boxes" target="_blank">
+                  <button style={linkButton}>Boxes</button>
+                </a>
 
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <a href="https://www.uhaul.com" target="_blank">
-              <button style={linkButton}>U-Haul</button>
-            </a>
+                <a href="https://www.homedepot.com/b/Storage-Organization-Moving-Supplies/N-5yc1vZchnc" target="_blank">
+                  <button style={linkButton}>Home Depot Kits</button>
+                </a>
 
-            <a href="https://www.pods.com" target="_blank">
-              <button style={linkButton}>PODS</button>
-            </a>
+                <a href="https://www.uhaul.com/MovingSupplies/" target="_blank">
+                  <button style={linkButton}>U-Haul Supplies</button>
+                </a>
+              </div>
+            </div>
+            {/* Movers */}
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+                Movers
+              </div>
 
-            <a href="https://twomenandatruck.com" target="_blank">
-              <button style={linkButton}>Two Men and a Truck</button>
-            </a>
-          </div>
-        </div>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <a href="https://www.uhaul.com" target="_blank">
+                  <button style={linkButton}>U-Haul</button>
+                </a>
 
-        {/* Supplies */}
-        <div>
-          <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
-            Packing Supplies
-          </div>
+                <a href="https://www.pods.com" target="_blank">
+                  <button style={linkButton}>PODS</button>
+                </a>
 
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <a href="https://www.amazon.com/s?k=moving+boxes" target="_blank">
-              <button style={linkButton}>Boxes</button>
-            </a>
+                <a href="https://twomenandatruck.com" target="_blank">
+                  <button style={linkButton}>Two Men and a Truck</button>
+                </a>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Movers */}
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+                Movers
+              </div>
 
-            <a href="https://www.homedepot.com/b/Storage-Organization-Moving-Supplies/N-5yc1vZchnc" target="_blank">
-              <button style={linkButton}>Home Depot Kits</button>
-            </a>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <a href="https://www.uhaul.com" target="_blank">
+                  <button style={linkButton}>U-Haul</button>
+                </a>
 
-            <a href="https://www.uhaul.com/MovingSupplies/" target="_blank">
-              <button style={linkButton}>U-Haul Supplies</button>
-            </a>
-          </div>
-        </div>
+                <a href="https://www.pods.com" target="_blank">
+                  <button style={linkButton}>PODS</button>
+                </a>
+
+                <a href="https://twomenandatruck.com" target="_blank">
+                  <button style={linkButton}>Two Men and a Truck</button>
+                </a>
+              </div>
+            </div>
+            {/* Supplies */}
+            <div>
+              <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+                Packing Supplies
+              </div>
+
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <a href="https://www.amazon.com/s?k=moving+boxes" target="_blank">
+                  <button style={linkButton}>Boxes</button>
+                </a>
+
+                <a href="https://www.homedepot.com/b/Storage-Organization-Moving-Supplies/N-5yc1vZchnc" target="_blank">
+                  <button style={linkButton}>Home Depot Kits</button>
+                </a>
+
+                <a href="https://www.uhaul.com/MovingSupplies/" target="_blank">
+                  <button style={linkButton}>U-Haul Supplies</button>
+                </a>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       <p
