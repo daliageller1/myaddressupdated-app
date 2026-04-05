@@ -187,6 +187,18 @@ export default function DashboardClient() {
     ? getReminder(new Date(move.moveDate))
     : null;
 
+  const reminderCategoryMap: Record<string, string[]> = {
+    "Notify utilities": ["Utilities"],
+    "Start packing": ["Miscellaneous"],
+    "Confirm movers": ["Miscellaneous"],
+    "Final prep": ["Financial", "Utilities"],
+  };
+
+  const activeCategories = reminder
+    ? Object.entries(reminderCategoryMap)
+      .find(([key]) => reminder.title.includes(key))?.[1] || []
+    : [];
+
   const grouped = move.checklist.reduce((acc: any, item: any) => {
     if (!acc[item.category]) acc[item.category] = [];
     acc[item.category].push(item);
