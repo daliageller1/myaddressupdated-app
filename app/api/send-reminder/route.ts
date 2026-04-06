@@ -29,10 +29,7 @@ export async function POST() {
 
   const milestones = [30, 14, 7, 3, 1, 0];
 
-  //console.log("reminder:", reminder);
-  //console.log("move.user.email:", move.user?.email);
-  //console.log("daysLeft:", daysLeft);
-  console.log("move.lastReminderSent.toDateString:", move.lastReminderSent?.toDateString());
+  console.log("API ROUTE move.lastReminderSent.toDateString:", move.lastReminderSent?.toDateString());
 
   if (
     reminder &&
