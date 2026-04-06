@@ -201,9 +201,9 @@ export default function DashboardClient() {
   const phase =
     daysLeft > 60
       ? "planning"
-      : daysLeft > 30
+      : daysLeft > 14
       ? "preparation"
-      : daysLeft > 7
+      : daysLeft > 2
       ? "packing"
       : "final";
 
@@ -316,26 +316,26 @@ function handleStartOver() {
         </div>
       )}
 
-      <div
-        style={{
-          marginBottom: "25px",
-          padding: "16px",
-          border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
-          borderRadius: "10px",
-          background:
-            isPackingPhase
-              ? "#fef3c7"   // yellow (packing)
-              : isPlanningPhase
-              ? "#eef2ff"   // blue (planning)
-              : "#fafafa",
-        }}
-      >
-        <div style={{ fontWeight: "600", marginBottom: "10px" }}>
-          🚚 Movers & Supplies
-        </div>
+      {!isFinalPhase && (
+        <div
+          style={{
+            marginBottom: "25px",
+            padding: "16px",
+            border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
+            borderRadius: "10px",
+            background:
+              isPackingPhase
+                ? "#fef3c7"   // yellow (packing)
+                : isPlanningPhase
+                ? "#eef2ff"   // blue (planning)
+                : "#fafafa",
+          }}
+        >
+          <div style={{ fontWeight: "600", marginBottom: "10px" }}>
+            🚚 Movers & Supplies
+          </div>
 
-        {!isFinalPhase && (
-          isPackingPhase ? (
+          {isPackingPhase ? (
             <>
               {/* Supplies FIRST */}
               <div>
