@@ -415,9 +415,10 @@ function handleStartOver() {
                 </div>
               </div>
             </>
-          )
-        )}
-      </div>
+          )}
+
+        </div>
+      )}
 
       <p
         style={{
