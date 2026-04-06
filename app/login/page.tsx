@@ -35,7 +35,7 @@ export default function Login() {
     setLoading(false);
 
     if (res.ok) {
-      router.push("/dashboard"); // or wherever you go after login
+      window.location.href = "/dashboard";
     } else {
       setError(data.error || "Invalid credentials");
     }
