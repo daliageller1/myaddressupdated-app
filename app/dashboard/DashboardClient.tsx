@@ -321,7 +321,7 @@ function handleStartOver() {
           style={{
             marginBottom: "25px",
             padding: "16px",
-            opacity: isPlanningPhase ? 0.6 : 1
+            opacity: isPlanningPhase ? 0.6 : 1,
             border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
             borderRadius: "10px",
             background:
