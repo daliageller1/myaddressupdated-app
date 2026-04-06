@@ -86,6 +86,11 @@ export default function DashboardClient() {
         setLoading(false);
       });
 
+  }, []);
+
+  useEffect(() => {
+    if (!move?.userId) return;
+
     fetch("/api/send-reminder", {
       method: "POST",
       headers: {
