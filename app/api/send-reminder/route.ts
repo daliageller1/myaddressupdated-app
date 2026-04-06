@@ -3,7 +3,7 @@ import { getReminder } from "@/lib/reminders";
 import { sendReminderEmail } from "@/lib/sendReminderEmail";
 import { NextResponse } from "next/server";
 
-export async function POST() {
+export async function POST(req: Request) {
   console.log("🔥 API ROUTE HIT");
 
   // const token = req.headers.get("authorization")?.replace("Bearer ", "");
