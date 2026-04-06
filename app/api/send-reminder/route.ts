@@ -6,10 +6,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   console.log("🔥 API ROUTE HIT");
 
-  // const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  // const decoded = verifyToken(token); // however you do this
-  // const userId = decoded.userId;
-
   const { userId } = await req.json();
 
   const move = await prisma.move.findFirst({
