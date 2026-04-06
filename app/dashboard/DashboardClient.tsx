@@ -209,8 +209,7 @@ export default function DashboardClient() {
 
   const isPlanningPhase = phase === "planning";
   const isPackingPhase = phase === "packing";
-  // const isPlanningPhase = reminder?.title.includes("Your move is in");
-  // const isPackingPhase = reminder?.title.includes("packing");
+  const isFinalPhase = phase === "final";
 
   const reminderCategoryMap: Record<string, string[]> = {
     "Your move is in": ["Miscellaneous"],
@@ -334,7 +333,7 @@ function handleStartOver() {
         <div style={{ fontWeight: "600", marginBottom: "10px" }}>
           🚚 Movers & Supplies
         </div>
-        {isPackingPhase ? (
+        {!isFinalPhase && isPackingPhase ? (
           <>
             {/* Supplies */}
             <div>
@@ -377,7 +376,7 @@ function handleStartOver() {
               </div>
             </div>
           </>
-        ) : (
+        ) : {!isFinalPhase && isPlanningPhase ? (
           <>
             {/* Movers */}
             <div style={{ marginBottom: "12px" }}>

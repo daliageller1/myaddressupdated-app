@@ -7,6 +7,8 @@ export function getReminder(moveDate: Date) {
 
   // 🚨 ALWAYS return something (this is the key fix)
 
+  const dayLabel = daysLeft === 1 ? "day" : "days";
+
   if (daysLeft <= 0) {
     return {
       title: "Your move is today!",
@@ -20,7 +22,7 @@ export function getReminder(moveDate: Date) {
 
   if (daysLeft <= 3) {
     return {
-      title: `Final prep — ${daysLeft} days left`,
+      title: `Final prep — ${daysLeft} ${dayLabel} left`,
       daysLeft,
       suggestions: [
         "Pack essentials bag",
@@ -31,7 +33,7 @@ export function getReminder(moveDate: Date) {
 
   if (daysLeft <= 7) {
     return {
-      title: `Confirm movers — ${daysLeft} days left`,
+      title: `Confirm movers — ${daysLeft} ${dayLabel} left`,
       daysLeft,
       suggestions: [
         "Call moving company",
@@ -42,7 +44,7 @@ export function getReminder(moveDate: Date) {
 
   if (daysLeft <= 14) {
     return {
-      title: `Start packing — ${daysLeft} days left`,
+      title: `Start packing — ${daysLeft} ${dayLabel} left`,
       daysLeft,
       suggestions: [
         "Pack non-essential items",
@@ -53,7 +55,7 @@ export function getReminder(moveDate: Date) {
 
   if (daysLeft <= 30) {
     return {
-      title: `Notify utilities — ${daysLeft} days left`,
+      title: `Notify utilities — ${daysLeft} ${dayLabel} left`,
       daysLeft,
       suggestions: [
         "Electricity",
@@ -65,7 +67,7 @@ export function getReminder(moveDate: Date) {
 
   // ✅ NEW: handle far future
   return {
-    title: `Your move is in ${daysLeft} days`,
+    title: `Your move is in ${daysLeft} ${dayLabel}`,
     daysLeft,
     suggestions: [
       "Start planning your move",
