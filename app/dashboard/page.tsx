@@ -23,14 +23,15 @@ export default async function Dashboard() {
 
 // console.error("page REMINDER:", reminder);
 // console.error("page EMAIL:", move?.user?.email);
-//console.error("page LAST SENT:", move?.lastReminderSent);
-console.error("dashboard server MOVE:", move);
+// console.error("page LAST SENT:", move?.lastReminderSent);
+// console.log("dashboard server MOVE:", move);
 
   if (
     reminder &&
     move?.user?.email &&
     move.lastReminderSent?.toDateString() !== today
   ) {
+    console.error("dashboard server yes calling sendReminderEmail");
     const result = await sendReminderEmail(move.user.email, reminder);
     console.log("📬 EMAIL RESULT:", result);
 
@@ -39,6 +40,7 @@ console.error("dashboard server MOVE:", move);
       data: { lastReminderSent: new Date() },
     });
   }
+  console.error("dashboard server not calling sendReminderEmail");
 
   return <DashboardClient />;
 }
