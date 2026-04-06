@@ -321,7 +321,6 @@ function handleStartOver() {
           style={{
             marginBottom: "25px",
             padding: "16px",
-            opacity: isPlanningPhase ? 0.6 : 1,
             border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
             borderRadius: "10px",
             background:
@@ -374,6 +373,16 @@ function handleStartOver() {
                     <button style={linkButton}>Two Men and a Truck</button>
                   </a>
                 </div>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    fontSize: "13px",
+                    color: "#2563eb",
+                    cursor: "pointer",
+                  }}
+                >
+                  → Compare options
+                </div>
               </div>
             </>
           ) : (
@@ -394,6 +403,16 @@ function handleStartOver() {
                   <a href="https://twomenandatruck.com" target="_blank">
                     <button style={linkButton}>Two Men and a Truck</button>
                   </a>
+                </div>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    fontSize: "13px",
+                    color: "#2563eb",
+                    cursor: "pointer",
+                  }}
+                >
+                  → Compare options
                 </div>
               </div>
 
