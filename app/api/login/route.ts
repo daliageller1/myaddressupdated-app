@@ -48,7 +48,6 @@ res.cookies.set("token", token, {
   sameSite: "lax",           // important
   path: "/",
   maxAge: 60 * 60 * 24 * 7,
-  domain: ".myaddressupdated.com", // 🔥 KEY FIX
 });
 
     return res;
