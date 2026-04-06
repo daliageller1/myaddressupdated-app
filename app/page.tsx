@@ -2,32 +2,39 @@ export default function Home() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        background: "#f9fafb",
         fontFamily: "system-ui, -apple-system, sans-serif",
-        padding: "40px 20px",
+        background: "#f9fafb",
+        minHeight: "100vh",
       }}
     >
+      {/* HERO */}
       <div
         style={{
-          maxWidth: "800px",
+          maxWidth: "900px",
           margin: "0 auto",
+          padding: "80px 20px 40px",
           textAlign: "center",
         }}
       >
-        {/* Hero */}
-        <h1 style={{ fontSize: "34px", marginBottom: "16px" }}>
-          Moving is stressful. This makes it simple.
+        <h1 style={{ fontSize: "42px", marginBottom: "16px" }}>
+          Moving is stressful.{" "}
+          <span style={{ color: "#2563eb" }}>This makes it simple.</span>
         </h1>
 
-        <p style={{ fontSize: "18px", color: "#555", marginBottom: "24px" }}>
+        <p
+          style={{
+            fontSize: "18px",
+            color: "#555",
+            marginBottom: "30px",
+          }}
+        >
           A smart checklist that tells you what to do and when — based on your move date.
         </p>
 
         <a href="/login">
           <button
             style={{
-              padding: "14px 24px",
+              padding: "14px 28px",
               fontSize: "16px",
               borderRadius: "10px",
               background: "#2563eb",
@@ -40,58 +47,156 @@ export default function Home() {
             Start your move →
           </button>
         </a>
+      </div>
 
-        {/* Spacer */}
-        <div style={{ height: "50px" }} />
-
-        {/* Features */}
+      {/* FEATURE SECTION */}
+      <div
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "40px 20px",
+        }}
+      >
         <div
           style={{
             display: "grid",
-            gap: "20px",
-            textAlign: "left",
+            gridTemplateColumns: "1fr",
+            gap: "24px",
           }}
         >
-          <div>
-            <h3>🧠 Smart reminders</h3>
-            <p style={{ color: "#555" }}>
-              Know exactly what to do at each stage of your move.
-            </p>
-          </div>
+          <Feature
+            title="🧠 Smart reminders"
+            text="Know exactly what to do at each stage of your move — no guesswork."
+          />
 
-          <div>
-            <h3>📋 Organized checklist</h3>
-            <p style={{ color: "#555" }}>
-              Keep track of utilities, subscriptions, and everything else.
-            </p>
-          </div>
+          <Feature
+            title="📋 Organized checklist"
+            text="Track utilities, subscriptions, and everything you need to update."
+          />
 
-          <div>
-            <h3>🚚 Movers & supplies</h3>
-            <p style={{ color: "#555" }}>
-              Find movers and packing supplies when you need them.
-            </p>
+          <Feature
+            title="🚚 Movers & supplies"
+            text="Find movers and packing supplies at the right time."
+          />
+        </div>
+      </div>
+
+      {/* HOW IT WORKS */}
+      <div
+        style={{
+          background: "white",
+          padding: "50px 20px",
+          marginTop: "40px",
+        }}
+      >
+        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
+            How it works
+          </h2>
+
+          <div
+            style={{
+              display: "grid",
+              gap: "20px",
+            }}
+          >
+            <Step
+              number="1"
+              text="Enter your move details"
+            />
+            <Step
+              number="2"
+              text="Get a personalized checklist"
+            />
+            <Step
+              number="3"
+              text="Follow reminders as your move approaches"
+            />
           </div>
         </div>
+      </div>
 
-        {/* Spacer */}
-        <div style={{ height: "50px" }} />
-
-        {/* Realtor angle (VERY important) */}
+      {/* REALTOR SECTION */}
+      <div
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "50px 20px",
+        }}
+      >
         <div
           style={{
-            padding: "20px",
-            border: "1px solid #e5e7eb",
-            borderRadius: "10px",
-            background: "white",
+            background: "#eef2ff",
+            padding: "25px",
+            borderRadius: "12px",
+            border: "1px solid #c7d2fe",
           }}
         >
-          <h3>🏡 For realtors</h3>
+          <h3 style={{ marginBottom: "10px" }}>🏡 For realtors</h3>
+
           <p style={{ color: "#555" }}>
-            Give this to your clients after closing to help them stay organized and reduce stress.
+            Give this to your clients after closing to help them stay organized,
+            reduce stress, and feel supported throughout the move.
           </p>
         </div>
       </div>
+
+      {/* FOOTER CTA */}
+      <div
+        style={{
+          textAlign: "center",
+          padding: "40px 20px 80px",
+        }}
+      >
+        <a href="/login">
+          <button
+            style={{
+              padding: "14px 28px",
+              fontSize: "16px",
+              borderRadius: "10px",
+              background: "#111",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Get started →
+          </button>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function Feature({ title, text }: { title: string; text: string }) {
+  return (
+    <div>
+      <h3 style={{ marginBottom: "6px" }}>{title}</h3>
+      <p style={{ color: "#555" }}>{text}</p>
+    </div>
+  );
+}
+
+function Step({ number, text }: { number: string; text: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <div
+        style={{
+          width: "30px",
+          height: "30px",
+          borderRadius: "50%",
+          background: "#2563eb",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontWeight: "600",
+        }}
+      >
+        {number}
+      </div>
+      <div>{text}</div>
     </div>
   );
 }
