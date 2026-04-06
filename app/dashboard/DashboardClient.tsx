@@ -88,6 +88,12 @@ export default function DashboardClient() {
 
     fetch("/api/send-reminder", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: move.userId,
+      }),
     });
 
   }, []);
@@ -521,8 +527,14 @@ function handleStartOver() {
                   alert("Failed to update move date");
                 }
 
-                await fetch("/api/send-reminder", {
+                fetch("/api/send-reminder", {
                   method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    userId: move.userId,
+                  }),
                 });
               }}
               style={{
