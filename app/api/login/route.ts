@@ -42,11 +42,14 @@ export async function POST(req: Request) {
 
     const res = NextResponse.json({ message: "Login successful" });
 
-    res.cookies.set("token", token, {
-      httpOnly: true,
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
+res.cookies.set("token", token, {
+  httpOnly: true,
+  secure: true, // ✅ required in production (HTTPS)
+  sameSite: "lax",
+  path: "/",
+  domain: ".myaddressupdated.com", // 🔥 THIS is the key
+  maxAge: 60 * 60 * 24 * 7,
+});
 
     return res;
   } catch (error) {
