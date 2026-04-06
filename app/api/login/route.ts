@@ -42,12 +42,13 @@ export async function POST(req: Request) {
 
     const res = NextResponse.json({ message: "Login successful" });
 
+const isProd = process.env.NODE_ENV === "production";
+
 res.cookies.set("token", token, {
   httpOnly: true,
-  secure: true, // ✅ required in production (HTTPS)
+  secure: isProd,
   sameSite: "lax",
   path: "/",
-  domain: ".myaddressupdated.com", // 🔥 THIS is the key
   maxAge: 60 * 60 * 24 * 7,
 });
 

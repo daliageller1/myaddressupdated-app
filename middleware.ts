@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ✅ Allow public routes
+  // ✅ PUBLIC ROUTES (NO AUTH)
   if (
     pathname === "/" ||
     pathname.startsWith("/login") ||
@@ -28,3 +28,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
+
+export const config = {
+  matcher: ["/:path*"],
+};
