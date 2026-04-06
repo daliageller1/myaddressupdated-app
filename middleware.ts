@@ -6,17 +6,12 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const { pathname } = req.nextUrl;
 
-  // Redirect logged-in users away from login
-  if (token && pathname.startsWith("/login")) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
+  // ONLY protect dashboard
+  if (pathname.startsWith("/dashboard")) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
 
-  // Protect dashboard
-  if (!token && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  if (token) {
     try {
       jwt.verify(token, process.env.JWT_SECRET as string);
     } catch {
@@ -28,5 +23,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/dashboard/:path*"],
 };
