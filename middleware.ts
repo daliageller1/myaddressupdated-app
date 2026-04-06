@@ -3,6 +3,18 @@ import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
 export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // ✅ Allow public routes
+  if (
+    pathname === "/" ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/api")
+  ) {
+    return NextResponse.next();
+  }
+
   const token = req.cookies.get("token")?.value;
 
   if (!token) {
@@ -16,7 +28,3 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
-
-export const config = {
-  matcher: ["/dashboard/:path*"],
-};
