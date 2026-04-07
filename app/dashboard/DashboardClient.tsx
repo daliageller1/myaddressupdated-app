@@ -284,15 +284,6 @@ function handleStartOver() {
 
   // 🚀 Move exists → show checklist
 
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    gap: "28px",
-  }}
->
-
-
   return (
     <div
       style={{
@@ -898,5 +889,4 @@ function handleStartOver() {
     </div>
   </div>
   );
-</div>
 }
