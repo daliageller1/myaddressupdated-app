@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import { getUserFromToken } from "@/lib/auth";
-import { cookies } from "next/headers";
+// import { getUserFromToken } from "@/lib/auth";
+// import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
 
+/*
   const token = cookies().get("token")?.value;
   const user = getUserFromToken(token);
   if (!user) {
@@ -14,6 +15,7 @@ export async function GET(req: Request) {
       { status: 401 }
     );
   }
+*/
 
   try {
     const token = req.headers
