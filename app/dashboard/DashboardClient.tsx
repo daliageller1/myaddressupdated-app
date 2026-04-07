@@ -51,36 +51,14 @@ export default function DashboardClient() {
     fontSize: "12px",
   };
 
-const actionBtn = {
-  padding: "10px 14px",
-  borderRadius: "8px",
-  border: "1px solid #ddd",
-  background: "white",
-  cursor: "pointer",
-  fontWeight: "500",
-};
-
-/*
-<div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-  }}
->
-  <div>
-    <h1 style={{ margin: 0 }}>Your Move</h1>
-    <p style={{ color: "#6b7280", margin: 0 }}>
-      {move.oldAddress} → {move.newAddress}
-    </p>
-  </div>
-
-  <div style={{ display: "flex", gap: "10px" }}>
-    <button onClick={logout}>Logout</button>
-  </div>
-</div>
-*/
+  const actionBtn = {
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    background: "white",
+    cursor: "pointer",
+    fontWeight: "500",
+  };
 
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
