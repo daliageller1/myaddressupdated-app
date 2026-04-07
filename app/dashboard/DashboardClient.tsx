@@ -329,7 +329,6 @@ function handleStartOver() {
                 : reminder.daysLeft <= 7
                 ? "#fef3c7"   // yellow
                 : "#eef2ff",  // blue
-            borderRadius: "10px",
             marginBottom: "16px",
           }}
         >
