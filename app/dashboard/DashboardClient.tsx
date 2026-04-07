@@ -518,7 +518,7 @@ function handleStartOver() {
             border: "1px solid #e5e7eb",
             padding: "6px 10px",
             fontSize: "13px",
-            background: "#fff",
+            background: "#fee2e2",
           }}
         >
           Start Over
