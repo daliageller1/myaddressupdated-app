@@ -331,7 +331,7 @@ function handleStartOver() {
                 : "#eef2ff",  // blue
             marginBottom: "16px",
             borderRadius: "10px",
-            width: "20px",
+            width: "70%",
           }}
         >
           <div style={{ fontWeight: "600", marginBottom: "6px" }}>
