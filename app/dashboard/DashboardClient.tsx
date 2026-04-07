@@ -134,16 +134,7 @@ useEffect(() => {
           fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "500px",
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "14px",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
-          }}
-        >
+        <div style={{ marginBottom: "24px" }}>
           <h1 style={{ marginBottom: "10px" }}>Create Your Move</h1>
           <p style={{ marginBottom: "25px", color: "#666" }}>
             Enter your moving details to generate your checklist.
@@ -300,16 +291,7 @@ function handleStartOver() {
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
     >
-      <div
-        style={{
-          width: "100%",
-          margin: "0 auto",
-          backgroundColor: "white",
-          borderRadius: "14px",
-          boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
-          padding: "28px",
-        }}
-      >
+      <div style={{ marginBottom: "24px" }}>
         <div
           style={{
           display: "flex",
