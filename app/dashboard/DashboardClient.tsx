@@ -347,9 +347,11 @@ function handleStartOver() {
           </p>
         </div>
 
+/*
         <div style={{ display: "flex", gap: "10px" }}>
           <button onClick={logout}>Logout</button>
         </div>
+*/
     </div>
 
     <div
