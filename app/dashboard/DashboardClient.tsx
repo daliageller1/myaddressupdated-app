@@ -307,8 +307,8 @@ function handleStartOver() {
       style={{
         display: "flex",
         gap: "12px",
-        marginBottom: "20px",
-        marginTop: "0px",
+        marginBottom: "12px",
+        marginTop: "12px",
       }}
     >
       <a href="/dashboard/realtors">
