@@ -43,12 +43,11 @@ export default function DashboardClient() {
   ];
 
   const linkButton = {
-    padding: "6px 12px",
-    borderRadius: "999px",
-    border: "1px solid #ddd",
-    background: "white",
-    cursor: "pointer",
-    fontSize: "12px",
+borderRadius: "6px",
+border: "1px solid #e5e7eb",
+padding: "6px 10px",
+fontSize: "13px",
+background: "#fff",
   };
 
   const actionBtn = {
@@ -514,13 +513,11 @@ function handleStartOver() {
           onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
           style={{
-            background: "#fee2e2",
-            border: "1px solid #dc2626",
-            color: "#dc2626",
-            cursor: "pointer",
-            padding: "6px 14px",
-            borderRadius: "999px",
-            fontWeight: "600",
+borderRadius: "6px",
+border: "1px solid #e5e7eb",
+padding: "6px 10px",
+fontSize: "13px",
+background: "#fff",
           }}
         >
           Start Over
@@ -876,14 +873,15 @@ function handleStartOver() {
                         }));
                       }}
                       style={{
-                        padding: "6px 10px",
-                        borderRadius: "999px",
+
+borderRadius: "6px",
                         border: isHighlighted ? "1px solid #2563eb" : "1px solid #ddd",
-                        background: isHighlighted ? "#eef2ff" : "#f9fafb",
                         color: isHighlighted ? "#1d4ed8" : "#111",
-                        cursor: "pointer",
-                        fontSize: "12px",
                         fontWeight: isHighlighted ? "600" : "400",
+padding: "6px 10px",
+fontSize: "13px",
+background: "#fff",
+
                       }}
                     >
                       {isHighlighted ? "🔥 " : "+ "}
