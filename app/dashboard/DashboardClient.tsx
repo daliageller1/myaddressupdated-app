@@ -352,6 +352,7 @@ function handleStartOver() {
         <div
           style={{
             marginBottom: "25px",
+            width: "70%",
             padding: "16px",
             border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
             borderRadius: "10px",
