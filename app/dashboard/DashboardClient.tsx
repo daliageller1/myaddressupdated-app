@@ -364,9 +364,19 @@ function handleStartOver() {
                 : "#fafafa",
           }}
         >
-          <div style={{ fontWeight: "600", marginBottom: "10px" }}>
-            🚚 Movers & Supplies
-          </div>
+<h2
+  style={{
+    fontSize: "18px",
+    fontWeight: 600,
+    marginBottom: "8px",
+  }}
+>
+  Movers & Supplies
+</h2>
+
+<p style={{ color: "#6b7280", marginBottom: "12px" }}>
+  Find services for your move
+</p>
 
           {isPackingPhase ? (
             <>
