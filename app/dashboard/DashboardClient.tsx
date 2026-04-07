@@ -303,7 +303,7 @@ function handleStartOver() {
 
     </div>
 
-    <div style={{ marginTop: "12px" }}>
+    <div style={{ marginTop: "0" }}>
       <a href="/dashboard/realtors">
         <button style={actionBtn}>🏡 Find Realtors</button>
       </a>
