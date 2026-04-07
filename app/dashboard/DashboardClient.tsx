@@ -318,18 +318,7 @@ function handleStartOver() {
           marginBottom: "20px",
         }}
       >
-        <div>
-          <h1 style={{ margin: 0 }}>Your Move</h1>
-          <p style={{ color: "#6b7280", margin: 0 }}>
-            {move.oldAddress} → {move.newAddress}
-          </p>
-        </div>
 
-/*
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button onClick={logout}>Logout</button>
-        </div>
-*/
     </div>
 
     <div
