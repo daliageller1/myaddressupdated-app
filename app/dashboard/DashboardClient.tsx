@@ -324,16 +324,16 @@ function handleStartOver() {
         <div
           style={{
             background:
-              reminder.daysLeft <= 3
-                ? "#fee2e2"   // red
-                : reminder.daysLeft <= 7
-                ? "#fef3c7"   // yellow
-                : "#eef2ff",  // blue
+              isPackingPhase
+                ? "#fef3c7"   // yellow (packing)
+                : isPlanningPhase
+                ? "#eef2ff"   // blue (planning)
+                : "#fafafa",
             marginBottom: "25px",
-            borderRadius: "10px",
             width: "70%",
             padding: "16px",
             border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
+            borderRadius: "10px",
           }}
         >
           <div style={{ fontWeight: "600", marginBottom: "6px" }}>
