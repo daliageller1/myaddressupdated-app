@@ -22,8 +22,8 @@ export default function DashboardLayout({ children }: any) {
         </div>
       </div>
 
-      {/* Page Content */}
-      <div style={{ padding: "8px 24px 24px" }}>
+      {/* Page Content top,sides,bottom */}
+      <div style={{ padding: "0px 32px 24px" }}>
         {children}
       </div>
     </div>
