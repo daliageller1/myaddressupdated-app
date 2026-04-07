@@ -286,8 +286,8 @@ function handleStartOver() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        padding: "40px 20px",
+        minHeight: "80vh",
+        padding: "12px 20px",
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
     >
