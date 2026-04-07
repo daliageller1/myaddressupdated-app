@@ -308,6 +308,7 @@ function handleStartOver() {
         display: "flex",
         gap: "12px",
         marginBottom: "20px",
+        marginTop: "0px",
       }}
     >
       <a href="/dashboard/realtors">
@@ -513,11 +514,11 @@ function handleStartOver() {
           onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
           style={{
-borderRadius: "6px",
-border: "1px solid #e5e7eb",
-padding: "6px 10px",
-fontSize: "13px",
-background: "#fff",
+            borderRadius: "6px",
+            border: "1px solid #e5e7eb",
+            padding: "6px 10px",
+            fontSize: "13px",
+            background: "#fff",
           }}
         >
           Start Over
