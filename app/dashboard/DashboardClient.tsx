@@ -485,16 +485,6 @@ function handleStartOver() {
         </div>
       )}
 
-      <p
-        style={{
-          color: "#6b7280",
-          marginBottom: "20px",
-          fontSize: "15px",
-        }}
-      >
-        Moving is stressful. Let’s make this part easy.
-      </p>
-
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <button
           onClick={logout}
