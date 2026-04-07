@@ -296,14 +296,13 @@ function handleStartOver() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "#f9fafb",
         padding: "40px 20px",
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
     >
       <div
         style={{
-          maxWidth: "1100px",
+          width: "100%",
           margin: "0 auto",
           backgroundColor: "white",
           borderRadius: "14px",

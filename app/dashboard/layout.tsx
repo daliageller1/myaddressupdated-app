@@ -1,7 +1,7 @@
 export default function DashboardLayout({ children }: any) {
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
-      
+    <div style={{ minHeight: "100vh" }}>
+
       {/* Top Nav */}
       <div
         style={{
@@ -23,7 +23,13 @@ export default function DashboardLayout({ children }: any) {
       </div>
 
       {/* Page Content */}
-      <div style={{ padding: "24px 32px" }}>
+      <div
+        style={{
+          padding: "20px 24px",   // ✅ light spacing only
+          width: "100%",
+          margin: "0 auto",
+        }}
+      >
         {children}
       </div>
     </div>
