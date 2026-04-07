@@ -25,8 +25,8 @@ export default function DashboardLayout({ children }: any) {
       {/* Page Content */}
       <div
         style={{
-          padding: "20px 24px",   // ✅ light spacing only
-          width: "100%",
+          padding: "0px 24px",
+          width: "95%",
           margin: "0 auto",
         }}
       >
