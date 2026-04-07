@@ -42,13 +42,13 @@ export async function POST(req: Request) {
 
     const res = NextResponse.json({ message: "Login successful" });
 
-res.cookies.set("token", token, {
-  httpOnly: true,
-  secure: true,              // REQUIRED for HTTPS
-  sameSite: "lax",           // important
-  path: "/",
-  maxAge: 60 * 60 * 24 * 7,
-});
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      secure: true,              // REQUIRED for HTTPS
+      sameSite: "lax",           // important
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
     return res;
   } catch (error) {
