@@ -1,27 +1,31 @@
 export default function DashboardLayout({ children }: any) {
   return (
-    <div style={{ display: "flex" }}>
-      {/* Sidebar */}
+    <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
+      
+      {/* Top Nav */}
       <div
         style={{
-          width: "220px",
-          padding: "20px",
-          borderRight: "1px solid #eee",
+          height: "60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 24px",
+          borderBottom: "1px solid #eee",
+          background: "white",
         }}
       >
-        <h2>Move App</h2>
+        <div style={{ fontWeight: "600" }}>Move App</div>
 
-        <div style={{ marginTop: "20px" }}>
-          <a href="/dashboard">🏠 Dashboard</a>
-        </div>
-
-        <div style={{ marginTop: "10px" }}>
-          <a href="/dashboard/realtors">🏡 Realtors</a>
+        <div style={{ display: "flex", gap: "20px" }}>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/dashboard/realtors">Realtors</a>
         </div>
       </div>
 
-      {/* Main */}
-      <div style={{ flex: 1 }}>{children}</div>
+      {/* Page Content */}
+      <div style={{ padding: "24px 32px" }}>
+        {children}
+      </div>
     </div>
   );
 }

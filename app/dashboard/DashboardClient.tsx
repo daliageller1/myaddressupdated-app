@@ -51,6 +51,26 @@ export default function DashboardClient() {
     fontSize: "12px",
   };
 
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <div>
+    <h1 style={{ margin: 0 }}>Your Move</h1>
+    <p style={{ color: "#6b7280", margin: 0 }}>
+      {move.oldAddress} → {move.newAddress}
+    </p>
+  </div>
+
+  <div style={{ display: "flex", gap: "10px" }}>
+    <button onClick={logout}>Logout</button>
+  </div>
+</div>
+
   function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
     window.location.href = "/login";
@@ -130,7 +150,7 @@ useEffect(() => {
             width: "100%",
             maxWidth: "500px",
             backgroundColor: "white",
-            padding: "40px",
+            padding: "20px",
             borderRadius: "14px",
             boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
           }}
@@ -294,16 +314,55 @@ function handleStartOver() {
   >
     <div
       style={{
-        maxWidth: "800px",
+        maxWidth: "1100px",
         margin: "0 auto",
         backgroundColor: "white",
-        padding: "40px",
+        padding: "0",
         borderRadius: "14px",
         boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
       }}
     >
 
-      <h1 style={{ marginBottom: "8px" }}>Your Move Checklist</h1>
+      // <h1 style={{ marginBottom: "8px" }}>Your Move Checklist</h1>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <div>
+    <h1 style={{ margin: 0 }}>Your Move</h1>
+    <p style={{ color: "#6b7280", margin: 0 }}>
+      {move.oldAddress} → {move.newAddress}
+    </p>
+  </div>
+
+  <div style={{ display: "flex", gap: "10px" }}>
+    <button onClick={logout}>Logout</button>
+  </div>
+</div>
+
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <div>
+    <h1 style={{ margin: 0 }}>Your Move</h1>
+    <p style={{ color: "#6b7280", margin: 0 }}>
+      {move.oldAddress} → {move.newAddress}
+    </p>
+  </div>
+
+  <div style={{ display: "flex", gap: "10px" }}>
+    <button onClick={logout}>Logout</button>
+  </div>
+</div>
 
       {reminder && (
         <div
@@ -656,10 +715,9 @@ function handleStartOver() {
           style={{
             marginBottom: "20px",
             padding: "15px",
-            border: "1px solid #f3f4f6",
+            border: "1px solid #eee",
             borderRadius: "8px",
-            background: "#ffffff",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
+            background: "white",
           }}
         >
           <h3
