@@ -322,54 +322,51 @@ function handleStartOver() {
         padding: "40px 20px",
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
-  >
+    >
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          backgroundColor: "white",
+          borderRadius: "14px",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
+        }}
+      >
+        <div
+          style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <div>
+          <h1 style={{ margin: 0 }}>Your Move</h1>
+          <p style={{ color: "#6b7280", margin: 0 }}>
+            {move.oldAddress} → {move.newAddress}
+          </p>
+        </div>
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={logout}>Logout</button>
+        </div>
+    </div>
+
     <div
       style={{
-        maxWidth: "1100px",
-        margin: "0 auto",
-        backgroundColor: "white",
-        padding: "0",
-        borderRadius: "14px",
-        boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
+        display: "flex",
+        gap: "12px",
+        marginBottom: "20px",
       }}
     >
+      <a href="/dashboard/realtors">
+        <button style={actionBtn}>🏡 Find Realtors</button>
+      </a>
 
-      // <h1 style={{ marginBottom: "8px" }}>Your Move Checklist</h1>
-<div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-  }}
->
-  <div>
-    <h1 style={{ margin: 0 }}>Your Move</h1>
-    <p style={{ color: "#6b7280", margin: 0 }}>
-      {move.oldAddress} → {move.newAddress}
-    </p>
-  </div>
-
-  <div style={{ display: "flex", gap: "10px" }}>
-    <button onClick={logout}>Logout</button>
-  </div>
-</div>
-
-<div
-  style={{
-    display: "flex",
-    gap: "12px",
-    marginBottom: "20px",
-  }}
->
-  <a href="/dashboard/realtors">
-    <button style={actionBtn}>🏡 Find Realtors</button>
-  </a>
-
-  <button style={actionBtn}>
-    🏢 Find Rentals
-  </button>
-</div>
+      <button style={actionBtn}>
+        🏢 Find Rentals
+      </button>
+    </div>
 
       {reminder && (
         <div
