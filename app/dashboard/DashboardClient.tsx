@@ -297,13 +297,13 @@ function handleStartOver() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "20px",
+          marginBottom: "12px",
         }}
       >
 
     </div>
 
-    <div style={{ marginTop: "12px" }}>
+    <div style={{ marginTop: "20px" }}>
       <a href="/dashboard/realtors">
         <button style={actionBtn}>🏡 Find Realtors</button>
       </a>
