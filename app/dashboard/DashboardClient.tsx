@@ -486,20 +486,36 @@ function handleStartOver() {
           type="button"
           title="Start over (this will delete your move and cannot be undone)"
           onClick={() => handleStartOver()}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
+          style={{
+            background: "#fee2e2",
+            border: "1px solid #dc2626",
+            color: "#dc2626",
+            cursor: "pointer",
+            padding: "6px 14px",
+            borderRadius: "999px",
+            fontWeight: "600",
+          }}
+        >
+          Start Over
+        </button>
+
+        <a href="/dashboard/realtors">
+          <button
             style={{
-              background: "#fee2e2",
-              border: "1px solid #dc2626",
-              color: "#dc2626",
-              cursor: "pointer",
               padding: "6px 14px",
-              borderRadius: "999px",
+              borderRadius: "6px",
+              border: "1px solid #ddd",
+              background: "#eef2ff",
+              cursor: "pointer",
+              color: "#2563eb",
               fontWeight: "600",
             }}
           >
-            Start Over
+            🏡 Realtors
           </button>
+        </a>
 
       </div>
 
