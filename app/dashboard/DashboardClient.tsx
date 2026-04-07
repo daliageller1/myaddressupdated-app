@@ -291,7 +291,7 @@ function handleStartOver() {
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
     >
-      <div style={{ marginBottom: "24px" }}>
+      <div style={{ marginBottom: "12px" }}>
         <div
           style={{
           display: "flex",
@@ -303,7 +303,7 @@ function handleStartOver() {
 
     </div>
 
-    <div style={{ marginTop: "0" }}>
+    <div style={{ marginTop: "12px" }}>
       <a href="/dashboard/realtors">
         <button style={actionBtn}>🏡 Find Realtors</button>
       </a>
