@@ -13,6 +13,7 @@ export default function DashboardClient() {
   const [moveDate, setMoveDate] = useState("");
   const [newItems, setNewItems] = useState<Record<string, string>>({});
   const [editingDate, setEditingDate] = useState(false);
+  const [realtors, setRealtors] = useState([]);
 
   const categoryConfig: Record<string, { label: string; example: string }> = {
     Financial: { label: "bank or account", example: "Chase" },
@@ -87,6 +88,12 @@ export default function DashboardClient() {
       });
 
   }, []);
+
+useEffect(() => {
+  fetch("/api/realtors")
+    .then((res) => res.json())
+    .then(setRealtors);
+}, []);
 
   useEffect(() => {
     if (!move?.userId) return;
