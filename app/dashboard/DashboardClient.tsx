@@ -325,7 +325,7 @@ console.log(`##### reminder?.title: ${reminder?.title}`);
 <div style={{ marginBottom: "16px" }}>
   <strong>⚠️  {reminder?.title}</strong>
           <ul style={{ margin: 0, paddingLeft: "18px" }}> 
-            {reminder.suggestions.map((s: string, i: number) => (
+            {reminder?.suggestions?.map((s: string, i: number) => (
               <li key={i} style={{ marginBottom: "4px" }}> 
                 {s} 
               </li>
