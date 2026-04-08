@@ -1,46 +1,30 @@
 import { prisma } from "@/lib/prisma";
+import { NextResponse, NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
-
+export async function GET(req: NextRequest) {
   try {
-    const token = req.headers
-      .get("cookie")
-      ?.split("; ")
-      .find((c) => c.startsWith("token="))
-      ?.split("=")[1];
+    const token = req.cookies.get("token")?.value;
 
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as { userId: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      userId: string;
+    };
+
+    const userId = decoded.userId;
 
     const move = await prisma.move.findFirst({
-      where: { userId: decoded.userId },
-      include: {
-        checklist: {
-          orderBy: {
-            id: "asc",
-          },
-        },
-      },
+      where: { userId },
+      include: { checklist: true },
     });
 
-    if (!move) {
-      return NextResponse.json({ move: null });
-    }
-
     return NextResponse.json({ move });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
