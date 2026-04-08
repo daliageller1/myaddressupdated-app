@@ -323,7 +323,7 @@ function handleStartOver() {
       {reminder && (
 <div style={{ marginBottom: "16px" }}>
   <strong>⚠️  {reminder?.title}</strong>
-          <ul style={{ margin: 0, paddingLeft: "18px" }}> 
+          <ul style={{ margin: 0, paddingLeft: "19px" }}> 
             {reminder?.suggestions?.map((s: string, i: number) => (
               <li key={i} style={{ marginBottom: "4px" }}> 
                 {s} 
