@@ -351,35 +351,27 @@ function handleStartOver() {
       )}
 
       {!isFinalPhase && (
-        <div
-          style={{
-            marginBottom: "25px",
-            width: "70%",
-            padding: "16px",
-            border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
-            borderRadius: "10px",
-            background:
-              isPackingPhase
-                ? "#fef3c7"   // yellow (packing)
-                : isPlanningPhase
-                ? "#eef2ff"   // blue (planning)
-                : "#fafafa",
-          }}
-        >
-<h2
-  style={{
-    fontSize: "18px",
-    fontWeight: 600,
-    marginBottom: "8px",
-  }}
->
-  Movers & Supplies
-</h2>
+<div style={{ marginBottom: "24px" }}>
+  <h2 style={{ fontSize: "18px", fontWeight: 600 }}>
+    Movers & Supplies
+  </h2>
+  <p style={{ color: "#6b7280", margin: "4px 0 12px" }}>
+    Find services for your move
+  </p>
 
-<p style={{ color: "#6b7280", marginBottom: "12px" }}>
-  Find services for your move
-</p>
+  <div style={{ marginBottom: "10px" }}>
+    <div style={{ fontSize: "13px", color: "#6b7280" }}>Packing</div>
+    <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
+      {/* pills */}
+    </div>
+  </div>
 
+  <div>
+    <div style={{ fontSize: "13px", color: "#6b7280" }}>Movers</div>
+    <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
+      {/* pills */}
+    </div>
+  </div>
           {isPackingPhase ? (
             <>
               {/* Supplies FIRST */}
