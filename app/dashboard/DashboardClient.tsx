@@ -283,6 +283,7 @@ function handleStartOver() {
 
   // 🚀 Move exists → show checklist
 
+console.log(`##### reminder?.title: ${reminder?.title}`);
   return (
     <div
       style={{
@@ -321,7 +322,6 @@ function handleStartOver() {
     </div>
 
       {reminder && (
-
 <div style={{ marginBottom: "16px" }}>
   <strong>⚠️  {reminder.title}</strong>
   <div style={{ color: "#6b7280", marginTop: "4px" }}>
