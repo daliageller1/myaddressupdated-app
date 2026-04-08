@@ -323,10 +323,14 @@ console.log(`##### reminder?.title: ${reminder?.title}`);
 
       {reminder && (
 <div style={{ marginBottom: "16px" }}>
-  <strong>⚠️  {reminder.title}</strong>
-  <div style={{ color: "#6b7280", marginTop: "4px" }}>
-    Call moving company • Prepare payment
-  </div>
+  <strong>⚠️  {reminder?.title}</strong>
+          <ul style={{ margin: 0, paddingLeft: "18px" }}> 
+            {reminder.suggestions.map((s: string, i: number) => (
+              <li key={i} style={{ marginBottom: "4px" }}> 
+                {s} 
+              </li>
+            ))} 
+          </ul>
 </div>
       )}
 
