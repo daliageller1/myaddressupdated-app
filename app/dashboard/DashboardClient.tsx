@@ -321,33 +321,13 @@ function handleStartOver() {
     </div>
 
       {reminder && (
-        <div
-          style={{
-            background:
-              isPackingPhase
-                ? "#fef3c7"   // yellow (packing)
-                : isPlanningPhase
-                ? "#eef2ff"   // blue (planning)
-                : "#fafafa",
-            marginBottom: "25px",
-            width: "70%",
-            padding: "16px",
-            border: isPlanningPhase ? "1px solid #c7d2fe" : "1px solid #e5e7eb",
-            borderRadius: "10px",
-          }}
-        >
-          <div style={{ fontWeight: "600", marginBottom: "6px" }}>
-            🔔 {reminder.title}
-          </div>
 
-          <ul style={{ margin: 0, paddingLeft: "18px" }}>
-            {reminder.suggestions.map((s: string, i: number) => (
-              <li key={i} style={{ marginBottom: "4px" }}>
-                {s}
-              </li>
-            ))}
-          </ul>
-        </div>
+<div style={{ marginBottom: "16px" }}>
+  <strong>⚠️  {reminder.title}</strong>
+  <div style={{ color: "#6b7280", marginTop: "4px" }}>
+    Call moving company • Prepare payment
+  </div>
+</div>
       )}
 
       {!isFinalPhase && (
