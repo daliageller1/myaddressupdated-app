@@ -351,27 +351,13 @@ function handleStartOver() {
       )}
 
       {!isFinalPhase && (
-<div style={{ marginBottom: "24px" }}>
-  <h2 style={{ fontSize: "18px", fontWeight: 600 }}>
-    Movers & Supplies
-  </h2>
-  <p style={{ color: "#6b7280", margin: "4px 0 12px" }}>
-    Find services for your move
-  </p>
-
-  <div style={{ marginBottom: "10px" }}>
-    <div style={{ fontSize: "13px", color: "#6b7280" }}>Packing</div>
-    <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
-      {/* pills */}
-    </div>
-  </div>
-
-  <div>
-    <div style={{ fontSize: "13px", color: "#6b7280" }}>Movers</div>
-    <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
-      {/* pills */}
-    </div>
-  </div>
+        <div style={{ marginBottom: "24px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: 600 }}>
+            Movers & Supplies
+          </h2>
+          <p style={{ color: "#6b7280", margin: "4px 0 12px" }}>
+            Find services for your move
+          </p>
           {isPackingPhase ? (
             <>
               {/* Supplies FIRST */}
