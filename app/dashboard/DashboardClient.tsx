@@ -283,7 +283,6 @@ function handleStartOver() {
 
   // 🚀 Move exists → show checklist
 
-console.log(`##### reminder?.title: ${reminder?.title}`);
   return (
     <div
       style={{
