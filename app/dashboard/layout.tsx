@@ -23,7 +23,13 @@ export default function DashboardLayout({ children }: any) {
       </div>
 
       {/* Page Content top,sides,bottom */}
-      <div style={{ padding: "0 50px 24px" }}>
+      <div
+        style={{
+          padding: "8px 24px 24px",
+          maxWidth: "1000px",
+          margin: "0 auto",
+        }}
+      >
         {children}
       </div>
     </div>

@@ -43,20 +43,20 @@ export default function DashboardClient() {
   ];
 
   const linkButton = {
-borderRadius: "6px",
-border: "1px solid #e5e7eb",
-padding: "6px 10px",
-fontSize: "13px",
-background: "#fff",
+    borderRadius: "6px",
+    border: "1px solid #e5e7eb",
+    padding: "6px 10px",
+    fontSize: "13px",
+    background: "#fff",
   };
 
-  const actionBtn = {
-    padding: "10px 14px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    background: "white",
+  const btn = {
+    padding: "6px 12px",
+    borderRadius: "6px",
+    border: "1px solid #e5e7eb",
+    background: "transparent",
     cursor: "pointer",
-    fontWeight: "500",
+    fontSize: "13px",
   };
 
   function logout() {
@@ -97,11 +97,11 @@ background: "#fff",
 
   }, []);
 
-useEffect(() => {
-  fetch("/api/realtors")
-    .then((res) => res.json())
-    .then(setRealtors);
-}, []);
+  useEffect(() => {
+    fetch("/api/realtors")
+      .then((res) => res.json())
+      .then(setRealtors);
+  }, []);
 
   useEffect(() => {
     if (!move?.userId) return;
@@ -283,69 +283,109 @@ function handleStartOver() {
 
   // 🚀 Move exists → show checklist
 
+  const handleAdd = async (category: string) => {
+    const value = newItems[category];
+    if (!value?.trim()) {
+      alert("Enter something first");
+      return;
+    }
+
+    const res = await fetch("/api/checklist/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        moveId: move.id,
+        category,
+        label: value,
+      }),
+    });
+
+    if (!res.ok) {
+      alert("Failed to add item");
+      return;
+    }
+
+    const created = await res.json();
+
+    setMove((prev: any) => ({
+      ...prev,
+      checklist: [...prev.checklist, created],
+    }));
+
+    setNewItems((prev) => ({
+      ...prev,
+      [category]: "",
+    }));
+  };
+
   return (
     <div
       style={{
         minHeight: "80vh",
-        padding: "12px 20px",
+        padding: "8px 20px",
         fontFamily: "system-ui, -apple-system, sans-serif",
      }}
     >
-      <div style={{ marginBottom: "12px" }}>
-        <div
-          style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "12px",
-        }}
-      >
+      <div style={{ marginBottom: "10px" }}>
 
-    </div>
+      <h1 style={{ margin: 0, fontSize: "22px", fontWeight: 600 }}>
+        Your Move
+      </h1>
+      <p style={{ color: "#6b7280", margin: "2px 0 8px" }}>
+        {move?.oldAddress} → {move?.newAddress}
+      </p>
 
+    {/* PRIMARY ACTIONS (MOST IMPORTANT) */}
     <div
       style={{
         display: "flex",
-        gap: "12px",
+        gap: "8px",
         marginBottom: "12px",
-        marginTop: "12px",
       }}
     >
       <a href="/dashboard/realtors">
-        <button style={actionBtn}>🏡 Find Realtors</button>
+        <button style={btn}>🏡 Find Realtors</button>
       </a>
+      <button style={btn}>🏢 Find Rentals</button>
+    </div>
 
-      <button style={actionBtn}>
-        🏢 Find Rentals
+    {/* SECONDARY ACTIONS */}
+    <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+      <button onClick={logout} style={btn}>Logout</button>
+      <button onClick={handleStartOver} style={{ ...btn, color: "#dc2626" }}>
+        Start Over
       </button>
     </div>
 
       {reminder && (
-<div style={{ marginBottom: "16px" }}>
-  <strong>⚠️  {reminder?.title}</strong>
-          <ul style={{ margin: 0, paddingLeft: "19px" }}> 
-            {reminder?.suggestions?.map((s: string, i: number) => (
-              <li key={i} style={{ marginBottom: "4px" }}> 
-                {s} 
-              </li>
-            ))} 
-          </ul>
-</div>
+        <div style={{ marginBottom: "12px" }}>
+          <div style={{ fontWeight: 600 }}>
+            ⚠️  {reminder?.title}
+          </div>
+          <div style={{ color: "#6b7280", marginTop: "4px" }}>
+            <ul style={{ margin: 0, paddingLeft: "18px" }}> 
+              {reminder?.suggestions?.map((s: string, i: number) => (
+                <li key={i} style={{ marginBottom: "4px" }}> 
+                  {s} 
+                </li>
+               ))} 
+            </ul>
+          </div>
+        </div>
       )}
 
       {!isFinalPhase && (
-        <div style={{ marginBottom: "24px" }}>
+        <div style={{ marginBottom: "12px" }}>
           <h2 style={{ fontSize: "18px", fontWeight: 600 }}>
             Movers & Supplies
           </h2>
-          <p style={{ color: "#6b7280", margin: "4px 0 12px" }}>
-            Find services for your move
-          </p>
           {isPackingPhase ? (
             <>
               {/* Supplies FIRST */}
               <div>
-                <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+                <div style={{ fontSize: "13px", color: "#666", marginBottom: "4px" }}>
                   Packing Supplies
                 </div>
 
@@ -446,58 +486,6 @@ function handleStartOver() {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <button
-          onClick={logout}
-          style={{
-            padding: "6px 14px",
-            borderRadius: "6px",
-            border: "1px solid #ddd",
-            background: "#fafafa",
-            cursor: "pointer",
-          }}
-        >
-          Logout
-        </button>
-
-        <button
-          type="button"
-          title="Start over (this will delete your move and cannot be undone)"
-          onClick={() => handleStartOver()}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
-          style={{
-            borderRadius: "6px",
-            border: "1px solid #e5e7eb",
-            padding: "6px 10px",
-            fontSize: "13px",
-            background: "#fee2e2",
-          }}
-        >
-          Start Over
-        </button>
-
-        <a href="/dashboard/realtors">
-          <button
-            style={{
-              padding: "6px 14px",
-              borderRadius: "6px",
-              border: "1px solid #ddd",
-              background: "#eef2ff",
-              cursor: "pointer",
-              color: "#2563eb",
-              fontWeight: "600",
-            }}
-          >
-            🏡 Realtors
-          </button>
-        </a>
-
-      </div>
-
-      <p><strong>From:</strong> {move.oldAddress}</p>
-      <p><strong>To:</strong> {move.newAddress}</p>
-
       <div style={{ marginTop: "10px" }}>
         {editingDate ? (
           <div style={{ marginTop: "10px", display: "flex", gap: "10px", alignItems: "center" }}>
@@ -597,10 +585,11 @@ function handleStartOver() {
         )}
       </div>
 
-      <h2 style={{ marginTop: "30px", marginBottom: "10px" }}>
+      <h2 style={{ marginTop: "20px", marginBottom: "6px" }}>
         Checklist
       </h2>
-      <div style={{ marginBottom: "20px" }}>
+
+      <div style={{ marginBottom: "12px" }}>
         <strong>Progress: {completed} of {total} completed ({percent}%)</strong>
 
         <div
@@ -630,31 +619,27 @@ function handleStartOver() {
           <div
           key={category}
           style={{
-            marginBottom: "20px",
-            padding: "15px",
-            border: "1px solid #eee",
-            borderRadius: "8px",
-            background: "white",
+            marginBottom: "12px",
           }}
         >
           <h3
             style={{
-              marginBottom: "10px",
-              marginTop: "20px",
-              fontSize: "16px",
+              marginBottom: "8px",
+              marginTop: "0px",
+              fontSize: "14px",
               textTransform: "uppercase",
-              letterSpacing: "1px",
-              color: "#555",
+              letterSpacing: "0.5px",
+              color: "#6b7280",
             }}
           >
             {category}
           </h3>
-          <ul style={{ listStyle: "none", padding: 0 }}>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {items.map((item: any) => (
               <li
                 key={item.id}
                 style={{
-                  padding: "6px 0",
+                  padding: "4px 0",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -707,12 +692,15 @@ function handleStartOver() {
                       checklist: prev.checklist.filter((i: any) => i.id !== item.id),
                     }));
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "#fecaca")}
+onMouseEnter={(e) => {
+  e.currentTarget.style.background = "#fee2e2";
+  e.currentTarget.style.color = "#dc2626";
+}}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
                   style={{
-                    background: "#fee2e2",
+                    background: "transparent",
                     border: "none",
-                    color: "#dc2626",
+                    color: "#999",
                     cursor: "pointer",
                     width: "20px",
                     height: "20px",
@@ -734,47 +722,22 @@ function handleStartOver() {
               placeholder={`Add ${categoryConfig[category]?.label || "item"} (e.g. ${categoryConfig[category]?.example || "something"})`}
               value={newItems[category] || ""}
               onChange={(e) =>
-                setNewItems({
-                  ...newItems,
+                setNewItems((prev) => ({
+                  ...prev,
                   [category]: e.target.value,
-                })
+                }))
               }
               style={{
                 padding: "10px",
                 borderRadius: "6px",
                 border: "1px solid #ddd",
-                flex: "0 0 280px",
+                flex: "1",
+                maxWidth: "300px",
               }}
             />
-
             <button
-              onClick={async () => {
-                const value = newItems[category];
-                if (!value?.trim()) return;
-
-                const res = await fetch("/api/checklist/create", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    moveId: move.id,
-                    category,
-                    label: value,
-                  }),
-                });
-
-                const created = await res.json();
-                setMove((prev: any) => ({
-                  ...prev,
-                  checklist: [...prev.checklist, created],
-                }));
-
-                setNewItems({
-                  ...newItems,
-                  [category]: "",
-                });
-              }}
+              type="button"
+              onClick={() => handleAdd(category)}
               style={{
                 padding: "8px 12px",
                 borderRadius: "6px",
@@ -827,15 +790,13 @@ function handleStartOver() {
                         }));
                       }}
                       style={{
-
-borderRadius: "6px",
+                        borderRadius: "6px",
                         border: isHighlighted ? "1px solid #2563eb" : "1px solid #ddd",
                         color: isHighlighted ? "#1d4ed8" : "#111",
                         fontWeight: isHighlighted ? "600" : "400",
-padding: "6px 10px",
-fontSize: "13px",
-background: "#fff",
-
+                        padding: "6px 10px",
+                        fontSize: "13px",
+                        background: "#fff",
                       }}
                     >
                       {isHighlighted ? "🔥 " : "+ "}
