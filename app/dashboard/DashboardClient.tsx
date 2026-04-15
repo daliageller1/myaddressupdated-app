@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { getReminder } from "@/lib/reminders";
 import { useEffect, useState } from "react";
 
@@ -345,10 +346,12 @@ function handleStartOver() {
         marginBottom: "12px",
       }}
     >
-      <a href="/dashboard/realtors">
+      <Link href="/dashboard/realtors">
         <button style={btn}>🏡 Find Realtors</button>
-      </a>
-      <button style={btn}>🏢 Find Rentals</button>
+      </Link>
+      <Link href="/dashboard/rentals">
+        <button style={btn}>🏢 Find Rentals</button>
+      </Link>
     </div>
 
     {/* SECONDARY ACTIONS */}
