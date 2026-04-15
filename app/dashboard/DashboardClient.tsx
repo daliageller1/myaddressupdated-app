@@ -123,6 +123,19 @@ export default function DashboardClient() {
 
   // 🚨 No move yet → show form
   if (!move) {
+    <div style={{ marginTop: "20px" }}>
+      <Link href="/dashboard/rentals">
+        <button style={{ padding: "10px 14px" }}>
+          🏢 Explore Rentals
+        </button>
+      </Link>
+
+      <Link href="/dashboard/realtors" style={{ marginLeft: "10px" }}>
+        <button style={{ padding: "10px 14px" }}>
+          🏡 Explore Realtors
+        </button>
+      </Link>
+    </div>
     return (
       <div
         style={{
