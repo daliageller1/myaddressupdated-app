@@ -19,6 +19,7 @@ export default function DashboardLayout({ children }: any) {
         <div style={{ display: "flex", gap: "20px" }}>
           <a href="/dashboard">Dashboard</a>
           <a href="/dashboard/realtors">Realtors</a>
+          <a href="/dashboard/rentals">Rentals</a>
         </div>
       </div>
 

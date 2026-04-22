@@ -124,7 +124,7 @@ export default function DashboardClient() {
   // 🚨 No move yet → show form
   if (!move) {
     <div style={{ marginTop: "20px" }}>
-      <Link href="/dashboard/rentals">
+      <Link href={`/dashboard/rentals?city=${encodeURIComponent(move?.newAddress || "")}`}>
         <button style={{ padding: "10px 14px" }}>
           🏢 Explore Rentals
         </button>
@@ -708,13 +708,16 @@ function handleStartOver() {
                       checklist: prev.checklist.filter((i: any) => i.id !== item.id),
                     }));
                   }}
-onMouseEnter={(e) => {
-  e.currentTarget.style.background = "#fee2e2";
-  e.currentTarget.style.color = "#dc2626";
-}}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "#fee2e2")}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#fee2e2";
+                    e.currentTarget.style.color = "#dc2626";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#fee2e2";
+                    e.currentTarget.style.color = "#999";
+                  }}
                   style={{
-                    background: "transparent",
+                    background: "#fee2e2",
                     border: "none",
                     color: "#999",
                     cursor: "pointer",
