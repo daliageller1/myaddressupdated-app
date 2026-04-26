@@ -27,12 +27,21 @@ model User {
 model Move {
   id         String   @id @default(uuid())
   userId     String
+
   oldAddress String
   newAddress String
+
+  // ✅ ADD THESE
+  oldCity    String?
+  oldState   String?
+  newCity    String?
+  newState   String?
+
   moveDate   DateTime
   lastReminderSent DateTime?
   paid       Boolean  @default(false)
   createdAt  DateTime @default(now())
+
   user       User     @relation(fields: [userId], references: [id])
   checklist  ChecklistItem[]
 }

@@ -20,6 +20,7 @@ export default function DashboardLayout({ children }: any) {
           <a href="/dashboard">Dashboard</a>
           <a href="/dashboard/realtors">Realtors</a>
           <a href="/dashboard/rentals">Rentals</a>
+          <a href="/dashboard/cost">Cost</a>
         </div>
       </div>
 
