@@ -29,10 +29,10 @@ export default function SignupPage() {
           boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
         }}
       >
-        <h1 style={{ marginBottom: "10px" }}>Create Account</h1>
+        <h1 style={{ marginBottom: "10px" }}>Start Your Move</h1>
 
         <p style={{ marginBottom: "20px", color: "#666" }}>
-          Sign up to get started.
+          Create an account to save and track your move.
         </p>
 
         {message && (

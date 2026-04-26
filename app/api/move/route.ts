@@ -137,7 +137,7 @@ export async function PATCH(req: Request) {
       process.env.JWT_SECRET as string
     ) as { userId: string };
 
-    const { moveDate } = await req.json();
+    const { moveDate, oldAddress, newAddress } = await req.json();
 
     const move = await prisma.move.findFirst({
       where: { userId: decoded.userId },
@@ -147,12 +147,32 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Move not found" }, { status: 404 });
     }
 
+    const data: any = {};
+
+    if (moveDate) {
+      data.moveDate = new Date(moveDate + "T12:00:00");
+      data.lastReminderSent = null;
+    }
+
+    if (oldAddress) {
+      data.oldAddress = oldAddress;
+
+      const parsed = parseAddress(oldAddress);
+      data.oldCity = parsed.city;
+      data.oldState = parsed.state;
+    }
+
+    if (newAddress) {
+      data.newAddress = newAddress;
+
+      const parsed = parseAddress(newAddress);
+      data.newCity = parsed.city;
+      data.newState = parsed.state;
+    }
+
     await prisma.move.update({
       where: { id: move.id },
-      data: {
-         moveDate: new Date(moveDate + "T12:00:00"),
-         lastReminderSent: null,
-      },
+      data,
     });
 
     return NextResponse.json({ success: true });
