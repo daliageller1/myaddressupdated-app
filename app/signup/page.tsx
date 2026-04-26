@@ -32,7 +32,7 @@ export default function SignupPage() {
         <h1 style={{ marginBottom: "10px" }}>Start Your Move</h1>
 
         <p style={{ marginBottom: "20px", color: "#666" }}>
-          Create an account to save and track your move.
+          Create your account to start and track your move.
         </p>
 
         {message && (
@@ -125,8 +125,12 @@ export default function SignupPage() {
             (e.currentTarget.style.background = "#2563eb")
           }
         >
-          {loading ? "Creating..." : "Sign Up"}
+          {loading ? "Creating..." : "Start My Move"}
         </button>
+
+        <p style={{ marginBottom: "20px", color: "#666" }}>
+          Takes less than 2 minutes
+        </p>
 
         <p style={{ marginTop: "15px", textAlign: "center" }}>
           Already have an account?{" "}
