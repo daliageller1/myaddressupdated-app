@@ -1,13 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function SignupPage() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const emailFromUrl = searchParams.get("email");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (emailFromUrl) {
+      setEmail(emailFromUrl);
+    }
+  }, [emailFromUrl]);
 
   return (
     <div
@@ -73,54 +84,59 @@ export default function SignupPage() {
 
         <button
           onClick={async () => {
-            setError("");
-            setMessage("");
+    setError("");
+    setMessage("");
 
-            if (!email || !password) {
-              setError("Email and password are required");
-              return;
-            }
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
 
-            if (password.length < 6) {
-              setError("Password must be at least 6 characters");
-              return;
-            }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
 
-            setLoading(true);
+    setLoading(true);
 
-            const res = await fetch("/api/signup", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password }),
-            });
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-            const data = await res.json();
+    const data = await res.json();
 
-            setLoading(false);
+    if (res.ok) {
+      setMessage("Account created! Redirecting...");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
+      return;
+    }
 
-            if (res.ok) {
-              setMessage("Account created! Redirecting...");
-              setTimeout(() => {
-                window.location.href = "/login";
-              }, 1500);
-            } else {
-              setError(data.error || "Something went wrong");
-            }
-          }}
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#2563eb",
-            color: "white",
-            fontWeight: "600",
-            cursor: "pointer",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "#1d4ed8")
-          }
+    if (data.error === "User already exists") {
+      router.push("/login?email=" + encodeURIComponent(email));
+      return;
+    }
+
+    setError(data.error || "Something went wrong");
+    setLoading(false);
+  }}
+  disabled={loading}
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "none",
+    backgroundColor: "#2563eb",
+    color: "white",
+    fontWeight: "600",
+    cursor: "pointer",
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.background = "#1d4ed8")
+  }
           onMouseLeave={(e) =>
             (e.currentTarget.style.background = "#2563eb")
           }
@@ -128,7 +144,7 @@ export default function SignupPage() {
           {loading ? "Creating..." : "Start My Move"}
         </button>
 
-        <p style={{ marginBottom: "20px", color: "#666" }}>
+        <p style={{ marginTop: "10px", textAlign: "center", color: "#666" }}>
           Takes less than 2 minutes
         </p>
 

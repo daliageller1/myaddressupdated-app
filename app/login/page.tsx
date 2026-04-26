@@ -1,14 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState("");
+  const emailFromUrl = searchParams.get("email");
+
+  useEffect(() => {
+    if (emailFromUrl) {
+      setEmail(emailFromUrl);
+    }
+  }, [searchParams]);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -62,7 +71,7 @@ export default function Login() {
           boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
         }}
       >
-        <h1 style={{ marginBottom: "8px" }}>Welcome back</h1>
+        <h1 style={{ marginBottom: "8px" }}>Welcome back - finish signing in</h1>
         <p style={{ marginBottom: "24px", color: "#666" }}>
           Log in to continue managing your move.
         </p>
@@ -75,20 +84,19 @@ export default function Login() {
           )}
           <input
             type="email"
-            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
             required
             style={{
               width: "100%",
               padding: "12px",
-              marginBottom: "16px",
+              marginBottom: "20px",
               borderRadius: "8px",
               border: "1px solid #ddd",
               fontSize: "14px",
             }}
           />
-
           <input
             type="password"
             placeholder="Password"
