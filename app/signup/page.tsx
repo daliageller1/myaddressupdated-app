@@ -47,8 +47,20 @@ export default function SignupPage() {
       const data = await res.json();
 
       if (res.ok) {
-        router.push("/login?email=" + encodeURIComponent(email));
-        return;
+        // 👇 immediately log them in
+        const loginRes = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (loginRes.ok) {
+          router.push("/dashboard");
+          return;
+        } else {
+          setError("Account created, but login failed");
+          return;
+        }
       }
 
       if (data.error === "User already exists") {

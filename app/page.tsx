@@ -31,7 +31,7 @@ export default function Home() {
           A smart checklist that tells you what to do and when — based on your move date.
         </p>
 
-        <a href="/login">
+        <a href="/signup">
           <button
             style={{
               padding: "14px 28px",
@@ -148,7 +148,7 @@ export default function Home() {
           padding: "40px 20px 80px",
         }}
       >
-        <a href="/login">
+        <a href="/signup">
           <button
             style={{
               padding: "14px 28px",

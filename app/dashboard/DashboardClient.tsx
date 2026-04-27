@@ -15,6 +15,7 @@ export default function DashboardClient() {
   const [newItems, setNewItems] = useState<Record<string, string>>({});
   const [editingDate, setEditingDate] = useState(false);
   const [realtors, setRealtors] = useState([]);
+  const [editingAddresses, setEditingAddresses] = useState(false);
 
   const categoryConfig: Record<string, { label: string; example: string }> = {
     Financial: { label: "bank or account", example: "Chase" },
@@ -123,19 +124,6 @@ export default function DashboardClient() {
 
   // 🚨 No move yet → show form
   if (!move) {
-    <div style={{ marginTop: "20px" }}>
-      <Link href={`/dashboard/rentals?city=${encodeURIComponent(move?.newAddress || "")}`}>
-        <button style={{ padding: "10px 14px" }}>
-          🏢 Explore Rentals
-        </button>
-      </Link>
-
-      <Link href="/dashboard/realtors" style={{ marginLeft: "10px" }}>
-        <button style={{ padding: "10px 14px" }}>
-          🏡 Explore Realtors
-        </button>
-      </Link>
-    </div>
     return (
       <div
         style={{
@@ -347,9 +335,100 @@ function handleStartOver() {
       <h1 style={{ margin: 0, fontSize: "22px", fontWeight: 600 }}>
         Your Move
       </h1>
-      <p style={{ color: "#6b7280", margin: "2px 0 8px" }}>
-        {move?.oldAddress} → {move?.newAddress}
-      </p>
+
+{editingAddresses ? (
+  <div style={{ marginBottom: "10px", display: "flex", gap: "8px", flexDirection: "column" }}>
+    <input
+      value={oldAddress}
+      onChange={(e) => setOldAddress(e.target.value)}
+      placeholder="From address"
+      style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd" }}
+    />
+
+    <input
+      value={newAddress}
+      onChange={(e) => setNewAddress(e.target.value)}
+      placeholder="To address"
+      style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd" }}
+    />
+
+    <div style={{ display: "flex", gap: "8px" }}>
+      <button
+        onClick={async () => {
+          const res = await fetch("/api/move", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              oldAddress,
+              newAddress,
+            }),
+          });
+
+          if (res.ok) {
+            setMove((prev: any) => ({
+              ...prev,
+              oldAddress,
+              newAddress,
+            }));
+            setEditingAddresses(false);
+          } else {
+            alert("Failed to update addresses");
+          }
+        }}
+        style={{
+          padding: "6px 12px",
+          borderRadius: "6px",
+          backgroundColor: "#16a34a",
+          color: "white",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Save
+      </button>
+
+      <button
+        onClick={() => {
+          setOldAddress(move.oldAddress || "");
+          setNewAddress(move.newAddress || "");
+          setEditingAddresses(false);
+        }}
+        style={{
+          padding: "6px 12px",
+          borderRadius: "6px",
+          backgroundColor: "#ddd",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+) : (
+  <p style={{ color: "#6b7280", margin: "2px 0 8px" }}>
+    {move?.oldAddress} → {move?.newAddress}
+
+    <button
+      onClick={() => {
+        setOldAddress(move.oldAddress || "");
+        setNewAddress(move.newAddress || "");
+        setEditingAddresses(true);
+      }}
+      style={{
+        marginLeft: "10px",
+        padding: "6px 10px",
+        borderRadius: "6px",
+        backgroundColor: "#2563eb",
+        color: "white",
+        border: "none",
+        cursor: "pointer",
+      }}
+    >
+      Edit
+    </button>
+  </p>
+)}
 
     {/* PRIMARY ACTIONS (MOST IMPORTANT) */}
     <div
