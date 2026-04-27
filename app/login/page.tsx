@@ -1,25 +1,29 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const [email, setEmail] = useState("");
-  const emailFromUrl = searchParams.get("email");
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const emailFromUrl = params.get("email");
+
     if (emailFromUrl) {
       setEmail(emailFromUrl);
     }
-  }, [searchParams]);
+  }, []);
 
   async function handleLogin(e: React.FormEvent) {
+
     e.preventDefault();
 
     setError("");
