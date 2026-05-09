@@ -15,15 +15,21 @@ const btn = {
 function normalizeCity(input: string) {
   if (!input) return "";
 
-  // Take only first part before comma
-  const base = input.split(",")[0].trim();
-
-  // Capitalize words
-  return base
+  return input
+    .trim()
     .toLowerCase()
     .split(" ")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .map(
+      (w) => w.charAt(0).toUpperCase() + w.slice(1)
+    )
     .join(" ");
+}
+
+function cityToSlug(city: string) {
+  return city
+    .toLowerCase()
+    .replace(",", "")
+    .replace(/\s+/g, "-");
 }
 
 const cityData: any = {
@@ -57,6 +63,7 @@ export default function RentalsClient({
   const [city, setCity] = useState(normalizeCity(initialCity));
 
   const normalizedCity = normalizeCity(city);
+  const apartmentsSlug = cityToSlug(normalizedCity);
   const data = cityData[normalizedCity] || null;
 
   const btn = {
@@ -69,12 +76,12 @@ export default function RentalsClient({
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Find Rentals</h1>
+      <h1>Explore rentals near your destination</h1>
 
       <input
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        placeholder="Enter city (e.g. Atlanta)"
+        placeholder="e.g. Atlanta, GA"
         style={{
           padding: "10px",
           border: "1px solid #ddd",
@@ -141,7 +148,7 @@ export default function RentalsClient({
             </a>
 
             <a
-              href={`https://www.apartments.com/${normalizedCity}`}
+              href={`https://www.apartments.com/${apartmentsSlug}`}
               target="_blank"
             >
               <button
