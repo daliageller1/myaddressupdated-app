@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { getReminder } from "@/lib/reminders";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardClient() {
   const [loading, setLoading] = useState(true);
@@ -15,7 +16,9 @@ export default function DashboardClient() {
   const [newItems, setNewItems] = useState<Record<string, string>>({});
   const [editingDate, setEditingDate] = useState(false);
   const [realtors, setRealtors] = useState([]);
-  const [editingAddresses, setEditingAddresses] = useState(false);
+  const router = useRouter();
+  const [editingAddresses, setEditingAddresses] =
+    useState(false);
 
   const categoryConfig: Record<string, { label: string; example: string }> = {
     Financial: { label: "bank or account", example: "Chase" },
@@ -52,13 +55,18 @@ export default function DashboardClient() {
     background: "#fff",
   };
 
-  const btn = {
-    padding: "6px 12px",
-    borderRadius: "6px",
-    border: "1px solid #e5e7eb",
-    background: "transparent",
+  const actionButtonStyle = {
+    height: "40px",
+    minWidth: "120px",
+    padding: "0 16px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    background: "white",
     cursor: "pointer",
-    fontSize: "13px",
+    fontSize: "14px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   function logout() {
@@ -117,8 +125,7 @@ export default function DashboardClient() {
         userId: move.userId,
       }),
     });
-
-  }, []);
+  }, [move?.userId]);
 
   if (loading) return <p>Loading...</p>;
 
@@ -325,131 +332,101 @@ function handleStartOver() {
   return (
     <div
       style={{
-        minHeight: "80vh",
-        padding: "8px 20px",
-        fontFamily: "system-ui, -apple-system, sans-serif",
-     }}
+        background: "white",
+        borderRadius: "12px",
+        padding: "24px",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+        marginBottom: "24px",
+        maxWidth: "700px",
+        margin: "0 auto",
+      }}
     >
-      <div style={{ marginBottom: "10px" }}>
-
-      <h1 style={{ margin: 0, fontSize: "22px", fontWeight: 600 }}>
+      <h1 style={{ marginBottom: "16px" }}>
         Your Move
       </h1>
 
-{editingAddresses ? (
-  <div style={{ marginBottom: "10px", display: "flex", gap: "8px", flexDirection: "column" }}>
-    <input
-      value={oldAddress}
-      onChange={(e) => setOldAddress(e.target.value)}
-      placeholder="From address"
-      style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd" }}
-    />
+      <div style={{ marginBottom: "16px" }}>
+        <div style={{ color: "#666", fontSize: "14px" }}>
+          Moving From
+        </div>
 
-    <input
-      value={newAddress}
-      onChange={(e) => setNewAddress(e.target.value)}
-      placeholder="To address"
-      style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd" }}
-    />
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: "600",
+          }}
+        >
+          {move.oldCity}, {move.oldState}
+        </div>
+      </div>
 
-    <div style={{ display: "flex", gap: "8px" }}>
-      <button
-        onClick={async () => {
-          const res = await fetch("/api/move", {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              oldAddress,
-              newAddress,
-            }),
-          });
+      <div style={{ marginBottom: "16px" }}>
+        <div style={{ color: "#666", fontSize: "14px" }}>
+          Moving To
+        </div>
 
-          if (res.ok) {
-            setMove((prev: any) => ({
-              ...prev,
-              oldAddress,
-              newAddress,
-            }));
-            setEditingAddresses(false);
-          } else {
-            alert("Failed to update addresses");
-          }
-        }}
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: "600",
+          }}
+        >
+          {move.newCity}, {move.newState}
+        </div>
+      </div>
+
+      <div style={{ marginBottom: "20px" }}>
+        <strong>Move Date:</strong>{" "}
+        {new Date(move.moveDate).toLocaleDateString()}
+      </div>
+
+      <div
         style={{
-          padding: "6px 12px",
-          borderRadius: "6px",
-          backgroundColor: "#16a34a",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
+          display: "flex",
+          gap: "10px",
+          flexWrap: "wrap",
+          marginBottom: "16px",
         }}
       >
-        Save
-      </button>
 
-      <button
-        onClick={() => {
-          setOldAddress(move.oldAddress || "");
-          setNewAddress(move.newAddress || "");
-          setEditingAddresses(false);
-        }}
-        style={{
-          padding: "6px 12px",
-          borderRadius: "6px",
-          backgroundColor: "#ddd",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-) : (
-  <p style={{ color: "#6b7280", margin: "2px 0 8px" }}>
-    {move?.oldAddress} → {move?.newAddress}
+        <button
+          onClick={() => router.push("/dashboard/edit-move")}
+          style={actionButtonStyle}
+        >
+          Edit Move
+        </button>
 
-    <button
-      onClick={() => {
-        setOldAddress(move.oldAddress || "");
-        setNewAddress(move.newAddress || "");
-        setEditingAddresses(true);
-      }}
-      style={{
-        marginLeft: "10px",
-        padding: "6px 10px",
-        borderRadius: "6px",
-        backgroundColor: "#2563eb",
-        color: "white",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      Edit
-    </button>
-  </p>
-)}
+        <button
+          onClick={() => router.push("/dashboard/rentals")}
+          style={actionButtonStyle}
+        >
+          Find Rentals
+        </button>
 
-    {/* PRIMARY ACTIONS (MOST IMPORTANT) */}
+        <button
+          onClick={() => router.push("/dashboard/realtors")}
+            style={actionButtonStyle}
+        >
+          Find Realtors
+        </button>
+      </div>
+
     <div
       style={{
-        display: "flex",
-        gap: "8px",
-        marginBottom: "12px",
+        marginTop: "18px",
+        marginBottom: "18px",
+        color: "#777",
+        fontSize: "13px",
       }}
     >
-      <Link href="/dashboard/realtors">
-        <button style={btn}>🏡 Find Realtors</button>
-      </Link>
-      <Link href="/dashboard/rentals">
-        <button style={btn}>🏢 Find Rentals</button>
-      </Link>
+      {move.oldAddress}
+      <br />
+      {move.newAddress}
     </div>
 
-    {/* SECONDARY ACTIONS */}
     <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
-      <button onClick={logout} style={btn}>Logout</button>
-      <button onClick={handleStartOver} style={{ ...btn, color: "#dc2626" }}>
+      <button onClick={logout} style={actionButtonStyle}>Logout</button>
+      <button onClick={handleStartOver} style={{ ...actionButtonStyle, color: "#dc2626" }}>
         Start Over
       </button>
     </div>
@@ -471,6 +448,233 @@ function handleStartOver() {
         </div>
       )}
 
+
+      <h2 style={{ marginTop: "20px", marginBottom: "6px" }}>
+        Checklist
+      </h2>
+
+      <div style={{ marginBottom: "12px" }}>
+        <strong>Progress: {completed} of {total} completed ({percent}%)</strong>
+
+        <div
+          style={{
+            height: "10px",
+            backgroundColor: "#e5e5e5",
+            borderRadius: "6px",
+            marginTop: "8px",
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${percent}%`,
+              backgroundColor: "#3b82f6",
+              borderRadius: "6px",
+              transition: "width 0.3s ease",
+            }}
+          />
+        </div>
+      </div>
+
+      {orderedCategories.map((category) => {
+        const items = grouped[category] || [];
+
+        return (
+          <div
+          key={category}
+          style={{
+            marginBottom: "12px",
+          }}
+        >
+          <h3
+            style={{
+              marginBottom: "8px",
+              marginTop: "0px",
+              fontSize: "14px",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+              color: "#6b7280",
+            }}
+          >
+            {category}
+          </h3>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {items.map((item: any) => (
+              <li
+                key={item.id}
+                style={{
+                  padding: "4px 0",
+                  display: "flex",
+                  gap: "8px",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <label>
+                    <input
+                      style={{ marginRight: "8px" }}
+                      type="checkbox"
+                      checked={item.completed}
+                      onChange={async (e) => {
+                        const checked = e.target.checked;
+
+                        await fetch(`/api/checklist/${item.id}`, {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ completed: checked }),
+                        });
+
+                        setMove((prev: any) => ({
+                          ...prev,
+                          checklist: prev.checklist.map((i: any) =>
+                            i.id === item.id ? { ...i, completed: checked } : i
+                          ),
+                        }));
+                      }}
+                    />
+                    <span
+                      style={{
+                        textDecoration: item.completed ? "line-through" : "none",
+                        color: item.completed ? "#16a34a" : "#111",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </label>
+                </div>
+                <button
+                  title="Delete this item (cannot be undone)"
+                  onClick={async () => {
+                    await fetch("/api/checklist/delete", {
+                      method: "DELETE",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ id: item.id }),
+                    });
+
+                    setMove((prev: any) => ({
+                      ...prev,
+                      checklist: prev.checklist.filter((i: any) => i.id !== item.id),
+                    }));
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#fee2e2";
+                    e.currentTarget.style.color = "#dc2626";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#fee2e2";
+                    e.currentTarget.style.color = "#bbb";
+                  }}
+                  style={{
+                    background: "transparent",
+                    padding: "2px 4px",
+                    marginLeft: "0px",
+                    border: "none",
+                    color: "#bbb",
+                    cursor: "pointer",
+                    fontSize: "13px",
+                    fontWeight: "500",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  ✕
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div style={{ marginTop: "10px", display: "flex", gap: "12px", alignItems: "center" }}>
+            <input
+              placeholder={`Add ${categoryConfig[category]?.label || "item"} (e.g. ${categoryConfig[category]?.example || "something"})`}
+              value={newItems[category] || ""}
+              onChange={(e) =>
+                setNewItems((prev) => ({
+                  ...prev,
+                  [category]: e.target.value,
+                }))
+              }
+              style={{
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #ddd",
+                flex: "1",
+                maxWidth: "300px",
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => handleAdd(category)}
+              style={{
+                padding: "8px 12px",
+                borderRadius: "6px",
+                background: "#2563eb",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Add
+            </button>
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
+              💡 Suggestions:
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              {(suggestionConfig[category] || [])
+                .filter(
+                  (s) =>
+                    !move.checklist.some(
+                      (item: any) =>
+                        item.category === category && item.label === s
+                    )
+                )
+                .map((suggestion) => {
+                  const isHighlighted = activeCategories.includes(category);
+
+                  return (
+                    <button
+                      key={suggestion}
+                      onClick={async () => {
+                        const res = await fetch("/api/checklist/create", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            moveId: move.id,
+                            category,
+                            label: suggestion,
+                          }),
+                        });
+
+                        const created = await res.json();
+
+                        setMove((prev: any) => ({
+                          ...prev,
+                          checklist: [...prev.checklist, created],
+                        }));
+                      }}
+                      style={{
+                        borderRadius: "6px",
+                        border: isHighlighted ? "1px solid #2563eb" : "1px solid #ddd",
+                        color: isHighlighted ? "#1d4ed8" : "#111",
+                        fontWeight: isHighlighted ? "600" : "400",
+                        padding: "6px 10px",
+                        fontSize: "13px",
+                        background: "#fff",
+                      }}
+                    >
+                      {isHighlighted ? "🔥 " : "+ "}
+                      {suggestion}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+      );
+      })}
       {!isFinalPhase && (
         <div style={{ marginBottom: "12px" }}>
           <h2 style={{ fontSize: "18px", fontWeight: 600 }}>
@@ -580,334 +784,6 @@ function handleStartOver() {
 
         </div>
       )}
-
-      <div style={{ marginTop: "10px" }}>
-        {editingDate ? (
-          <div style={{ marginTop: "10px", display: "flex", gap: "10px", alignItems: "center" }}>
-    
-            <input
-              type="date"
-              value={moveDate}
-              onChange={(e) => setMoveDate(e.target.value)}
-              style={{
-                padding: "8px",
-                borderRadius: "6px",
-                border: "1px solid #ddd",
-              }}
-            />
-
-            <button
-              onClick={async () => {
-                const res = await fetch("/api/move", {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ moveDate }),
-                });
-
-                if (res.ok) {
-                  setMove((prev: any) => ({
-                    ...prev,
-                    moveDate,
-                  }));
-                  setEditingDate(false);
-                } else {
-                  alert("Failed to update move date");
-                }
-
-                fetch("/api/send-reminder", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    userId: move.userId,
-                  }),
-                });
-              }}
-              style={{
-                padding: "8px 14px",
-                borderRadius: "6px",
-                backgroundColor: "#16a34a",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Save
-            </button>
-
-            <button
-              onClick={() => {
-                setMoveDate(move.moveDate || "");
-                setEditingDate(false);
-              }}
-              style={{
-                padding: "8px 14px",
-                borderRadius: "6px",
-                backgroundColor: "#ddd",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Cancel
-            </button>
-
-          </div>
-        ) : (
-          <p>
-            <strong>Move Date:</strong>{" "}
-            {move.moveDate
-              ? new Date(move.moveDate).toLocaleDateString("en-US", {
-                  timeZone: "UTC",
-                })
-              : "Not set"}
-
-            <button
-              onClick={() => setEditingDate(true)}
-              style={{
-                marginLeft: "10px",
-                padding: "8px 14px",
-                borderRadius: "8px",
-                backgroundColor: "#2563eb",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Edit
-            </button>
-          </p>
-        )}
-      </div>
-
-      <h2 style={{ marginTop: "20px", marginBottom: "6px" }}>
-        Checklist
-      </h2>
-
-      <div style={{ marginBottom: "12px" }}>
-        <strong>Progress: {completed} of {total} completed ({percent}%)</strong>
-
-        <div
-          style={{
-            height: "10px",
-            backgroundColor: "#e5e5e5",
-            borderRadius: "6px",
-            marginTop: "8px",
-          }}
-        >
-          <div
-            style={{
-              height: "100%",
-              width: `${percent}%`,
-              backgroundColor: "#3b82f6",
-              borderRadius: "6px",
-              transition: "width 0.3s ease",
-            }}
-          />
-        </div>
-      </div>
-
-      {orderedCategories.map((category) => {
-        const items = grouped[category] || [];
-
-        return (
-          <div
-          key={category}
-          style={{
-            marginBottom: "12px",
-          }}
-        >
-          <h3
-            style={{
-              marginBottom: "8px",
-              marginTop: "0px",
-              fontSize: "14px",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-              color: "#6b7280",
-            }}
-          >
-            {category}
-          </h3>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {items.map((item: any) => (
-              <li
-                key={item.id}
-                style={{
-                  padding: "4px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <div>
-                  <label>
-                    <input
-                      style={{ marginRight: "8px" }}
-                      type="checkbox"
-                      checked={item.completed}
-                      onChange={async (e) => {
-                        const checked = e.target.checked;
-
-                        await fetch(`/api/checklist/${item.id}`, {
-                          method: "PATCH",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ completed: checked }),
-                        });
-
-                        setMove((prev: any) => ({
-                          ...prev,
-                          checklist: prev.checklist.map((i: any) =>
-                            i.id === item.id ? { ...i, completed: checked } : i
-                          ),
-                        }));
-                      }}
-                    />
-                    <span
-                      style={{
-                        textDecoration: item.completed ? "line-through" : "none",
-                        color: item.completed ? "#16a34a" : "#111",
-                      }}
-                    >
-                      {item.label}
-                    </span>
-                  </label>
-                </div>
-                <button
-                  title="Delete this item (cannot be undone)"
-                  onClick={async () => {
-                    await fetch("/api/checklist/delete", {
-                      method: "DELETE",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ id: item.id }),
-                    });
-
-                    setMove((prev: any) => ({
-                      ...prev,
-                      checklist: prev.checklist.filter((i: any) => i.id !== item.id),
-                    }));
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#fee2e2";
-                    e.currentTarget.style.color = "#dc2626";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#fee2e2";
-                    e.currentTarget.style.color = "#999";
-                  }}
-                  style={{
-                    background: "#fee2e2",
-                    border: "none",
-                    color: "#999",
-                    cursor: "pointer",
-                    width: "20px",
-                    height: "20px",
-                    borderRadius: "50%",
-                    fontSize: "11px",
-                    fontWeight: "500",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div style={{ marginTop: "10px", display: "flex", gap: "12px", alignItems: "center" }}>
-            <input
-              placeholder={`Add ${categoryConfig[category]?.label || "item"} (e.g. ${categoryConfig[category]?.example || "something"})`}
-              value={newItems[category] || ""}
-              onChange={(e) =>
-                setNewItems((prev) => ({
-                  ...prev,
-                  [category]: e.target.value,
-                }))
-              }
-              style={{
-                padding: "10px",
-                borderRadius: "6px",
-                border: "1px solid #ddd",
-                flex: "1",
-                maxWidth: "300px",
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => handleAdd(category)}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "6px",
-                background: "#2563eb",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Add
-            </button>
-          </div>
-          <div style={{ marginTop: "10px" }}>
-            <div style={{ fontSize: "13px", color: "#666", marginBottom: "6px" }}>
-              💡 Suggestions:
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {(suggestionConfig[category] || [])
-                .filter(
-                  (s) =>
-                    !move.checklist.some(
-                      (item: any) =>
-                        item.category === category && item.label === s
-                    )
-                )
-                .map((suggestion) => {
-                  const isHighlighted = activeCategories.includes(category);
-
-                  return (
-                    <button
-                      key={suggestion}
-                      onClick={async () => {
-                        const res = await fetch("/api/checklist/create", {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                            moveId: move.id,
-                            category,
-                            label: suggestion,
-                          }),
-                        });
-
-                        const created = await res.json();
-
-                        setMove((prev: any) => ({
-                          ...prev,
-                          checklist: [...prev.checklist, created],
-                        }));
-                      }}
-                      style={{
-                        borderRadius: "6px",
-                        border: isHighlighted ? "1px solid #2563eb" : "1px solid #ddd",
-                        color: isHighlighted ? "#1d4ed8" : "#111",
-                        fontWeight: isHighlighted ? "600" : "400",
-                        padding: "6px 10px",
-                        fontSize: "13px",
-                        background: "#fff",
-                      }}
-                    >
-                      {isHighlighted ? "🔥 " : "+ "}
-                      {suggestion}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-      );
-      })}
     </div>
-  </div>
   );
 }
