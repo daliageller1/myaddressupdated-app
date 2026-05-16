@@ -25,7 +25,7 @@ export default async function RentalsPage({
       const move =
         await prisma.move.findFirst({
           where: {
-            userId: user.userId,
+            userId: user.userId.toString(),
           },
           orderBy: {
             createdAt: "desc",
