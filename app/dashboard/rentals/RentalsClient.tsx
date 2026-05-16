@@ -15,14 +15,25 @@ const btn = {
 function normalizeCity(input: string) {
   if (!input) return "";
 
-  return input
-    .trim()
+  const [city, state] = input.split(",");
+
+  const normalizedCity = city
+    ?.trim()
     .toLowerCase()
     .split(" ")
     .map(
-      (w) => w.charAt(0).toUpperCase() + w.slice(1)
+      (w) =>
+        w.charAt(0).toUpperCase() +
+        w.slice(1)
     )
     .join(" ");
+
+  const normalizedState =
+    state?.trim().toUpperCase();
+
+  return normalizedState
+    ? `${normalizedCity}, ${normalizedState}`
+    : normalizedCity;
 }
 
 function cityToSlug(city: string) {

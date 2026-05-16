@@ -143,41 +143,81 @@ export default function DashboardClient() {
         }}
       >
         <div style={{ marginBottom: "24px" }}>
-          <h1 style={{ marginBottom: "10px" }}>Create Your Move</h1>
+          <h1
+            style={{
+              marginBottom: "10px",
+              fontSize: "32px",
+              fontWeight: 700,
+            }}
+          >
+            Create Your Move
+          </h1>
           <p style={{ marginBottom: "25px", color: "#666" }}>
             Enter your moving details to generate your checklist.
           </p>
 
           <form onSubmit={createMove}>
+            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+              Moving From
+            </div>
+
             <input
-              placeholder="Old Address"
+              placeholder="e.g. 181 Sanchez Street #414, San Francisco, CA 94114"
               value={oldAddress}
               onChange={(e) => setOldAddress(e.target.value)}
               required
               style={{
                 width: "100%",
                 padding: "12px",
-                marginBottom: "16px",
+                marginBottom: "12px",
                 borderRadius: "8px",
                 border: "1px solid #ddd",
                 fontSize: "14px",
               }}
             />
 
+            <div
+              style={{
+                marginBottom: "12px",
+                fontSize: "12px",
+                color: "#777",
+              }}
+            >
+              Include street, city, state, and ZIP code
+            </div>
+
+            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+              Moving To
+            </div>
+
             <input
-              placeholder="New Address"
+              placeholder="e.g. 5671 Beacon Street, Pittsburgh, PA 15217"
               value={newAddress}
               onChange={(e) => setNewAddress(e.target.value)}
               required
               style={{
                 width: "100%",
                 padding: "12px",
-                marginBottom: "16px",
+                marginBottom: "12px",
                 borderRadius: "8px",
                 border: "1px solid #ddd",
                 fontSize: "14px",
               }}
             />
+
+            <div
+              style={{
+                marginBottom: "12px",
+                fontSize: "12px",
+                color: "#777",
+              }}
+            >
+              Include street, city, state, and ZIP code
+            </div>
+
+            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+              Move Date
+            </div>
 
             <input
               type="date"
@@ -187,12 +227,22 @@ export default function DashboardClient() {
               style={{
                 width: "100%",
                 padding: "12px",
-                marginBottom: "20px",
+                marginBottom: "12px",
                 borderRadius: "8px",
                 border: "1px solid #ddd",
                 fontSize: "14px",
               }}
             />
+
+            <div
+              style={{
+                marginBottom: "12px",
+                fontSize: "12px",
+                color: "#777",
+              }}
+            >
+              Used for reminders and planning
+            </div>
 
             <button
               type="submit"
@@ -356,7 +406,7 @@ function handleStartOver() {
             fontWeight: "600",
           }}
         >
-          {move.oldCity}, {move.oldState}
+          {move.oldCity?.replace(",", "")}, {move.oldState}
         </div>
       </div>
 
@@ -371,7 +421,7 @@ function handleStartOver() {
             fontWeight: "600",
           }}
         >
-          {move.newCity}, {move.newState}
+          {move.newCity?.replace(",", "")}, {move.newState}
         </div>
       </div>
 
@@ -397,7 +447,13 @@ function handleStartOver() {
         </button>
 
         <button
-          onClick={() => router.push("/dashboard/rentals")}
+          onClick={() =>
+            router.push(
+              `/dashboard/rentals?city=${encodeURIComponent(
+                `${move.newCity}, ${move.newState}`
+              )}`
+            )
+          }
           style={actionButtonStyle}
         >
           Find Rentals

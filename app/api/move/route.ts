@@ -8,25 +8,21 @@ const STREET_WORDS = [
 ];
 
 function parseAddress(address: string) {
-  if (!address) return { city: "", state: "" };
-
-  const parts = address.trim().split(" ");
-
-  const state = parts[parts.length - 2];
-
-  const beforeState = parts.slice(0, parts.length - 2);
-
-  const last = beforeState[beforeState.length - 1];
-  const secondLast = beforeState[beforeState.length - 2];
-
-  // If secondLast is a street word → ignore it
-  if (STREET_WORDS.includes(secondLast?.toLowerCase())) {
-    return { city: last, state };
+  if (!address) {
+    return { city: "", state: "" };
   }
 
-  // Otherwise assume 2-word city
+  const parts = address
+    .split(",")
+    .map((p) => p.trim());
+
+  const city = parts[1] || "";
+
+  const state =
+    parts[2]?.split(" ")[0] || "";
+
   return {
-    city: `${secondLast} ${last}`,
+    city,
     state,
   };
 }
@@ -79,11 +75,10 @@ export async function POST(req: Request) {
         newAddress,
 
         // ✅ NEW structured fields
-        oldCity: oldParsed.city,
-        oldState: oldParsed.state,
-        newCity: newParsed.city,
-        newState: newParsed.state,
-
+        oldCity: oldParsed.city?.replace(",", "").trim() ?? "",
+        oldState: oldParsed.state?.replace(",", "").trim() ?? "",
+        newCity: newParsed.city?.replace(",", "").trim() ?? "",
+        newState: newParsed.state?.replace(",", "").trim() ?? "",
         moveDate: new Date(moveDate + "T12:00:00"),
         lastReminderSent: null,
       },
