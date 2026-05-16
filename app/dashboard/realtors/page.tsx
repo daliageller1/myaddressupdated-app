@@ -1,89 +1,204 @@
-"use client";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
-import { useState } from "react";
+export default async function RealtorsPage() {
+  const token =
+    (await cookies()).get("token")?.value;
 
-export default function RealtorsPage() {
-  const [search, setSearch] = useState("");
+  let city = "";
 
-  const realtors = [
-    {
-      name: "Sarah Johnson",
-      company: "Coldwell Banker",
-      phone: "(555) 123-4567",
-      rating: 4.8,
-    },
-    {
-      name: "Michael Chen",
-      company: "Compass",
-      phone: "(555) 987-6543",
-      rating: 4.9,
-    },
-  ];
+  if (token) {
+    try {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET!
+      ) as { userId: number };
+
+      const move = await prisma.move.findFirst({
+        where: {
+          userId: String(decoded.userId),
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      if (move?.newCity && move?.newState) {
+        city = `${move.newCity}, ${move.newState}`;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h1 style={{ fontSize: "24px", fontWeight: 600 }}>
+    <div>
+
+      <h1
+        style={{
+          fontSize: "36px",
+          fontWeight: "700",
+          marginBottom: "8px",
+          lineHeight: "1.2",
+        }}
+      >
         🏡 Find a Realtor
+        {city && (
+          <span style={{ fontWeight: "600" }}>
+            {" "}in {city}
+          </span>
+        )}
       </h1>
 
-      <p style={{ color: "#666", marginBottom: "16px" }}>
-        Connect with trusted real estate professionals in your area.
+      <p
+        style={{
+          color: "#666",
+          marginBottom: "24px",
+        }}
+      >
+        {city
+          ? `Top-rated real estate professionals serving ${city}.`
+          : "Connect with trusted real estate professionals in your area."}
       </p>
 
-      {/* Search */}
-      <input
-        placeholder="Search by name or company..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+      <div
         style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          border: "1px solid #ddd",
+          display: "flex",
+          gap: "12px",
+          marginBottom: "24px",
         }}
-      />
+      >
+        <input
+          defaultValue={city}
+          placeholder="Search by city..."
+          style={{
+            flex: 1,
+            padding: "12px",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            fontSize: "16px",
+          }}
+        />
 
-      {/* Realtor List */}
-      <div style={{ display: "grid", gap: "12px" }}>
-        {realtors
-          .filter((r) =>
-            r.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((r, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "16px",
-                borderRadius: "10px",
-                border: "1px solid #eee",
-                background: "white",
-              }}
-            >
-              <div style={{ fontWeight: 600 }}>{r.name}</div>
-              <div style={{ color: "#666", fontSize: "14px" }}>
-                {r.company}
-              </div>
+        <button
+          style={{
+            background: "#2563eb",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 22px",
+            height: "42px",
+            cursor: "pointer",
+            fontWeight: "500",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Search
+        </button>
+      </div>
 
-              <div style={{ marginTop: "8px", fontSize: "14px" }}>
-                ⭐ {r.rating} • {r.phone}
-              </div>
+{/* temporary fake data */}
+      <div
+        style={{
+          border: "1px solid #eee",
+          borderRadius: "12px",
+          padding: "18px",
+          marginBottom: "16px",
+        }}
+      >
+        <h3
+          style={{
+            margin: "0 0 6px 0",
+          }}
+        >
+          Sarah Johnson
+        </h3>
 
-              <button
-                style={{
-                  marginTop: "10px",
-                  padding: "8px 12px",
-                  background: "#2563eb",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                }}
-              >
-                Contact
-              </button>
-            </div>
-          ))}
+        <p
+          style={{
+            color: "#666",
+            lineHeight: "1.5",
+            margin: "0 0 4px 0",
+          }}
+        >
+          Coldwell Banker
+        </p>
+
+        <p
+          style={{
+            margin: "0",
+          }}
+        >
+          ⭐ 4.8 • (555) 123-4567
+        </p>
+
+        <button
+          style={{
+            marginTop: "8px",
+            background: "#2563eb",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 22px",
+            height: "42px",
+            cursor: "pointer",
+            fontWeight: "500",
+          }}
+        >
+          Contact
+        </button>
+      </div>
+
+      <div
+        style={{
+          border: "1px solid #eee",
+          borderRadius: "12px",
+          padding: "18px",
+          marginBottom: "16px",
+        }}
+      >
+        <h3
+          style={{
+            margin: "0 0 6px 0",
+          }}
+        >
+          Michael Chen
+        </h3>
+
+        <p
+          style={{
+            color: "#666",
+            lineHeight: "1.5",
+            margin: "0 0 4px 0",
+          }}
+        >
+          Compass
+        </p>
+
+        <p
+          style={{
+            margin: "0",
+          }}
+        >
+          ⭐ 4.8 • (555) 987-6543
+        </p>
+
+        <button
+          style={{
+            marginTop: "8px",
+            background: "#2563eb",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 22px",
+            height: "42px",
+            cursor: "pointer",
+            fontWeight: "500",
+          }}
+        >
+          Contact
+        </button>
       </div>
     </div>
   );
