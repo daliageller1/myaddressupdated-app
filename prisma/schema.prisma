@@ -28,21 +28,40 @@ model Move {
   id         String   @id @default(uuid())
   userId     String
 
+  // formatted addresses (keep these)
   oldAddress String
   newAddress String
 
-  // ✅ ADD THESE
+  // current city/state
   oldCity    String?
   oldState   String?
   newCity    String?
   newState   String?
 
-  moveDate   DateTime
-  lastReminderSent DateTime?
-  paid       Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  // source structured address
+  oldAddressLine1 String?
+  oldAddressLine2 String?
+  oldZip          String?
+  oldCountry      String? @default("US")
+  oldTimezone     String?
+  oldLat          Float?
+  oldLng          Float?
 
-  user       User     @relation(fields: [userId], references: [id])
+  // destination structured address
+  newAddressLine1 String?
+  newAddressLine2 String?
+  newZip          String?
+  newCountry      String? @default("US")
+  newTimezone     String?
+  newLat          Float?
+  newLng          Float?
+
+  moveDate          DateTime
+  lastReminderSent  DateTime?
+  paid              Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  user       User            @relation(fields: [userId], references: [id])
   checklist  ChecklistItem[]
 }
 

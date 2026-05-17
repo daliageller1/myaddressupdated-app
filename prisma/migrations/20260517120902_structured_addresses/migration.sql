@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Move" ADD COLUMN     "newAddressLine1" TEXT,
+ADD COLUMN     "newAddressLine2" TEXT,
+ADD COLUMN     "newCountry" TEXT DEFAULT 'US',
+ADD COLUMN     "newLat" DOUBLE PRECISION,
+ADD COLUMN     "newLng" DOUBLE PRECISION,
+ADD COLUMN     "newTimezone" TEXT,
+ADD COLUMN     "newZip" TEXT,
+ADD COLUMN     "oldAddressLine1" TEXT,
+ADD COLUMN     "oldAddressLine2" TEXT,
+ADD COLUMN     "oldCountry" TEXT DEFAULT 'US',
+ADD COLUMN     "oldLat" DOUBLE PRECISION,
+ADD COLUMN     "oldLng" DOUBLE PRECISION,
+ADD COLUMN     "oldTimezone" TEXT,
+ADD COLUMN     "oldZip" TEXT;

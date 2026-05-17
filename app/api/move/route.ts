@@ -2,68 +2,45 @@ import { prisma } from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
-const STREET_WORDS = [
-  "street",
-  "st",
-  "avenue",
-  "ave",
-  "road",
-  "rd",
-  "drive",
-  "dr",
-  "lane",
-  "ln",
-  "court",
-  "ct",
-  "boulevard",
-  "blvd",
-  "way",
-  "place",
-  "pl",
-];
+function formatAddress({
+  line1,
+  line2,
+  city,
+  state,
+  zip,
+  country,
+}: {
+  line1?: string;
+  line2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
+}) {
+  const street = [
+    line1,
+    line2,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-function parseAddress(address: string) {
-  if (!address) {
-    return { city: "", state: "" };
-  }
-
-  // Remove commas + normalize whitespace
-  const clean = address
-    .replace(/,/g, "")
-    .trim();
-
-  const parts = clean.split(/\s+/);
-
-  if (parts.length < 3) {
-    return { city: "", state: "" };
-  }
-
-  // State is before ZIP
-  const state = parts[parts.length - 2] ?? "";
-
-  const beforeState = parts.slice(0, -2);
-
-  const last = beforeState[beforeState.length - 1] ?? "";
-  const secondLast =
-    beforeState[beforeState.length - 2] ?? "";
-
-  // Pittsburgh PA
-  if (
-    STREET_WORDS.includes(
-      secondLast.toLowerCase()
-    )
-  ) {
-    return {
-      city: last,
-      state,
-    };
-  }
-
-  // San Francisco CA
-  return {
-    city: `${secondLast} ${last}`.trim(),
+  const cityState = [
+    city,
     state,
-  };
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  return [
+    street,
+    cityState,
+    zip,
+    country !== "US"
+      ? country
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
 export async function POST(req: Request) {
@@ -83,14 +60,47 @@ export async function POST(req: Request) {
       process.env.JWT_SECRET as string
     ) as { userId: string };
 
-    const { oldAddress, newAddress, moveDate } = await req.json();
+    const {
+      moveDate,
 
-    if (!oldAddress || !newAddress || !moveDate) {
-      return NextResponse.json(
-        { error: "Missing fields" },
-        { status: 400 }
-      );
-    }
+      oldAddressLine1,
+      oldAddressLine2,
+      oldCity,
+      oldState,
+      oldZip,
+      oldCountry,
+
+      newAddressLine1,
+      newAddressLine2,
+      newCity,
+      newState,
+      newZip,
+      newCountry,
+    } = await req.json();
+
+    const oldAddress =
+      formatAddress({
+        line1:
+          oldAddressLine1,
+        line2:
+          oldAddressLine2,
+        city: oldCity,
+        state: oldState,
+        zip: oldZip,
+        country: oldCountry,
+      });
+
+    const newAddress =
+      formatAddress({
+        line1:
+          newAddressLine1,
+        line2:
+          newAddressLine2,
+        city: newCity,
+        state: newState,
+        zip: newZip,
+        country: newCountry,
+      });
 
     // Check if user already has a move
     const existingMove = await prisma.move.findFirst({
@@ -104,22 +114,32 @@ export async function POST(req: Request) {
       );
     }
 
-    const oldParsed = parseAddress(oldAddress);
-    const newParsed = parseAddress(newAddress);
-
     const move = await prisma.move.create({
       data: {
         userId: decoded.userId,
+
         oldAddress,
         newAddress,
 
-        // ✅ NEW structured fields
-        oldCity: oldParsed.city?.replace(",", "").trim() ?? "",
-        oldState: oldParsed.state?.replace(",", "").trim() ?? "",
-        newCity: newParsed.city?.replace(",", "").trim() ?? "",
-        newState: newParsed.state?.replace(",", "").trim() ?? "",
-        moveDate: new Date(moveDate + "T12:00:00"),
-        lastReminderSent: null,
+        oldAddressLine1,
+        oldAddressLine2,
+        oldCity,
+        oldState,
+        oldZip,
+        oldCountry,
+
+        newAddressLine1,
+        newAddressLine2,
+        newCity,
+        newState,
+        newZip,
+        newCountry,
+
+        moveDate:
+          new Date(
+            moveDate +
+              "T12:00:00"
+          ),
       },
     });
 
@@ -171,7 +191,23 @@ export async function PATCH(req: Request) {
       process.env.JWT_SECRET as string
     ) as { userId: string };
 
-    const { moveDate, oldAddress, newAddress } = await req.json();
+    const {
+      moveDate,
+
+      oldAddressLine1,
+      oldAddressLine2,
+      oldCity,
+      oldState,
+      oldZip,
+      oldCountry,
+
+      newAddressLine1,
+      newAddressLine2,
+      newCity,
+      newState,
+      newZip,
+      newCountry,
+    } = await req.json();
 
     const move = await prisma.move.findFirst({
       where: { userId: decoded.userId },
@@ -188,21 +224,51 @@ export async function PATCH(req: Request) {
       data.lastReminderSent = null;
     }
 
-    if (oldAddress) {
-      data.oldAddress = oldAddress;
+    data.oldAddressLine1 =
+      oldAddressLine1;
+    data.oldAddressLine2 =
+      oldAddressLine2;
+    data.oldCity = oldCity;
+    data.oldState = oldState;
+    data.oldZip = oldZip;
+    data.oldCountry =
+      oldCountry ?? "US";
 
-      const parsed = parseAddress(oldAddress);
-      data.oldCity = parsed.city;
-      data.oldState = parsed.state;
-    }
+    data.newAddressLine1 =
+      newAddressLine1;
+    data.newAddressLine2 =
+      newAddressLine2;
+    data.newCity = newCity;
+    data.newState = newState;
+    data.newZip = newZip;
+    data.newCountry =
+      newCountry ?? "US";
 
-    if (newAddress) {
-      data.newAddress = newAddress;
+    data.oldAddress =
+      formatAddress({
+        line1:
+          oldAddressLine1,
+        line2:
+          oldAddressLine2,
+        city: oldCity,
+        state: oldState,
+        zip: oldZip,
+        country:
+          oldCountry,
+      });
 
-      const parsed = parseAddress(newAddress);
-      data.newCity = parsed.city;
-      data.newState = parsed.state;
-    }
+    data.newAddress =
+      formatAddress({
+        line1:
+          newAddressLine1,
+        line2:
+          newAddressLine2,
+        city: newCity,
+        state: newState,
+        zip: newZip,
+        country:
+          newCountry,
+      });
 
     await prisma.move.update({
       where: { id: move.id },

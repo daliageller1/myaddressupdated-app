@@ -8,10 +8,24 @@ import { useRouter } from "next/navigation";
 export default function DashboardClient() {
   const [loading, setLoading] = useState(true);
 
+  // Current address
+  const [oldAddressLine1, setOldAddressLine1] = useState("");
+  const [oldAddressLine2, setOldAddressLine2] = useState("");
+  const [oldCity, setOldCity] = useState("");
+  const [oldState, setOldState] = useState("");
+  const [oldZip, setOldZip] = useState("");
+  const [oldCountry, setOldCountry] = useState("US");
+
+  // Destination
+  const [newAddressLine1, setNewAddressLine1] = useState("");
+  const [newAddressLine2, setNewAddressLine2] = useState("");
+  const [newCity, setNewCity] = useState("");
+  const [newState, setNewState] = useState("");
+  const [newZip, setNewZip] = useState("");
+  const [newCountry, setNewCountry] = useState("US");
+
   const [move, setMove] = useState<any>(null);
 
-  const [oldAddress, setOldAddress] = useState("");
-  const [newAddress, setNewAddress] = useState("");
   const [moveDate, setMoveDate] = useState("");
   const [newItems, setNewItems] = useState<Record<string, string>>({});
   const [editingDate, setEditingDate] = useState(false);
@@ -82,7 +96,23 @@ export default function DashboardClient() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ oldAddress, newAddress, moveDate }),
+      body: JSON.stringify({
+        oldAddressLine1,
+        oldAddressLine2,
+        oldCity,
+        oldState,
+        oldZip,
+        oldCountry,
+
+        newAddressLine1,
+        newAddressLine2,
+        newCity,
+        newState,
+        newZip,
+        newCountry,
+
+        moveDate,
+      }),
     });
 
     if (res.ok) {
@@ -129,6 +159,15 @@ export default function DashboardClient() {
 
   if (loading) return <p>Loading...</p>;
 
+  const inputStyle = {
+    width: "100%",
+    padding: "12px",
+    marginBottom: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+  };
+
   // 🚨 No move yet → show form
   if (!move) {
     return (
@@ -150,72 +189,160 @@ export default function DashboardClient() {
               fontWeight: 700,
             }}
           >
-            Create Your Move
+            🚚 Create Your Move
           </h1>
           <p style={{ marginBottom: "25px", color: "#666" }}>
             Enter your moving details to generate your checklist.
           </p>
 
           <form onSubmit={createMove}>
-            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+            <h3 style={{ marginBottom: "12px" }}>
               Moving From
-            </div>
+            </h3>
 
             <input
-              placeholder="e.g. 181 Sanchez Street #414, San Francisco, CA 94114"
-              value={oldAddress}
-              onChange={(e) => setOldAddress(e.target.value)}
+              placeholder="Street Address"
+              value={oldAddressLine1}
+              onChange={(e) =>
+                setOldAddressLine1(
+                  e.target.value
+                )
+              }
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                marginBottom: "12px",
-                borderRadius: "8px",
-                border: "1px solid #ddd",
-                fontSize: "14px",
-              }}
+              style={inputStyle}
+            />
+
+            <input
+              placeholder="Apartment / Unit (optional)"
+              value={oldAddressLine2}
+              onChange={(e) =>
+                setOldAddressLine2(
+                  e.target.value
+                )
+              }
+              style={inputStyle}
+            />
+
+            <input
+              placeholder="City"
+              value={oldCity}
+              onChange={(e) =>
+                setOldCity(e.target.value)
+              }
+              required
+              style={inputStyle}
             />
 
             <div
               style={{
-                marginBottom: "12px",
-                fontSize: "12px",
-                color: "#777",
+                display: "flex",
+                gap: "12px",
               }}
             >
-              Include street, city, state, and ZIP code
+              <input
+                placeholder="State"
+                value={oldState}
+                onChange={(e) =>
+                  setOldState(e.target.value)
+                }
+                required
+                style={{
+                  ...inputStyle,
+                  flex: 1,
+                }}
+              />
+
+              <input
+                placeholder="ZIP Code"
+                value={oldZip}
+                onChange={(e) =>
+                  setOldZip(e.target.value)
+                }
+                style={{
+                  ...inputStyle,
+                  flex: 1,
+                }}
+              />
             </div>
 
-            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+            <h3
+              style={{
+                marginTop: "24px",
+                marginBottom: "14px",
+              }}>
               Moving To
-            </div>
+            </h3>
 
             <input
-              placeholder="e.g. 5671 Beacon Street, Pittsburgh, PA 15217"
-              value={newAddress}
-              onChange={(e) => setNewAddress(e.target.value)}
+              placeholder="Street Address"
+              value={newAddressLine1}
+              onChange={(e) =>
+                setNewAddressLine1(
+                  e.target.value
+                )
+              }
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                marginBottom: "12px",
-                borderRadius: "8px",
-                border: "1px solid #ddd",
-                fontSize: "14px",
-              }}
+              style={inputStyle}
+            />
+
+            <input
+              placeholder="Apartment / Unit (optional)"
+              value={newAddressLine2}
+              onChange={(e) =>
+                setNewAddressLine2(
+                  e.target.value
+                )
+              }
+              style={inputStyle}
+            />
+
+            <input
+              placeholder="City"
+              value={newCity}
+              onChange={(e) =>
+                setNewCity(e.target.value)
+              }
+              required
+              style={inputStyle}
             />
 
             <div
               style={{
-                marginBottom: "12px",
-                fontSize: "12px",
-                color: "#777",
+                display: "flex",
+                gap: "12px",
               }}
             >
-              Include street, city, state, and ZIP code
+              <input
+                placeholder="State"
+                value={newState}
+                onChange={(e) =>
+                  setNewState(e.target.value)
+                }
+                required
+                style={{
+                  ...inputStyle,
+                  flex: 1,
+                }}
+              />
+
+              <input
+                placeholder="ZIP Code"
+                value={newZip}
+                onChange={(e) =>
+                  setNewZip(e.target.value)
+                }
+                style={{
+                  ...inputStyle,
+                  flex: 1,
+                }}
+              />
             </div>
 
-            <div style={{ marginBottom: "8px", fontWeight: 500 }}>
+            <div
+              style={{
+                marginTop: "24px",
+                marginBottom: "14px",
+              }}>
               Move Date
             </div>
 
@@ -231,23 +358,14 @@ export default function DashboardClient() {
                 borderRadius: "8px",
                 border: "1px solid #ddd",
                 fontSize: "14px",
+                height: "48px",
               }}
             />
-
-            <div
-              style={{
-                marginBottom: "12px",
-                fontSize: "12px",
-                color: "#777",
-              }}
-            >
-              Used for reminders and planning
-            </div>
 
             <button
               type="submit"
               style={{
-                width: "100%",
+                width: "320px",
                 padding: "12px",
                 borderRadius: "8px",
                 border: "none",
@@ -255,6 +373,8 @@ export default function DashboardClient() {
                 color: "white",
                 fontWeight: "600",
                 cursor: "pointer",
+                display: "block",
+                margin: "32px auto 0",
               }}
             >
               Generate Checklist
@@ -388,7 +508,7 @@ function handleStartOver() {
         boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
         margin: "0 auto 24px",
         width: "100%",
-        maxWidth: "720px",
+        maxWidth: "620px",
         border: "1px solid #f1f1f1",
       }}
     >
