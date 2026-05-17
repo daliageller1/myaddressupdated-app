@@ -9,8 +9,18 @@ export default function EditMovePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const [oldAddress, setOldAddress] = useState("");
-  const [newAddress, setNewAddress] = useState("");
+  const [oldAddressLine1, setOldAddressLine1] = useState("");
+  const [oldAddressLine2, setOldAddressLine2] = useState("");
+  const [oldCity, setOldCity] = useState("");
+  const [oldState, setOldState] = useState("");
+  const [oldZip, setOldZip] = useState("");
+
+  const [newAddressLine1, setNewAddressLine1] = useState("");
+  const [newAddressLine2, setNewAddressLine2] = useState("");
+  const [newCity, setNewCity] = useState("");
+  const [newState, setNewState] = useState("");
+  const [newZip, setNewZip] = useState("");
+
   const [moveDate, setMoveDate] = useState("");
 
   useEffect(() => {
@@ -20,8 +30,17 @@ export default function EditMovePage() {
         const data = await res.json();
 
         if (data.move) {
-          setOldAddress(data.move.oldAddress || "");
-          setNewAddress(data.move.newAddress || "");
+          setOldAddressLine1(data.move.oldAddressLine1 || "");
+          setOldAddressLine2(data.move.oldAddressLine2 || "");
+          setOldCity(data.move.oldCity || "");
+          setOldState(data.move.oldState || "");
+          setOldZip(data.move.oldZip || "");
+
+          setNewAddressLine1(data.move.newAddressLine1 || "");
+          setNewAddressLine2(data.move.newAddressLine2 || "");
+          setNewCity(data.move.newCity || "");
+          setNewState(data.move.newState || "");
+          setNewZip(data.move.newZip || "");
 
           if (data.move.moveDate) {
             setMoveDate(
@@ -51,8 +70,18 @@ export default function EditMovePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          oldAddress,
-          newAddress,
+          oldAddressLine1,
+          oldAddressLine2,
+          oldCity,
+          oldState,
+          oldZip,
+
+          newAddressLine1,
+          newAddressLine2,
+          newCity,
+          newState,
+          newZip,
+
           moveDate,
         }),
       });
@@ -117,61 +146,205 @@ export default function EditMovePage() {
           Update your move details.
         </p>
 
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: 500,
-            }}
-          >
-            Moving From
-          </label>
+        <h3 style={{ marginBottom: "12px" }}>
+          Moving From
+        </h3>
 
-          <input
-            value={oldAddress}
-            onChange={(e) =>
-              setOldAddress(e.target.value)
-            }
-            placeholder="Old address"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              fontSize: "14px",
-            }}
-          />
-        </div>
+        <input
+          placeholder="Street Address"
+          value={oldAddressLine1}
+          onChange={(e) =>
+            setOldAddressLine1(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: 500,
-            }}
-          >
-            Moving To
-          </label>
+<input
+  placeholder="Apartment / Unit (optional)"
+  value={oldAddressLine2}
+  onChange={(e) =>
+    setOldAddressLine2(
+      e.target.value
+    )
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+    marginBottom: "12px",
+  }}
+/>
 
-          <input
-            value={newAddress}
-            onChange={(e) =>
-              setNewAddress(e.target.value)
-            }
-            placeholder="New address"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              fontSize: "14px",
-            }}
-          />
-        </div>
+<input
+  placeholder="City"
+  value={oldCity}
+  onChange={(e) =>
+    setOldCity(e.target.value)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+    marginBottom: "12px",
+  }}
+/>
 
-        <div style={{ marginBottom: "28px" }}>
+<div
+  style={{
+    display: "flex",
+    gap: "12px",
+  }}
+>
+  <input
+    placeholder="State"
+    value={oldState}
+    onChange={(e) =>
+      setOldState(e.target.value)
+    }
+    style={{
+      flex: 1,
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ddd",
+      fontSize: "14px",
+    }}
+  />
+
+  <input
+    placeholder="ZIP Code"
+    value={oldZip}
+    onChange={(e) =>
+      setOldZip(e.target.value)
+    }
+    style={{
+      width: "160px",
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ddd",
+      fontSize: "14px",
+    }}
+  />
+</div>
+
+        <h3
+          style={{
+            marginTop: "24px",
+            marginBottom: "12px",
+          }}
+        >
+          Moving To
+        </h3>
+
+<input
+  placeholder="Street Address"
+  value={newAddressLine1}
+  onChange={(e) =>
+    setNewAddressLine1(
+      e.target.value
+    )
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+    marginBottom: "12px",
+  }}
+/>
+
+<input
+  placeholder="Apartment / Unit (optional)"
+  value={newAddressLine2}
+  onChange={(e) =>
+    setNewAddressLine2(
+      e.target.value
+    )
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+    marginBottom: "12px",
+  }}
+/>
+
+<input
+  placeholder="City"
+  value={newCity}
+  onChange={(e) =>
+    setNewCity(e.target.value)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    fontSize: "14px",
+    marginBottom: "12px",
+  }}
+/>
+
+<div
+  style={{
+    display: "flex",
+    gap: "12px",
+  }}
+>
+  <input
+    placeholder="State"
+    value={newState}
+    onChange={(e) =>
+      setNewState(e.target.value)
+    }
+    style={{
+      flex: 1,
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ddd",
+      fontSize: "14px",
+    }}
+  />
+
+  <input
+    placeholder="ZIP Code"
+    value={newZip}
+    onChange={(e) =>
+      setNewZip(e.target.value)
+    }
+    style={{
+      width: "160px",
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ddd",
+      fontSize: "14px",
+    }}
+  />
+</div>
+
+
+
+        <div
+          style={{
+            marginTop: "24px",
+            marginBottom: "12px",
+          }}
+        >
           <label
             style={{
               display: "block",
