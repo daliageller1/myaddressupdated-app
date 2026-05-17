@@ -3,8 +3,23 @@ import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 const STREET_WORDS = [
-  "street", "st", "ave", "avenue", "road", "rd",
-  "boulevard", "blvd", "lane", "ln", "drive", "dr", "court", "ct"
+  "street",
+  "st",
+  "avenue",
+  "ave",
+  "road",
+  "rd",
+  "drive",
+  "dr",
+  "lane",
+  "ln",
+  "court",
+  "ct",
+  "boulevard",
+  "blvd",
+  "way",
+  "place",
+  "pl",
 ];
 
 function parseAddress(address: string) {
@@ -12,17 +27,41 @@ function parseAddress(address: string) {
     return { city: "", state: "" };
   }
 
-  const parts = address
-    .split(",")
-    .map((p) => p.trim());
+  // Remove commas + normalize whitespace
+  const clean = address
+    .replace(/,/g, "")
+    .trim();
 
-  const city = parts[1] || "";
+  const parts = clean.split(/\s+/);
 
-  const state =
-    parts[2]?.split(" ")[0] || "";
+  if (parts.length < 3) {
+    return { city: "", state: "" };
+  }
 
+  // State is before ZIP
+  const state = parts[parts.length - 2] ?? "";
+
+  const beforeState = parts.slice(0, -2);
+
+  const last = beforeState[beforeState.length - 1] ?? "";
+  const secondLast =
+    beforeState[beforeState.length - 2] ?? "";
+
+  // Pittsburgh PA
+  if (
+    STREET_WORDS.includes(
+      secondLast.toLowerCase()
+    )
+  ) {
+    return {
+      city: last,
+      state,
+    };
+  }
+
+  // San Francisco CA
   return {
-    city,
+    city: `${secondLast} ${last}`.trim(),
     state,
   };
 }

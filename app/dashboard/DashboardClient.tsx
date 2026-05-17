@@ -384,45 +384,66 @@ function handleStartOver() {
       style={{
         background: "white",
         borderRadius: "12px",
-        padding: "24px",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        marginBottom: "24px",
-        maxWidth: "700px",
-        margin: "0 auto",
+        padding: "32px",
+        boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+        margin: "0 auto 24px",
+        width: "100%",
+        maxWidth: "720px",
+        border: "1px solid #f1f1f1",
       }}
     >
-      <h1 style={{ marginBottom: "16px" }}>
-        Your Move
+
+      <h1
+        style={{
+          marginBottom: "28px",
+          fontSize: "30px",
+          fontWeight: "700",
+          letterSpacing: "-0.5px",
+        }}
+      >
+        🚚 Your Move
       </h1>
 
-      <div style={{ marginBottom: "16px" }}>
-        <div style={{ color: "#666", fontSize: "14px" }}>
-          Moving From
-        </div>
-
-        <div
-          style={{
-            fontSize: "20px",
-            fontWeight: "600",
-          }}
-        >
-          {move.oldCity?.replace(",", "")}, {move.oldState}
-        </div>
+      <div
+        style={{
+          color: "#666",
+          fontSize: "14px",
+          marginBottom: "6px",
+        }}
+      >
+        Moving From
       </div>
 
-      <div style={{ marginBottom: "16px" }}>
-        <div style={{ color: "#666", fontSize: "14px" }}>
-          Moving To
-        </div>
+      <div
+        style={{
+          fontSize: "30px",
+          fontWeight: "700",
+          marginBottom: "28px",
+          lineHeight: "1.15",
+        }}
+      >
+        {move.oldCity}, {move.oldState}
+      </div>
 
-        <div
-          style={{
-            fontSize: "20px",
-            fontWeight: "600",
-          }}
-        >
-          {move.newCity?.replace(",", "")}, {move.newState}
-        </div>
+      <div
+        style={{
+          color: "#666",
+          fontSize: "14px",
+          marginBottom: "6px",
+        }}
+      >
+        Moving To
+      </div>
+
+      <div
+        style={{
+          fontSize: "30px",
+          fontWeight: "700",
+          marginBottom: "28px",
+          lineHeight: "1.15",
+        }}
+      >
+        {move.newCity}, {move.newState}
       </div>
 
       <div style={{ marginBottom: "20px" }}>
