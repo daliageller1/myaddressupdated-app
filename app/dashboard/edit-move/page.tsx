@@ -132,21 +132,22 @@ export default function EditMovePage() {
         <h1
           style={{
             marginBottom: "10px",
-          }}
-        >
-          Edit Move
+            fontSize: "32px",
+            fontWeight: 700,
+          }}  
+        >   
+          🚚 Edit Move
         </h1>
-
-        <p
-          style={{
-            color: "#666",
-            marginBottom: "24px",
-          }}
-        >
+        <p style={{ marginBottom: "25px", color: "#666" }}> 
           Update your move details.
         </p>
-
-        <h3 style={{ marginBottom: "12px" }}>
+        <h3
+          style={{
+            display: "block",
+            marginBottom: "8px",
+            fontWeight: 500,
+          }}
+        >
           Moving From
         </h3>
 
@@ -168,176 +169,176 @@ export default function EditMovePage() {
           }}
         />
 
-<input
-  placeholder="Apartment / Unit (optional)"
-  value={oldAddressLine2}
-  onChange={(e) =>
-    setOldAddressLine2(
-      e.target.value
-    )
-  }
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    marginBottom: "12px",
-  }}
-/>
+        <input
+          placeholder="Apartment / Unit (optional)"
+          value={oldAddressLine2}
+          onChange={(e) =>
+            setOldAddressLine2(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-<input
-  placeholder="City"
-  value={oldCity}
-  onChange={(e) =>
-    setOldCity(e.target.value)
-  }
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    marginBottom: "12px",
-  }}
-/>
+        <input
+          placeholder="City"
+          value={oldCity}
+          onChange={(e) =>
+            setOldCity(e.target.value)
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-<div
-  style={{
-    display: "flex",
-    gap: "12px",
-  }}
->
-  <input
-    placeholder="State"
-    value={oldState}
-    onChange={(e) =>
-      setOldState(e.target.value)
-    }
-    style={{
-      flex: 1,
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-      fontSize: "14px",
-    }}
-  />
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+          }}
+        >
+          <input
+            placeholder="State"
+            value={oldState}
+            onChange={(e) =>
+              setOldState(e.target.value)
+            }
+            style={{
+              flex: 1,
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              fontSize: "14px",
+            }}
+          />
 
-  <input
-    placeholder="ZIP Code"
-    value={oldZip}
-    onChange={(e) =>
-      setOldZip(e.target.value)
-    }
-    style={{
-      width: "160px",
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-      fontSize: "14px",
-    }}
-  />
-</div>
+          <input
+            placeholder="ZIP Code"
+            value={oldZip}
+            onChange={(e) =>
+              setOldZip(e.target.value)
+            }
+            style={{
+              width: "160px",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              fontSize: "14px",
+            }}
+          />
+        </div>
 
         <h3
           style={{
             marginTop: "24px",
-            marginBottom: "12px",
+            display: "block",
+            marginBottom: "8px",
+            fontWeight: 500,
           }}
         >
           Moving To
         </h3>
 
-<input
-  placeholder="Street Address"
-  value={newAddressLine1}
-  onChange={(e) =>
-    setNewAddressLine1(
-      e.target.value
-    )
-  }
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    marginBottom: "12px",
-  }}
-/>
+        <input
+          placeholder="Street Address"
+          value={newAddressLine1}
+          onChange={(e) =>
+            setNewAddressLine1(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-<input
-  placeholder="Apartment / Unit (optional)"
-  value={newAddressLine2}
-  onChange={(e) =>
-    setNewAddressLine2(
-      e.target.value
-    )
-  }
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    marginBottom: "12px",
-  }}
-/>
+        <input
+          placeholder="Apartment / Unit (optional)"
+          value={newAddressLine2}
+          onChange={(e) =>
+            setNewAddressLine2(
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-<input
-  placeholder="City"
-  value={newCity}
-  onChange={(e) =>
-    setNewCity(e.target.value)
-  }
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    fontSize: "14px",
-    marginBottom: "12px",
-  }}
-/>
+        <input
+          placeholder="City"
+          value={newCity}
+          onChange={(e) =>
+            setNewCity(e.target.value)
+          }
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            marginBottom: "12px",
+          }}
+        />
 
-<div
-  style={{
-    display: "flex",
-    gap: "12px",
-  }}
->
-  <input
-    placeholder="State"
-    value={newState}
-    onChange={(e) =>
-      setNewState(e.target.value)
-    }
-    style={{
-      flex: 1,
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-      fontSize: "14px",
-    }}
-  />
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+          }}
+        >
+          <input
+            placeholder="State"
+            value={newState}
+            onChange={(e) =>
+              setNewState(e.target.value)
+            }
+            style={{
+              flex: 1,
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              fontSize: "14px",
+            }}
+          />
 
-  <input
-    placeholder="ZIP Code"
-    value={newZip}
-    onChange={(e) =>
-      setNewZip(e.target.value)
-    }
-    style={{
-      width: "160px",
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ddd",
-      fontSize: "14px",
-    }}
-  />
-</div>
-
-
+          <input
+            placeholder="ZIP Code"
+            value={newZip}
+            onChange={(e) =>
+              setNewZip(e.target.value)
+            }
+            style={{
+              width: "160px",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              fontSize: "14px",
+            }}
+          />
+        </div>
 
         <div
           style={{
