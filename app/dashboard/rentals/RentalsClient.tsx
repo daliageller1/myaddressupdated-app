@@ -36,13 +36,6 @@ function normalizeCity(input: string) {
     : normalizedCity;
 }
 
-function cityToSlug(city: string) {
-  return city
-    .toLowerCase()
-    .replace(",", "")
-    .replace(/\s+/g, "-");
-}
-
 const cityData: any = {
   Atlanta: {
     avgRent: "$1,600",
@@ -74,8 +67,52 @@ export default function RentalsClient({
   const [city, setCity] = useState(normalizeCity(initialCity));
 
   const normalizedCity = normalizeCity(city);
-  const apartmentsSlug = cityToSlug(normalizedCity);
   const data = cityData[normalizedCity] || null;
+
+function openRentalSearch(site: string) {
+  if (!city.trim()) return;
+
+  let query = "";
+
+  switch (site) {
+    case "zillow":
+      query =
+        `apartments for rent in ${normalizedCity} site:zillow.com`;
+      break;
+
+    case "apartments":
+      query =
+        `apartments for rent in ${normalizedCity} site:apartments.com`;
+      break;
+
+    case "redfin":
+      query =
+        `apartments for rent in ${normalizedCity} site:redfin.com`;
+      break;
+
+    default:
+      query =
+        `apartments for rent in ${normalizedCity}`;
+  }
+
+  window.open(
+    `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+    "_blank"
+  );
+}
+
+function searchRentals() {
+  if (!city.trim()) return;
+
+  const query = encodeURIComponent(
+    `apartments for rent in ${normalizedCity}`
+  );
+
+  window.open(
+    `https://www.google.com/search?q=${query}`,
+    "_blank"
+  );
+}
 
   const btn = {
     padding: "8px 12px",
@@ -86,25 +123,44 @@ export default function RentalsClient({
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Explore rentals near your destination</h1>
+    <div style={{ marginBottom: "24px" }}>
+      <h1
+        style={{
+          fontSize: "30px",
+          fontWeight: "700",
+          marginBottom: "28px",
+        }}
+      >
+        Explore rentals near your destination
+      </h1>
+
+      <div
+        style={{
+          marginBottom: "10px",
+          fontWeight: "500",
+          color: "#555",
+        }}
+      >
+        Destination
+      </div>
 
       <input
         value={city}
         onChange={(e) => setCity(e.target.value)}
         placeholder="e.g. Atlanta, GA"
         style={{
-          padding: "10px",
+          padding: "14px 16px",
+          height: "48px",
           border: "1px solid #ddd",
-          borderRadius: "6px",
-          marginBottom: "16px",
+          borderRadius: "8px",
+          width: "360px",
+          fontSize: "16px",
+          marginBottom: "28px",
         }}
       />
 
       {city && (
         <>
-          <h2>{normalizedCity || city}</h2>
-
           {data ? (
             <>
               <p><strong>💰 Avg Rent:</strong> {data.avgRent}</p>
@@ -144,70 +200,45 @@ export default function RentalsClient({
           )}
 
           {/* ALWAYS SHOW LINKS */}
-          <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-            <a
-              href={`https://www.zillow.com/homes/for_rent/${encodeURIComponent(normalizedCity)}`}
-              target="_blank"
-            >
-              <button
-                style={btn}
-                onMouseOver={(e) => (e.currentTarget.style.background = "#eee")}
-                onMouseOut={(e) => (e.currentTarget.style.background = "#f9fafb")}
-              >
-                Zillow
-              </button>
-            </a>
-
-            <a
-              href={`https://www.apartments.com/${apartmentsSlug}`}
-              target="_blank"
-            >
-              <button
-                style={btn}
-                onMouseOver={(e) => (e.currentTarget.style.background = "#eee")}
-                onMouseOut={(e) => (e.currentTarget.style.background = "#f9fafb")}
-              >
-                Apartments
-              </button>
-            </a>
-
-            <a
-              href={`https://www.redfin.com`}
-              target="_blank"
-            >
-              <button
-                style={btn}
-                onMouseOver={(e) => (e.currentTarget.style.background = "#eee")}
-                onMouseOut={(e) => (e.currentTarget.style.background = "#f9fafb")}
-              >
-                Redfin
-              </button>
-            </a>
-          </div>
-          <button
-            onClick={async () => {
-              const res = await fetch("/api/move", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  oldAddress: "Unknown",
-                  newAddress: normalizedCity,
-                  moveDate: new Date().toISOString().split("T")[0],
-                }),
-              });
-              const data = await res.json();
-              console.log("API RESPONSE:", data);
-
-              if (res.ok) {
-                window.location.href = "/dashboard";
-              } else {
-                alert("Could not create move: " + JSON.stringify(data));
-              }
-            }}
+          <div
             style={{
-              marginTop: "16px",
+              marginTop: "20px",
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            <button
+    style={btn}
+    onClick={() =>
+      openRentalSearch("zillow")
+    }
+  >
+    Zillow
+  </button>
+
+  <button
+    style={btn}
+    onClick={() =>
+      openRentalSearch("apartments")
+    }
+  >
+    Apartments
+  </button>
+
+  <button
+    style={btn}
+    onClick={() =>
+      openRentalSearch("redfin")
+    }
+  >
+    Redfin
+  </button>
+          </div>
+
+          <button
+            onClick={searchRentals}
+            style={{
+              marginTop: "10px",
               padding: "10px 14px",
               borderRadius: "6px",
               background: "#2563eb",
@@ -216,7 +247,7 @@ export default function RentalsClient({
               cursor: "pointer",
             }}
           >
-            Start Move to {normalizedCity}
+            Search Rentals
           </button>
         </>
       )}
