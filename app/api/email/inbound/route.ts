@@ -18,6 +18,22 @@ export async function POST(
 
     const email = body?.data;
 
+console.log(
+  "EMAIL KEYS:",
+  Object.keys(email || {})
+);
+
+console.log(
+  "BODY FIELDS:",
+  {
+    text: email?.text,
+    html: email?.html,
+    markdown: email?.markdown,
+    snippet: email?.snippet,
+    raw: email?.raw,
+  }
+);
+
     const emailId =
       email?.email_id;
 
