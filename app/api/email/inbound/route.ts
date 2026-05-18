@@ -17,10 +17,9 @@ export async function POST(
     );
 
     const email = body?.data;
-console.log(
-  "EMAIL OBJECT:",
-  JSON.stringify(email, null, 2)
-);
+
+    const emailId =
+      email?.email_id;
 
     const from =
       email?.from ??
@@ -35,43 +34,82 @@ console.log(
       email?.subject ??
       "(No Subject)";
 
-const result =
-  await resend.emails.send({
-    from:
-      "My Address Updated <hello@myaddressupdated.com>",
+    let messageBody =
+      "(No message body)";
 
-    to:
-      process.env
-        .SUPPORT_EMAIL!,
+    // Fetch full email body
+    if (emailId) {
+      try {
+        const response =
+          await fetch(
+            `https://api.resend.com/emails/${emailId}`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${process.env.RESEND_API_KEY}`,
+              },
+            }
+          );
 
-    replyTo: from,
+        const emailData =
+          await response.json();
 
-    subject:
-      `[Forwarded] ${subject}`,
+        console.log(
+          "Full email:",
+          JSON.stringify(
+            emailData,
+            null,
+            2
+          )
+        );
 
-    text: `
+        messageBody =
+          emailData?.text ??
+          emailData?.html ??
+          "(No message body)";
+      } catch (err) {
+        console.error(
+          "Failed to fetch full email:",
+          err
+        );
+      }
+    }
+
+    const result =
+      await resend.emails.send({
+        from:
+          "My Address Updated <hello@myaddressupdated.com>",
+
+        to:
+          process.env
+            .SUPPORT_EMAIL!,
+
+        replyTo: from,
+
+        subject:
+          `[Forwarded] ${subject}`,
+
+        text: `
 Forwarded message
 
 From: ${from}
 To: ${to}
 
 Subject: ${subject}
-      `,
-  });
 
-console.log(
-  "SUPPORT_EMAIL:",
-  process.env.SUPPORT_EMAIL
-);
+Message:
+${messageBody}
+        `,
+      });
 
-console.log(
-  "Resend result:",
-  JSON.stringify(result, null, 2)
-);
-
-console.log(
-  "Forwarded email successfully"
-);
+    console.log(
+      "Resend result:",
+      JSON.stringify(
+        result,
+        null,
+        2
+      )
+    );
 
     return NextResponse.json({
       success: true,
