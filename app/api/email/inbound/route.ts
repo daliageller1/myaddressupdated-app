@@ -68,7 +68,7 @@ ${text}
     return NextResponse.json(
       {
         error:
-          "Failed to process email",
+          "Failed to process email.",
       },
       { status: 500 }
     );
