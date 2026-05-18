@@ -16,24 +16,20 @@ export async function POST(
       JSON.stringify(body, null, 2)
     );
 
-    const email =
-      body?.data?.email;
+    const email = body?.data;
 
     const from =
       email?.from ??
       "unknown";
 
-    const to =
-      email?.to ??
-      "hello@myaddressupdated.com";
+    const to = Array.isArray(email?.to)
+      ? email.to.join(", ")
+      : email?.to ??
+        "hello@myaddressupdated.com";
 
     const subject =
       email?.subject ??
       "(No Subject)";
-
-    const text =
-      email?.text ??
-      "No content";
 
     await resend.emails.send({
       from:
@@ -44,7 +40,7 @@ export async function POST(
           .SUPPORT_EMAIL!,
 
       subject:
-        `[Support] ${subject}`,
+        `[Forwarded] ${subject}`,
 
       text: `
 Forwarded message
@@ -52,9 +48,13 @@ Forwarded message
 From: ${from}
 To: ${to}
 
-${text}
+Subject: ${subject}
       `,
     });
+
+    console.log(
+      "Forwarded email successfully"
+    );
 
     return NextResponse.json({
       success: true,
@@ -68,7 +68,7 @@ ${text}
     return NextResponse.json(
       {
         error:
-          "Failed to process email.",
+          "Failed to process email",
       },
       { status: 500 }
     );
