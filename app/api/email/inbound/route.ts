@@ -17,6 +17,10 @@ export async function POST(
     );
 
     const email = body?.data;
+console.log(
+  "EMAIL OBJECT:",
+  JSON.stringify(email, null, 2)
+);
 
     const from =
       email?.from ??
