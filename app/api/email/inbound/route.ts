@@ -54,6 +54,17 @@ export async function POST(
         const emailData =
           await response.json();
 
+console.log(`emailData: ${emailData}`);
+console.log(`emailData: ${JSON.stringify(emailData)}`);
+console.log(
+  "FULL EMAIL RESPONSE:",
+  JSON.stringify(
+    emailData,
+    null,
+    2
+  )
+);
+
         console.log(
           "Full email:",
           JSON.stringify(
