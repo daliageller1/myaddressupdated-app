@@ -31,18 +31,21 @@ export async function POST(
       email?.subject ??
       "(No Subject)";
 
-    await resend.emails.send({
-      from:
-        "hello@myaddressupdated.com",
+const result =
+  await resend.emails.send({
+    from:
+      "My Address Updated <hello@myaddressupdated.com>",
 
-      to:
-        process.env
-          .SUPPORT_EMAIL!,
+    to:
+      process.env
+        .SUPPORT_EMAIL!,
 
-      subject:
-        `[Forwarded] ${subject}`,
+    replyTo: from,
 
-      text: `
+    subject:
+      `[Forwarded] ${subject}`,
+
+    text: `
 Forwarded message
 
 From: ${from}
@@ -50,11 +53,21 @@ To: ${to}
 
 Subject: ${subject}
       `,
-    });
+  });
 
-    console.log(
-      "Forwarded email successfully"
-    );
+console.log(
+  "SUPPORT_EMAIL:",
+  process.env.SUPPORT_EMAIL
+);
+
+console.log(
+  "Resend result:",
+  JSON.stringify(result, null, 2)
+);
+
+console.log(
+  "Forwarded email successfully"
+);
 
     return NextResponse.json({
       success: true,
